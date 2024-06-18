@@ -1,22 +1,31 @@
 import './App.css'
-import styled, { css } from 'styled-components'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { DashboardPage } from './pages/dashboard'
+import { LoginPage } from './pages/login'
+import { BookingsPage } from './pages/bookings'
+import { RoomsPage } from './pages/rooms'
+import { EmployeesPage } from './pages/employees'
+import { RoomCreatePage } from './pages/roomCreate'
+import { EmployeeCreatePage } from './pages/employeeCreate'
+import { BookingInfoPage } from './pages/bookingsInfo'
+import { PrivateRoute } from './components/privateRoute'
 
-function App() {
-  const Button = styled.button`
-  background: transparent;
-  border-radius: 3px;
-  border: 2px solid #BF4F74;
-  color: #BF4F74;
-  margin: 0 1em;
-  padding: 0.25em 1em;
-  `;
+export default function App() {
 
-  return (
-    <>
-      <h1>HOLA</h1>
-      <Button>Normal Button</Button>
-    </>
-  )
-} 
-
-export default App
+    return (
+        <>
+            <BrowserRouter>
+                <Routes>
+                    <Route path='/' element={ <PrivateRoute> <DashboardPage/> </PrivateRoute> }/>
+                    <Route path='login' element={ <LoginPage/> }/>
+                    <Route path='booking' element={ <PrivateRoute> <BookingsPage/> </PrivateRoute> }/>
+                    <Route path='booking/:bookingId' element={ <PrivateRoute> <BookingInfoPage/> </PrivateRoute> }/>
+                    <Route path='room' element={ <PrivateRoute> <RoomsPage/> </PrivateRoute> }/>
+                    <Route path='room/create' element={ <PrivateRoute> <RoomCreatePage/> </PrivateRoute> }/>
+                    <Route path='employee' element={ <PrivateRoute> <EmployeesPage/> </PrivateRoute> }/>
+                    <Route path='employee/create' element={ <PrivateRoute> <EmployeeCreatePage/> </PrivateRoute> }/>
+                </Routes>
+            </BrowserRouter>
+        </>
+    )
+}
