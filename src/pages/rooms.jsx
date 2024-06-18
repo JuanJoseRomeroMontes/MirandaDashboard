@@ -1,3 +1,4 @@
+import rooms from '../data/roomsData.json';
 
 export const RoomsPage = () => {
 

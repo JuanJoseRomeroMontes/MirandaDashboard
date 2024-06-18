@@ -1,3 +1,4 @@
+import employees from '../data/employeesData.json';
 
 export const EmployeeCreatePage = () => {
 

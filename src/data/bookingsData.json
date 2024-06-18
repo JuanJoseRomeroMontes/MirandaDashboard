@@ -1,0 +1,98 @@
+[
+    {
+        "full name": "Pearl Cremin",
+        "id": 0,
+        "checkIn": "2024-06-12",
+        "checkOut": "2024-06-29",
+        "specialRequest": "id cupidatat anim culpa voluptate exercitation",
+        "roomId": 11
+    },
+    {
+        "full name": "Beatrice Flatley",
+        "id": 1,
+        "checkIn": "2024-06-10",
+        "checkOut": "2024-06-19",
+        "specialRequest": "mollit non do nisi reprehenderit magna fugiat ex veniam",
+        "roomId": 10
+    },
+    {
+        "full name": "Perry Huel",
+        "id": 2,
+        "checkIn": "2024-06-14",
+        "checkOut": "2024-06-26",
+        "specialRequest": "sunt consectetur incididunt",
+        "roomId": 4
+    },
+    {
+        "full name": "Stephanie Ratke",
+        "id": 3,
+        "checkIn": "2024-06-13",
+        "checkOut": "2024-06-24",
+        "specialRequest": "quis in esse",
+        "roomId": 10
+    },
+    {
+        "full name": "Caleb Grady",
+        "id": 4,
+        "checkIn": "2024-06-06",
+        "checkOut": "2024-06-28",
+        "specialRequest": "",
+        "roomId": 11
+    },
+    {
+        "full name": "Courtney Zboncak",
+        "id": 5,
+        "checkIn": "2024-06-13",
+        "checkOut": "2024-06-26",
+        "specialRequest": "culpa aliquip magna ea est ea",
+        "roomId": 8
+    },
+    {
+        "full name": "Jared Miller",
+        "id": 6,
+        "checkIn": "2024-06-02",
+        "checkOut": "2024-06-18",
+        "specialRequest": "consectetur mollit ea irure in elit ex eu",
+        "roomId": 8
+    },
+    {
+        "full name": "Brett Satterfield",
+        "id": 7,
+        "checkIn": "2024-06-02",
+        "checkOut": "2024-06-27",
+        "specialRequest": "nulla in ea nulla exercitation nostrud reprehenderit elit magna incididunt",
+        "roomId": 3
+    },
+    {
+        "full name": "Tony Heathcote",
+        "id": 8,
+        "checkIn": "2024-06-11",
+        "checkOut": "2024-06-18",
+        "specialRequest": "excepteur enim ut duis cillum eu ad",
+        "roomId": 3
+    },
+    {
+        "full name": "Emilio Pagac",
+        "id": 9,
+        "checkIn": "2024-06-13",
+        "checkOut": "2024-06-18",
+        "specialRequest": "in",
+        "roomId": 5
+    },
+    {
+        "full name": "Edmund Kutch",
+        "id": 10,
+        "checkIn": "2024-06-02",
+        "checkOut": "2024-06-17",
+        "specialRequest": "non",
+        "roomId": 2
+    },
+    {
+        "full name": "Lillie Johnson",
+        "id": 11,
+        "checkIn": "2024-06-08",
+        "checkOut": "2024-06-18",
+        "specialRequest": "aliqua excepteur magna deserunt anim sunt dolor adipisicing minim mollit",
+        "roomId": 2
+    }
+]

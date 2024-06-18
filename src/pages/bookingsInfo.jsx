@@ -1,3 +1,4 @@
+import bookings from '../data/bookingsData.json';
 
 export const BookingInfoPage = () => {
 
