@@ -1,4 +1,3 @@
-import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { DashboardPage } from './pages/dashboard'
 import { LoginPage } from './pages/login'
@@ -24,6 +23,7 @@ export default function App() {
                     <Route path='room/create' element={ <PrivateRoute> <RoomCreatePage/> </PrivateRoute> }/>
                     <Route path='employee' element={ <PrivateRoute> <EmployeesPage/> </PrivateRoute> }/>
                     <Route path='employee/create' element={ <PrivateRoute> <EmployeeCreatePage/> </PrivateRoute> }/>
+                    <Route path='employee/edit/:employeeId' element={ <PrivateRoute> <EmployeeEditPage/> </PrivateRoute> }/>
                 </Routes>
             </BrowserRouter>
         </>

@@ -1,12 +1,12 @@
-import rooms from '../data/roomsData.json';
+import employees from '../data/employeesData.json';
 import { Menus } from '../components/menus';
 
-export const RoomsPage = () => {
+export const EmployeeEditPage = () => {
 
     return(
         <>
             <Menus>
-                <h1>Rooms</h1>
+                <h1>Edit employee</h1>
             </Menus>
         </>
     )

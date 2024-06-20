@@ -1,10 +1,13 @@
 import bookings from '../data/bookingsData.json';
+import { Menus } from '../components/menus';
 
 export const BookingsPage = () => {
 
     return(
         <>
-            <h1>Bookings</h1>
+            <Menus>
+                <h1>Bookings</h1>
+            </Menus>
         </>
     )
 };
