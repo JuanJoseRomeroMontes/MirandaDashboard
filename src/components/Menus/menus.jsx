@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { LeftMenu } from "./leftMenu";
 import { TopMenu } from "./topMenu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Page = styled.div`
   width: 100%;
@@ -27,7 +27,7 @@ export const Menus = ({ title: Title, children, ...rest }) => {
         <Page>
             <LeftMenu leftMenuClosed={leftMenuClosed}/>
             <div className="content">
-                <TopMenu toggleLeftMenu={toggleLeftMenu}/>
+                <TopMenu toggleLeftMenu={toggleLeftMenu} title={Title}/>
                 {children}
             </div>
         </Page>

@@ -1,11 +1,11 @@
 import employees from '../data/employeesData.json';
-import { Menus } from '../components/menus';
+import { Menus } from '../components/Menus/menus';
 
 export const EmployeesPage = () => {
 
     return(
         <>
-            <Menus>
+            <Menus title="Employees">
                 <h1>Employees</h1>
             </Menus>
         </>

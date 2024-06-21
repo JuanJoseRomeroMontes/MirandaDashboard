@@ -1,6 +1,6 @@
 [
     {
-        "roomId": 0,
+        "id": 0,
         "roomNumber": 56,
         "availability": false,
         "roomType": "Single Bed",
@@ -25,7 +25,7 @@
         ]
     },
     {
-        "roomId": 1,
+        "id": 1,
         "roomNumber": 93,
         "availability": true,
         "roomType": "Double Superior",
@@ -46,7 +46,7 @@
         ]
     },
     {
-        "roomId": 2,
+        "id": 2,
         "roomNumber": 14,
         "availability": true,
         "roomType": "Suite",
@@ -68,7 +68,7 @@
         ]
     },
     {
-        "roomId": 3,
+        "id": 3,
         "roomNumber": 57,
         "availability": true,
         "roomType": "Double Superior",
@@ -92,7 +92,7 @@
         ]
     },
     {
-        "roomId": 4,
+        "id": 4,
         "roomNumber": 99,
         "availability": true,
         "roomType": "Double Bed",
@@ -113,7 +113,7 @@
         ]
     },
     {
-        "roomId": 5,
+        "id": 5,
         "roomNumber": 57,
         "availability": true,
         "roomType": "Suite",
@@ -137,7 +137,7 @@
         ]
     },
     {
-        "roomId": 6,
+        "id": 6,
         "roomNumber": 89,
         "availability": false,
         "roomType": "Single Bed",
@@ -160,7 +160,7 @@
         ]
     },
     {
-        "roomId": 7,
+        "id": 7,
         "roomNumber": 43,
         "availability": true,
         "roomType": "Double Superior",
@@ -182,7 +182,7 @@
         ]
     },
     {
-        "roomId": 8,
+        "id": 8,
         "roomNumber": 67,
         "availability": true,
         "roomType": "Suite",
@@ -202,7 +202,7 @@
         ]
     },
     {
-        "roomId": 9,
+        "id": 9,
         "roomNumber": 19,
         "availability": true,
         "roomType": "Suite",
@@ -224,7 +224,7 @@
         ]
     },
     {
-        "roomId": 10,
+        "id": 10,
         "roomNumber": 89,
         "availability": true,
         "roomType": "Double Superior",

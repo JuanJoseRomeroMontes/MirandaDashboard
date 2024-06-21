@@ -8,6 +8,7 @@ import { RoomCreatePage } from './pages/roomCreate'
 import { EmployeeCreatePage } from './pages/employeeCreate'
 import { BookingInfoPage } from './pages/bookingsInfo'
 import { PrivateRoute } from './components/privateRoute'
+import { EmployeeEditPage } from './pages/employeeEdit'
 
 export default function App() {
 
