@@ -1,6 +1,7 @@
+import { useNavigate } from "react-router";
 
 export const LoginPage = () => {
-
+    const navigate = useNavigate();
     const masterEmail = "miranda@gmail.com";
     const masterPassword = "mirapass";
 
@@ -8,12 +9,11 @@ export const LoginPage = () => {
         event.preventDefault();
         if(event.target.email.value == masterEmail && event.target.password.value == masterPassword)
         {
-            alert("loged in")
             localStorage.setItem("mirandaDashboardLogin", true);
+            navigate("/")
         }
         else
         {
-            alert("incorrect data, login out")
             localStorage.setItem("mirandaDashboardLogin", false);
         }  
     }
