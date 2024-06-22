@@ -2,36 +2,9 @@ import bookings from '../data/bookingsData.json';
 import rooms from '../data/roomsData.json';
 import { Menus } from '../components/Menus/menus';
 import { Table } from '../components/Tables/Table';
-import { useEffect, useMemo, useState } from 'react';
-import { Guest, RoomStatus, SpecialRequest, DeleteBookingData } from '../components/Tables/BookingTableComponents';
-import styled from 'styled-components';
-
-const RequestPopUp = styled.div`
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    z-index: 99;
-    background-color: #80808050;
-    display: ${(props) => (props.$display ? "flex" : "none")};
-    align-items: center;
-    justify-content: center;
-
-    div{
-        padding: 15px;
-        width: fit-content;
-        background-color: white;
-        min-width: 250px;
-        text-align: center;
-    }
-`;
-
-const FilterTab = styled.div`
-    padding: 15px;
-    border: none;
-    border-bottom: 1px solid ${(props) => (props.$selected ? "#135846" : "#D4D4D4")};
-    color: ${(props) => (props.$selected ? "#135846" : "#6E6E6E")};
-`;
+import { useMemo, useState } from 'react';
+import { Guest, RoomStatus, SpecialRequest, RequestPopUp } from '../components/Tables/BookingTableComponents';
+import { Pagination, FilterTab, DeleteData } from '../components/Tables/GeneralTableComponents';
 
 export const BookingsPage = () => {
     const [bookingData, setBookingData] = useState(getBookingData(bookings, rooms))
@@ -122,7 +95,7 @@ export const BookingsPage = () => {
         { header: 'Special Request', render: (row) => <SpecialRequest message={row.specialRequest} handlePopUp={handlePopUp}/>, },
         { header: 'Room Type', render: (row) => <p>{row.roomType}</p>, },
         { header: 'Status', render: (row) => <RoomStatus status={row.status}/>, },
-        { header: '',  render: (row) => <DeleteBookingData id={row.id} deleteFunc={handleDeleteBooking}/>, },
+        { header: '',  render: (row) => <DeleteData id={row.id} deleteFunc={handleDeleteBooking}/>, },
     ];
 
     return(
@@ -165,15 +138,15 @@ export const BookingsPage = () => {
 
                     <Table data={paginatedData} columns={columns} />
 
-                    <div style={{display: "inline-flex"}}>
+                    <Pagination>
                             <p>Showing booking from {getPaginationIndex()+1} to {getPaginationIndex()+itemsPerPage > bookingData.length ? bookingData.length : getPaginationIndex()+itemsPerPage} of {bookingData.length} total bookings </p>
 
                             <div>
                                 <button onClick={() => handlePaginationChange(currentPage-1)}>Prev</button>
-                                <input type="number" value={currentPage} onChange={() => handlePaginationChange(event.target.value)} style={{width: "50px", textAlign: "center"}}/>
+                                <input type="number" value={currentPage} onChange={() => handlePaginationChange(event.target.value)}/>
                                 <button onClick={() => handlePaginationChange(currentPage+1)}>Next</button>
                             </div>
-                    </div>
+                    </Pagination>
                 </div>
             </Menus>
             <RequestPopUp $display={popUpMessage!==""} onClick={() => {setpopUpMessage("")}}><div>{popUpMessage}</div></RequestPopUp>
@@ -220,9 +193,3 @@ function convertStringToDate(date){
     //Javascript months are indexed from 0, thats why they are substracted 1
     return new Date(parseInt(dateSplit[0]), parseInt(dateSplit[1])-1, parseInt(dateSplit[2]));
 }
-
-/* if (search.property && search.value) {
-    newBookingsList = newBookingsList.filter(booking => 
-        booking[search.property] && booking[search.property].toLowerCase().includes(search.value.toLowerCase())
-    );
-} */
