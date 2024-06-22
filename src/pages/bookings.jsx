@@ -2,7 +2,7 @@ import bookings from '../data/bookingsData.json';
 import rooms from '../data/roomsData.json';
 import { Menus } from '../components/Menus/menus';
 import { Table } from '../components/Tables/Table';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Guest, RoomStatus, SpecialRequest, DeleteBookingData } from '../components/Tables/BookingTableComponents';
 import styled from 'styled-components';
 
@@ -40,12 +40,12 @@ export const BookingsPage = () => {
     const [order, setOrder] = useState({defaultOrder: true}); //object with properties: property, value
     const [filter, setFilter] = useState({defaultFilter: true}); //object with properties: property, value
     const [search, setSearch] = useState({property: "fullName", value: ""}); //object with properties: property, value
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
 
     const filteredBookings = useMemo(() => {
-        let newBookingsList = bookingData;
-
-        if(!(filter.defaultFilter))
-            newBookingsList = bookingData.filter(booking => booking[filter.property] == filter.value);
+        let newBookingsList = bookingData.filter(booking => booking[filter.property] == filter.value);
+        setCurrentPage(1);
 
         if (search.value !== "") {
             newBookingsList = newBookingsList.filter(booking => 
@@ -68,8 +68,17 @@ export const BookingsPage = () => {
                 return value;
             });
         }
+
         return newBookingsList;
-    }, [order, filter, search])
+    }, [order, filter, search, bookingData])
+
+    const paginatedData = useMemo(() =>{
+        return filteredBookings.slice(getPaginationIndex(), getPaginationIndex() + itemsPerPage);
+    }, [filteredBookings, currentPage])
+
+    function getPaginationIndex(){
+        return (currentPage - 1) * itemsPerPage;
+    }
 
     function handlectiveTab(newActiveTab){
         let newTabsState = [false, false, false, false]
@@ -79,21 +88,25 @@ export const BookingsPage = () => {
         setTabsState(newTabsState);
     }
 
-    const handleInputChange = (event) => {
+    function handleInputChange(event){
         setSearch({property: "fullName", value: event.target.value});
     };
 
-    const handlePopUp = (message) => {
+    function handlePaginationChange(page){
+        if(page <= Math.ceil(filteredBookings.length / itemsPerPage) && page > 0)
+            setCurrentPage(page);
+    }
+
+    function handlePopUp(message){
         setpopUpMessage(message)
     }
 
-    const handleDeleteBooking = (idToFilter) => {
+    function handleDeleteBooking(idToFilter){
         const deletedData = [...bookingData].filter(booking => booking.id !== idToFilter);
         setBookingData(deletedData)
-        setDataTemp(deletedData)
     }
 
-    const handleDropdownChange = (event) => {
+    function handleDropdownChange(event){
         let order = {property: event.target.value}
         if(event.target.value === "fullName")
             order.inversed = true;
@@ -119,17 +132,18 @@ export const BookingsPage = () => {
                     <div style={{display: "inline-flex"}}>
                         <FilterTab $selected={tabsState[0]} onClick={() => {
                             handlectiveTab(0); 
-                            setFilter({defaultFilter: true}); //DefaultFilter value doens't matter, only if the property exist or not
+                            setFilter({});
                             setOrder({defaultOrder: true}); //DefaultOrder value doens't matter, only if the property exist or not
                         }}>All Bookings</FilterTab>
                         <FilterTab $selected={tabsState[1]} onClick={() => {
                             handlectiveTab(1);
-                            setFilter({defaultFilter: true}); 
+                            setFilter({}); 
                             setOrder({property: "checkIn"});
+                            setCurrentPage(1);
                         }} >Checking In</FilterTab>
                         <FilterTab $selected={tabsState[2]} onClick={() => {
                             handlectiveTab(2);
-                            setFilter({defaultFilter: true}); 
+                            setFilter({}); 
                             setOrder({property: "checkOut"});
                             }}>Checking Out</FilterTab>
                         <FilterTab $selected={tabsState[3]} onClick={() => {
@@ -138,7 +152,9 @@ export const BookingsPage = () => {
                             setOrder({property: "bookDate"});
                             }}>In Progress</FilterTab>
                     </div>
+
                     <input type="text" value={search.value} onChange={handleInputChange} />
+
                     <select id="orderDropdown" onChange={handleDropdownChange}>
                         <option value="">Select an option</option>
                         <option value="fullName">Guest</option>
@@ -146,7 +162,18 @@ export const BookingsPage = () => {
                         <option value="checkIn">Check In</option>
                         <option value="checkOut">Check Out</option>
                     </select>
-                    <Table data={filteredBookings} columns={columns} />
+
+                    <Table data={paginatedData} columns={columns} />
+
+                    <div style={{display: "inline-flex"}}>
+                            <p>Showing booking from {getPaginationIndex()+1} to {getPaginationIndex()+itemsPerPage > bookingData.length ? bookingData.length : getPaginationIndex()+itemsPerPage} of {bookingData.length} total bookings </p>
+
+                            <div>
+                                <button onClick={() => handlePaginationChange(currentPage-1)}>Prev</button>
+                                <input type="number" value={currentPage} onChange={() => handlePaginationChange(event.target.value)} style={{width: "50px", textAlign: "center"}}/>
+                                <button onClick={() => handlePaginationChange(currentPage+1)}>Next</button>
+                            </div>
+                    </div>
                 </div>
             </Menus>
             <RequestPopUp $display={popUpMessage!==""} onClick={() => {setpopUpMessage("")}}><div>{popUpMessage}</div></RequestPopUp>
