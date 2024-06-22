@@ -56,11 +56,16 @@ export const BookingsPage = () => {
         if(!(order.defaultOrder))
         {
             newBookingsList.sort((a,b) => {
+                let value = 0;
                 if(a[order.property] < b[order.property])
-                    return 1;
+                    value = 1;
                 else if(a[order.property] > b[order.property])
-                    return -1;
-                return 0;
+                    value = -1;
+                
+                if(order.inversed)
+                    value *= -1;
+
+                return value;
             });
         }
         return newBookingsList;
@@ -86,6 +91,14 @@ export const BookingsPage = () => {
         const deletedData = [...bookingData].filter(booking => booking.id !== idToFilter);
         setBookingData(deletedData)
         setDataTemp(deletedData)
+    }
+
+    const handleDropdownChange = (event) => {
+        let order = {property: event.target.value}
+        if(event.target.value === "fullName")
+            order.inversed = true;
+        
+        setOrder(order)
     }
 
     const columns = [
@@ -126,6 +139,13 @@ export const BookingsPage = () => {
                             }}>In Progress</FilterTab>
                     </div>
                     <input type="text" value={search.value} onChange={handleInputChange} />
+                    <select id="orderDropdown" onChange={handleDropdownChange}>
+                        <option value="">Select an option</option>
+                        <option value="fullName">Guest</option>
+                        <option value="bookDate">Order Date</option>
+                        <option value="checkIn">Check In</option>
+                        <option value="checkOut">Check Out</option>
+                    </select>
                     <Table data={filteredBookings} columns={columns} />
                 </div>
             </Menus>
