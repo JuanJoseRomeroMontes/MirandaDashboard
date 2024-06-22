@@ -37,10 +37,9 @@ export const BookingsPage = () => {
     const [bookingData, setBookingData] = useState(getBookingData(bookings, rooms))
     const [popUpMessage, setpopUpMessage] = useState("");
     const [tabsState, setTabsState] = useState([true, false, false, false])
-    const [order, setOrder] = useState("");
-    const [inputValue, setInputValue] = useState("");
+    const [order, setOrder] = useState({defaultOrder: true}); //object with properties: property, value
     const [filter, setFilter] = useState({defaultFilter: true}); //object with properties: property, value
-    const [search, setSearch] = useState({defaultOrder: true}); //object with properties: property, value
+    const [search, setSearch] = useState({property: "fullName", value: ""}); //object with properties: property, value
 
     const filteredBookings = useMemo(() => {
         let newBookingsList = bookingData;
@@ -48,7 +47,11 @@ export const BookingsPage = () => {
         if(!(filter.defaultFilter))
             newBookingsList = bookingData.filter(booking => booking[filter.property] == filter.value);
 
-    /*  newBookingsList = newBookingsList.filter(booking => booking[search.property].includes(search.property));*/
+        if (search.value !== "") {
+            newBookingsList = newBookingsList.filter(booking => 
+                booking[search.property] && booking[search.property].toLowerCase().includes(search.value.toLowerCase())
+            );
+        }
         
         if(!(order.defaultOrder))
         {
@@ -72,7 +75,7 @@ export const BookingsPage = () => {
     }
 
     const handleInputChange = (event) => {
-        setInputValue(event.target.value);
+        setSearch({property: "fullName", value: event.target.value});
     };
 
     const handlePopUp = (message) => {
@@ -122,7 +125,7 @@ export const BookingsPage = () => {
                             setOrder({property: "bookDate"});
                             }}>In Progress</FilterTab>
                     </div>
-                    <input type="text" value={inputValue} onChange={handleInputChange} />
+                    <input type="text" value={search.value} onChange={handleInputChange} />
                     <Table data={filteredBookings} columns={columns} />
                 </div>
             </Menus>
