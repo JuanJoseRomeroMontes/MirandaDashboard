@@ -8,7 +8,8 @@
         },
         "id": 0,
         "subject": "laboris cupidatat nostrud nulla incididunt",
-        "comment": "aliquip cupidatat ipsum excepteur culpa esse cupidatat tempor deserunt"
+        "comment": "aliquip cupidatat ipsum excepteur culpa esse cupidatat tempor deserunt",
+        "archived": false
     },
     {
         "date": "2024-06-12",
@@ -19,7 +20,8 @@
         },
         "id": 1,
         "subject": "consectetur",
-        "comment": "et anim aliquip incididunt deserunt mollit sit occaecat"
+        "comment": "et anim aliquip incididunt deserunt mollit sit occaecat",
+        "archived": false
     },
     {
         "date": "2024-06-11",
@@ -30,7 +32,8 @@
         },
         "id": 2,
         "subject": "irure",
-        "comment": "ut velit amet duis deserunt culpa deserunt velit aliqua dolore ad ea quis duis"
+        "comment": "ut velit amet duis deserunt culpa deserunt velit aliqua dolore ad ea quis duis",
+        "archived": false
     },
     {
         "date": "2024-06-26",
@@ -41,7 +44,8 @@
         },
         "id": 3,
         "subject": "aliqua fugiat quis",
-        "comment": "dolor ut cupidatat duis aliqua sit consequat ex occaecat veniam"
+        "comment": "dolor ut cupidatat duis aliqua sit consequat ex occaecat veniam",
+        "archived": false
     },
     {
         "date": "2024-06-28",
@@ -52,7 +56,8 @@
         },
         "id": 4,
         "subject": "Lorem cupidatat ullamco",
-        "comment": "ad nostrud aliquip amet sit ullamco ad"
+        "comment": "ad nostrud aliquip amet sit ullamco ad",
+        "archived": true
     },
     {
         "date": "2024-06-20",
@@ -63,7 +68,8 @@
         },
         "id": 5,
         "subject": "incididunt Lorem ipsum eiusmod cillum",
-        "comment": "cillum duis magna proident aliqua labore dolor"
+        "comment": "cillum duis magna proident aliqua labore dolor",
+        "archived": false
     },
     {
         "date": "2024-06-28",
@@ -74,7 +80,8 @@
         },
         "id": 6,
         "subject": "do nostrud",
-        "comment": "adipisicing nostrud non et occaecat exercitation ad incididunt officia amet"
+        "comment": "adipisicing nostrud non et occaecat exercitation ad incididunt officia amet",
+        "archived": true
     },
     {
         "date": "2024-06-06",
@@ -85,7 +92,8 @@
         },
         "id": 7,
         "subject": "exercitation voluptate est eu",
-        "comment": "consequat Lorem irure adipisicing ut esse dolor eiusmod in enim"
+        "comment": "consequat Lorem irure adipisicing ut esse dolor eiusmod in enim",
+        "archived": true
     },
     {
         "date": "2024-06-20",
@@ -96,7 +104,8 @@
         },
         "id": 8,
         "subject": "officia",
-        "comment": "minim anim consequat non sit cillum"
+        "comment": "minim anim consequat non sit cillum",
+        "archived": false
     },
     {
         "date": "2024-06-14",
@@ -107,7 +116,8 @@
         },
         "id": 9,
         "subject": "in",
-        "comment": "esse nostrud est officia nulla nostrud minim quis nisi est veniam eiusmod ut"
+        "comment": "esse nostrud est officia nulla nostrud minim quis nisi est veniam eiusmod ut",
+        "archived": true
     },
     {
         "date": "2024-06-19",
@@ -118,6 +128,7 @@
         },
         "id": 10,
         "subject": "est",
-        "comment": "id proident consequat culpa anim sit"
+        "comment": "id proident consequat culpa anim sit",
+        "archived": false
     }
 ]
