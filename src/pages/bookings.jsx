@@ -53,18 +53,6 @@ export const BookingsPage = () => {
         return (currentPage - 1) * itemsPerPage;
     }
 
-    function handlectiveTab(newActiveTab){
-        let newTabsState = [false, false, false, false]
-    
-        newTabsState[newActiveTab] = true;
-    
-        setTabsState(newTabsState);
-    }
-
-    function handleInputChange(event){
-        setSearch({property: "fullName", value: event.target.value});
-    };
-
     function handlePaginationChange(page){
         if(page <= Math.ceil(filteredBookings.length / itemsPerPage) && page > 0)
             setCurrentPage(page);
@@ -86,6 +74,18 @@ export const BookingsPage = () => {
         
         setOrder(order)
     }
+
+    function handlectiveTab(newActiveTab){
+        let newTabsState = [false, false, false, false]
+    
+        newTabsState[newActiveTab] = true;
+    
+        setTabsState(newTabsState);
+    }
+
+    function handleInputChange(event){
+        setSearch({property: "fullName", value: event.target.value});
+    };
 
     const columns = [
         { header: 'Guest', render: (row) => <Guest fullName={row.fullName} bookingId={row.id} />, },
@@ -139,7 +139,7 @@ export const BookingsPage = () => {
                     <Table data={paginatedData} columns={columns} />
 
                     <Pagination>
-                            <p>Showing booking from {getPaginationIndex()+1} to {getPaginationIndex()+itemsPerPage > bookingData.length ? bookingData.length : getPaginationIndex()+itemsPerPage} of {bookingData.length} total bookings </p>
+                            <p>Showing booking from {getPaginationIndex()+1} to {getPaginationIndex()+itemsPerPage > filteredBookings.length ? filteredBookings.length : getPaginationIndex()+itemsPerPage} of {filteredBookings.length} total bookings </p>
 
                             <div>
                                 <button onClick={() => handlePaginationChange(currentPage-1)}>Prev</button>

@@ -13,6 +13,16 @@ export const Pagination = styled.div`
     align-items: center;
 `;
 
+export const Image = styled.img`
+    height: 0;
+    width: 100%;
+    padding-bottom: 56%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(${(props) => props.$src}); 
+`;
+
 //Bookings popUp
 const RequestPopUp = styled.div`
     width: 100%;

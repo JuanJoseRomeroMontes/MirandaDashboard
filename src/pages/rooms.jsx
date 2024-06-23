@@ -2,8 +2,7 @@ import rooms from '../data/roomsData.json';
 import { Menus } from '../components/Menus/menus';
 import { useMemo, useState } from 'react';
 import { Table } from '../components/Tables/Table';
-import { DeleteData, Pagination } from '../components/Tables/GeneralTableComponents';
-import styled from 'styled-components';
+import { DeleteData, Pagination, Image } from '../components/Tables/GeneralTableComponents';
 
 export const RoomsPage = () => {
 
@@ -78,7 +77,7 @@ export const RoomsPage = () => {
                     <Table data={paginatedData} columns={columns} />
 
                     <Pagination>
-                            <p>Showing rooms from {getPaginationIndex()+1} to {getPaginationIndex()+itemsPerPage > roomData.length ? roomData.length : getPaginationIndex()+itemsPerPage} of {roomData.length} total roomss </p>
+                            <p>Showing rooms from {getPaginationIndex()+1} to {getPaginationIndex()+itemsPerPage > filteredRooms.length ? filteredRooms.length : getPaginationIndex()+itemsPerPage} of {filteredRooms.length} total roomss </p>
 
                             <div>
                                 <button onClick={() => handlePaginationChange(currentPage-1)}>Prev</button>
@@ -91,16 +90,6 @@ export const RoomsPage = () => {
         </>
     )
 };
-
-const Image = styled.img`
-    height: 0;
-    width: 100%;
-    padding-bottom: 56%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-image: url(${(props) => props.$src}); 
-`;
 
 function calculateDiscount(price, discount){
     const priceDiscount = price * (discount/100)

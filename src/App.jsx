@@ -9,6 +9,7 @@ import { EmployeeCreatePage } from './pages/employeeCreate'
 import { BookingInfoPage } from './pages/bookingsInfo'
 import { PrivateRoute } from './components/privateRoute'
 import { EmployeeEditPage } from './pages/employeeEdit'
+import { ContactPage } from './pages/contact'
 
 export default function App() {
 
@@ -25,6 +26,7 @@ export default function App() {
                     <Route path='employee' element={ <PrivateRoute> <EmployeesPage/> </PrivateRoute> }/>
                     <Route path='employee/create' element={ <PrivateRoute> <EmployeeCreatePage/> </PrivateRoute> }/>
                     <Route path='employee/edit/:employeeId' element={ <PrivateRoute> <EmployeeEditPage/> </PrivateRoute> }/>
+                    <Route path='contact' element={ <PrivateRoute> <ContactPage/> </PrivateRoute> }/>
                 </Routes>
             </BrowserRouter>
         </>
