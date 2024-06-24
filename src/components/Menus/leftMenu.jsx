@@ -22,6 +22,7 @@ export const LeftMenu = ({ leftMenuClosed }) => {
         <li><Link to='/booking'>Booking</Link></li>
         <li><Link to='/room'>Room</Link></li>
         <li><Link to='/employee'>Employee</Link></li>
+        <li><Link to='/contact'>Contacts</Link></li>
       </ul>
     </Background>
   );

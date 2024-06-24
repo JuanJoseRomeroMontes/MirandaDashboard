@@ -3,7 +3,8 @@ import styled from 'styled-components';
 
 const TableContainer = styled.div`
   margin: 20px;
-  padding: 20px;
+  max-height: 500px; /* Define una altura máxima para el contenedor */
+  overflow: auto; /* Habilita el desplazamiento */
 `;
 
 const StyledTable = styled.table`
@@ -16,6 +17,10 @@ const TableHeader = styled.th`
   background-color: #f2f2f2;
   border: 1px solid #ddd;
   text-align: left;
+  position: sticky;
+  top: -1px;
+  background: white; /* Asegura que el fondo de la cabecera sea sólido */
+  z-index: 1; /* Asegura que la cabecera esté por encima del contenido */
 `;
 
 const TableRow = styled.tr`
