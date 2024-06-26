@@ -15,10 +15,10 @@ import { AuthProvider } from './components/authProvider'
 import { Provider } from 'react-redux'
 
 export default function App() {
-
     return (
         <>
             <AuthProvider>
+                <Provider store={ store }>
                         <BrowserRouter>
                             <Routes>
                                 <Route path='/' element={ <PrivateRoute> <DashboardPage/> </PrivateRoute> }/>
@@ -33,6 +33,7 @@ export default function App() {
                                 <Route path='contact' element={ <PrivateRoute> <ContactPage/> </PrivateRoute> }/>
                             </Routes>
                         </BrowserRouter>
+                </Provider>
             </AuthProvider>
         </>
     )

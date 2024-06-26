@@ -2,9 +2,11 @@ import bookings from '../data/bookingsData.json';
 import rooms from '../data/roomsData.json';
 import { Menus } from '../components/Menus/menus';
 import { Table } from '../components/Tables/Table';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Guest, RoomStatus, SpecialRequest, RequestPopUp } from '../components/Tables/BookingTableComponents';
 import { Pagination, FilterTab, DeleteData } from '../components/Tables/GeneralTableComponents';
+import { createBooking, deleteBooking, fetchBooking, fetchBookingList, updateBooking } from '../features/BookingSlice/bookingThunk';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const BookingsPage = () => {
     const [bookingData, setBookingData] = useState(getBookingData(bookings, rooms))
@@ -15,6 +17,41 @@ export const BookingsPage = () => {
     const [search, setSearch] = useState({property: "fullName", value: ""}); //object with properties: property, value
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
+
+    //----------------------------------
+
+    const [loading, setLoading] = useState(true);
+    const dispatch = useDispatch();
+    const bookingStatus = useSelector((state) => state.bookingSlice.status);
+    const bookingDataSlice = useSelector((state) => state.bookingSlice.data);
+    const bookingError = useSelector((state) => state.bookingSlice.error);
+
+    useEffect(() => {
+        if (bookingStatus === 'idle') {
+            dispatch(fetchBookingList())
+        }
+        else if (bookingStatus === 'fulfilled') {
+            setLoading(false)
+            //setImages(searchData)
+        }
+        else if (bookingStatus === 'rejected') {
+            setLoading(false)
+            console.log(searchError)
+            toast.error('API request limit reach, try searching for photos again in 1 hour', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+            });
+        }
+    }, [bookingStatus])
+
+    //----------------------------------
 
     const filteredBookings = useMemo(() => {
         let newBookingsList = bookingData.filter(booking => booking[filter.property] == filter.value);
@@ -97,6 +134,9 @@ export const BookingsPage = () => {
         { header: 'Status', render: (row) => <RoomStatus status={row.status}/>, },
         { header: '',  render: (row) => <DeleteData id={row.id} deleteFunc={handleDeleteBooking}/>, },
     ];
+
+    if(loading)
+        return (<h1>LOADING</h1>)
 
     return(
         <>
