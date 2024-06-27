@@ -13,6 +13,7 @@ import { ContactPage } from './pages/contact'
 import { store } from './app/Store'
 import { AuthProvider } from './components/authProvider'
 import { Provider } from 'react-redux'
+import { BookingCreatePage } from './pages/bookingCreate'
 
 export default function App() {
     return (
@@ -24,6 +25,7 @@ export default function App() {
                                 <Route path='/' element={ <PrivateRoute> <DashboardPage/> </PrivateRoute> }/>
                                 <Route path='login' element={ <LoginPage/> }/>
                                 <Route path='booking' element={ <PrivateRoute> <BookingsPage/> </PrivateRoute> }/>
+                                <Route path='booking/create' element={ <PrivateRoute> <BookingCreatePage/> </PrivateRoute> }/>
                                 <Route path='booking/:bookingId' element={ <PrivateRoute> <BookingInfoPage/> </PrivateRoute> }/>
                                 <Route path='room' element={ <PrivateRoute> <RoomsPage/> </PrivateRoute> }/>
                                 <Route path='room/create' element={ <PrivateRoute> <RoomCreatePage/> </PrivateRoute> }/>

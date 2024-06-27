@@ -7,9 +7,11 @@ import { Guest, RoomStatus, SpecialRequest, RequestPopUp } from '../components/T
 import { Pagination, FilterTab, DeleteData } from '../components/Tables/GeneralTableComponents';
 import { createBooking, deleteBooking, fetchBooking, fetchBookingList, updateBooking } from '../features/BookingSlice/bookingThunk';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 export const BookingsPage = () => {
-    let bookingData;
+    const navigate = useNavigate();
+    const [bookingData, setBookingData] = useState()
     const [popUpMessage, setpopUpMessage] = useState("");
     const [tabsState, setTabsState] = useState([true, false, false, false])
     const [order, setOrder] = useState({defaultOrder: true}); //object with properties: property, value
@@ -18,27 +20,25 @@ export const BookingsPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
-    const [firstLoad, setFirstLoad] = useState(false);
     const dispatch = useDispatch();
     const status = useSelector((state) => state.bookingSlice.status);
-    const dataSlice = useSelector((state) => state.bookingSlice.data);
-    const error = useSelector((state) => state.bookingSlice.error);
+    const dataSlice = useSelector((state) => state.bookingSlice.items);
 
     useEffect(() => {
-        const initialFetch = async () => {
-            if(status === 'idle'){
-                await dispatch(fetchBookingList()).unwrap();
-                setFirstLoad(true);
-            }            
+        if (status === 'idle') {
+            dispatch(fetchBookingList());
         }
-        
-        initialFetch();
-    }, [])
-
-    bookingData = useMemo(() => {
-        return getBookingData(dataSlice.items, rooms);
-    }, [dataSlice])
-
+        else if (status === 'fulfilled') {
+            if(dataSlice !== null){
+                console.log(dataSlice);
+                setBookingData(getBookingData(dataSlice, rooms));
+            } 
+        }
+        else if (status === 'rejected') {
+            console.log("rejectedPetition")
+        }
+    }, [status, dataSlice, dispatch])
+ 
     const filteredBookings = useMemo(() => {
         let newBookingsList = [];
 
@@ -89,12 +89,7 @@ export const BookingsPage = () => {
     }
 
     function handleDeleteBooking(idToFilter){
-
-        const asyncDelete = async (idToFilter) => {
-            const a = await dispatch(deleteBooking(idToFilter)).unwrap();
-        }
-
-        asyncDelete(idToFilter);
+        dispatch(deleteBooking(idToFilter))
     }
 
     function handleDropdownChange(event){
@@ -117,6 +112,10 @@ export const BookingsPage = () => {
         setSearch({property: "fullName", value: event.target.value});
     };
 
+    const handleCreateButton = () => {
+        navigate("create")
+    }
+
     const columns = [
         { header: 'Guest', render: (row) => <Guest fullName={row.fullName} bookingId={row.id} />, },
         { header: 'Order Date', render: (row) => <p>{row.bookDate}</p>, },
@@ -128,13 +127,13 @@ export const BookingsPage = () => {
         { header: '',  render: (row) => <DeleteData id={row.id} deleteFunc={handleDeleteBooking}/>, },
     ];
 
-    if(!firstLoad)
+    if(status === 'idle')
         return (<Menus title="Bookings"><h1>LOADING</h1></Menus>)
 
     return(
         <>
             <Menus title="Bookings">
-                <div style={{padding: "15px"}}>
+                <div style={{padding: "15px", height: 'calc(100% - 140px)'}}>
                     <div style={{display: "inline-flex"}}>
                         <FilterTab $selected={tabsState[0]} onClick={() => {
                             handlectiveTab(0); 
@@ -168,6 +167,8 @@ export const BookingsPage = () => {
                         <option value="checkIn">Check In</option>
                         <option value="checkOut">Check Out</option>
                     </select>
+
+                    <button onClick={handleCreateButton}>Create Booking</button>
                     
                     {status === "pending" ? <h1>LOADING TABLE</h1> : null}
                     <Table data={paginatedData} columns={columns} />
@@ -195,9 +196,18 @@ function getBookingData(bookingList, roomList){
         const modifiedElement = { ...element };
         const bookedRoom = roomList.find(room => room.id === modifiedElement.roomId);
         
-        modifiedElement.roomType = bookedRoom.roomType;
-        modifiedElement.roomNumber = bookedRoom.roomNumber;
-        modifiedElement.status = checkDay(modifiedElement.checkIn, modifiedElement.checkOut);
+        if(bookedRoom != null)
+            {
+                modifiedElement.roomType = bookedRoom.roomType;
+                modifiedElement.roomNumber = bookedRoom.roomNumber;
+                modifiedElement.status = checkDay(modifiedElement.checkIn, modifiedElement.checkOut);
+            }
+        else
+            {
+                modifiedElement.roomType = "NaN";
+                modifiedElement.roomNumber = -1;
+                modifiedElement.status = "NaN";
+            }
 
         data.push(modifiedElement)
     });

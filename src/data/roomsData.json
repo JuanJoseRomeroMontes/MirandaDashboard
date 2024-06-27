@@ -114,7 +114,7 @@
     },
     {
         "id": 5,
-        "roomNumber": 57,
+        "roomNumber": 75,
         "availability": true,
         "roomType": "Suite",
         "description": "culpa aliquip ullamco labore aute commodo ullamco enim incididunt anim enim magna consequat aliqua amet ex proident pariatur irure",
@@ -236,6 +236,28 @@
         "amenities": [
             "TV",
             "Grocery"
+        ],
+        "photosArray": [
+            "https://img.freepik.com/free-photo/luxury-classic-modern-bedroom-suite-hotel_105762-1787.jpg",
+            "https://img.freepik.com/free-photo/room-interior-hotel-bedroom_23-2150683421.jpg",
+            "https://img.freepik.com/free-photo/3d-rendering-beautiful-luxury-bedroom-suite-hotel-with-tv-working-table_105762-2022.jpg"
+        ]
+    },
+    {
+        "id": 11,
+        "roomNumber": 1,
+        "availability": true,
+        "roomType": "Suite",
+        "description": "Habitación de prueba, para crear el booking",
+        "offer": true,
+        "price": 1500,
+        "discount": 10,
+        "cancellation": "No se puede cancelar la reserva de esta habitacion",
+        "amenities": [
+            "TV",
+            "Grocery",
+            "Cleaning",
+            "Air conditioner"
         ],
         "photosArray": [
             "https://img.freepik.com/free-photo/luxury-classic-modern-bedroom-suite-hotel_105762-1787.jpg",

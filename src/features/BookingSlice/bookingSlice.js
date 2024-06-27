@@ -5,9 +5,9 @@ export const bookingSlice = createSlice({
     name: "booking",
     initialState:{
         status: 'idle',
-        data: {items: [], single: null},
+        items: [],
+        single: null,
         error: null,
-        loaded: false,
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -17,7 +17,7 @@ export const bookingSlice = createSlice({
         })
         .addCase(fetchBookingList.fulfilled, (state, action) => {
             state.status = 'fulfilled';
-            state.data.items = action.payload;
+            state.items = action.payload;
         })
         .addCase(fetchBookingList.rejected, (state, action) => {
             state.status = 'rejected'
@@ -28,7 +28,7 @@ export const bookingSlice = createSlice({
         })
         .addCase(fetchBooking.fulfilled, (state, action) => {
             state.status = 'fulfilled'
-            state.data.single = action.payload
+            state.single = items.find(i => i.id === action.payload)
         })
         .addCase(fetchBooking.rejected, (state, action) => {
             state.status = 'rejected'
@@ -39,7 +39,7 @@ export const bookingSlice = createSlice({
         })
         .addCase(createBooking.fulfilled, (state, action) => {
             state.status = 'fulfilled'
-            state.data.items = [...state.data.items, action.payload];
+            state.items = [...state.items, action.payload];
         })
         .addCase(createBooking.rejected, (state, action) => {
             state.status = 'rejected'
@@ -50,7 +50,7 @@ export const bookingSlice = createSlice({
         })
         .addCase(updateBooking.fulfilled, (state, action) => {
             state.status = 'fulfilled'
-            state.data.items = state.data.items.map(i => i.id === action.payload.id ? action.payload : i);
+            state.items = state.items.map(i => i.id === action.payload.id ? action.payload : i);
         })
         .addCase(updateBooking.rejected, (state, action) => {
             state.status = 'rejected'
@@ -61,7 +61,7 @@ export const bookingSlice = createSlice({
         })
         .addCase(deleteBooking.fulfilled, (state, action) => {
             state.status = 'fulfilled'
-            state.data.items = state.data.items.filter(i => i.id !== action.payload);
+            state.items = state.items.filter(i => i.id !== action.payload);
         })
         .addCase(deleteBooking.rejected, (state, action) => {
             state.status = 'rejected'

@@ -25,7 +25,7 @@ export const TopMenu = ({ title, toggleLeftMenu, ...rest }) => {
 
     const LogOut = () => {
         auth.authDispatch({type: 'logOut'})
-        navigate("login")
+        navigate("/login")
     }
 
     return(

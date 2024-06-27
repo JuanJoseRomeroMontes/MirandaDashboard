@@ -30,7 +30,7 @@ export const Table = ({ data, columns }) => {
 
 const TableContainer = styled.div`
   margin: 20px;
-  max-height: 450px; /* Define una altura máxima para el contenedor */
+  max-height: 80%; /* Define una altura máxima para el contenedor */
   overflow: auto; /* Habilita el desplazamiento */
 `;
 

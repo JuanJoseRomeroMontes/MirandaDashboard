@@ -21,8 +21,7 @@ export const fetchBookingList = createAsyncThunk("booking/fetchBookingList", asy
 
 export const fetchBooking = createAsyncThunk("booking/fecthBooking", async (id) => {
     try{
-        let data = await delay(bookingsData.find(i => i.id === id));
-        return data;
+        return id;
     }
     catch(error){
         return data;
