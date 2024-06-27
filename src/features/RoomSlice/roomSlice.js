@@ -6,7 +6,8 @@ export const roomSlice = createSlice({
     name: "room",
     initialState:{
         status: 'idle',
-        data: {items: [], single: null},
+        items: [],
+        single: null,
         error: null,
     },
     reducers: {},
@@ -17,7 +18,7 @@ export const roomSlice = createSlice({
         })
         .addCase(fetchRoomList.fulfilled, (state, action) => {
             state.status = 'fulfilled'
-            state.data.items = action.payload
+            state.items = action.payload
         })
         .addCase(fetchRoomList.rejected, (state, action) => {
             state.status = 'rejected'
@@ -28,7 +29,7 @@ export const roomSlice = createSlice({
         })
         .addCase(fetchRoom.fulfilled, (state, action) => {
             state.status = 'fulfilled'
-            state.data.single = action.payload
+            state.single = state.items.find(i => i.id === action.payload)
         })
         .addCase(fetchRoom.rejected, (state, action) => {
             state.status = 'rejected'
@@ -39,7 +40,7 @@ export const roomSlice = createSlice({
         })
         .addCase(createRoom.fulfilled, (state, action) => {
             state.status = 'fulfilled'
-            state.data.items = [...state.data.items, action.payload];
+            state.items = [...state.items, action.payload];
         })
         .addCase(createRoom.rejected, (state, action) => {
             state.status = 'rejected'
@@ -50,7 +51,7 @@ export const roomSlice = createSlice({
         })
         .addCase(updateRoom.fulfilled, (state, action) => {
             state.status = 'fulfilled'
-            state.data.items = state.data.items.map(i => i.id === action.payload.id ? action.payload : i);
+            state.items = state.items.map(i => i.id === action.payload.id ? action.payload : i);
         })
         .addCase(updateRoom.rejected, (state, action) => {
             state.status = 'rejected'
@@ -61,7 +62,7 @@ export const roomSlice = createSlice({
         })
         .addCase(deleteRoom.fulfilled, (state, action) => {
             state.status = 'fulfilled'
-            state.data.items = state.data.items.filter(i => i.id !== action.payload);
+            state.items = state.items.filter(i => i.id !== action.payload);
         })
         .addCase(deleteRoom.rejected, (state, action) => {
             state.status = 'rejected'

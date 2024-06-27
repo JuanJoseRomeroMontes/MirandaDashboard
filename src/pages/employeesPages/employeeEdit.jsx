@@ -1,5 +1,4 @@
-import employees from '../data/employeesData.json';
-import { Menus } from '../components/Menus/menus';
+import { Menus } from '../../components/Menus/menus';
 
 export const EmployeeEditPage = () => {
 

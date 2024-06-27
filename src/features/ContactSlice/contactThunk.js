@@ -1,13 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import commentsData from '../../data/commentsData.json';
-
-function delay(data){
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(data);
-        }, 200)
-    });
-}
+import { delay } from '../../utils'
 
 export const fetchContactList = createAsyncThunk("contact/fetchContactList", async () => {
     try{
@@ -21,8 +14,8 @@ export const fetchContactList = createAsyncThunk("contact/fetchContactList", asy
 
 export const fetchContact = createAsyncThunk("contact/fecthContact", async (id) => {
     try{
-        let data = await delay(commentsData.find(i => i.id === id));
-        return data;
+        await delay()
+        return id;
     }
     catch(error){
         return data;
@@ -31,6 +24,7 @@ export const fetchContact = createAsyncThunk("contact/fecthContact", async (id) 
 
 export const createContact = createAsyncThunk("contact/createContact", async (contact) => {
     try{
+        await delay()
         return contact;
     }
     catch(error){
@@ -40,6 +34,7 @@ export const createContact = createAsyncThunk("contact/createContact", async (co
 
 export const updateContact = createAsyncThunk("contact/updateContact", async (contact) => {
     try{
+        await delay()
         return contact;
     }
     catch(error){
@@ -49,6 +44,7 @@ export const updateContact = createAsyncThunk("contact/updateContact", async (co
 
 export const deleteContact = createAsyncThunk("Contact/deleteContact", async (id) => {
     try{
+        await delay()
         return id;
     }
     catch(error){

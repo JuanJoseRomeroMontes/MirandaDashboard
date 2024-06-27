@@ -1,16 +1,14 @@
-import bookings from '../data/bookingsData.json';
-import rooms from '../data/roomsData.json';
-import { Menus } from '../components/Menus/menus';
-import { Table } from '../components/Tables/Table';
+import { Menus } from '../../components/Menus/menus';
+import { Table } from '../../components/Tables/Table';
 import { useEffect, useMemo, useState } from 'react';
-import { Guest, RoomStatus, SpecialRequest, RequestPopUp } from '../components/Tables/BookingTableComponents';
-import { Pagination, FilterTab, DeleteData } from '../components/Tables/GeneralTableComponents';
-import { createBooking, deleteBooking, fetchBooking, fetchBookingList, updateBooking } from '../features/BookingSlice/bookingThunk';
+import { Guest, RoomStatus, SpecialRequest, RequestPopUp } from '../../components/Tables/BookingTableComponents';
+import { Pagination, FilterTab, ManageData } from '../../components/Tables/GeneralTableComponents';
+import { deleteBooking, fetchBookingList } from '../../features/BookingSlice/bookingThunk';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { fetchRoomList } from '../../features/RoomSlice/roomThunk';
 
 export const BookingsPage = () => {
-    const navigate = useNavigate();
     const [bookingData, setBookingData] = useState()
     const [popUpMessage, setpopUpMessage] = useState("");
     const [tabsState, setTabsState] = useState([true, false, false, false])
@@ -20,24 +18,27 @@ export const BookingsPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const status = useSelector((state) => state.bookingSlice.status);
-    const dataSlice = useSelector((state) => state.bookingSlice.items);
+    const bookingSliceData = useSelector((state) => state.bookingSlice.items);
+    const roomSliceData = useSelector((state) => state.roomSlice.items);
 
     useEffect(() => {
         if (status === 'idle') {
             dispatch(fetchBookingList());
+            if(roomSliceData === null || roomSliceData.length === 0)
+                dispatch(fetchRoomList());
         }
         else if (status === 'fulfilled') {
-            if(dataSlice !== null){
-                console.log(dataSlice);
-                setBookingData(getBookingData(dataSlice, rooms));
+            if(bookingSliceData !== null){
+                setBookingData(getBookingData(bookingSliceData, roomSliceData));
             } 
         }
         else if (status === 'rejected') {
             console.log("rejectedPetition")
         }
-    }, [status, dataSlice, dispatch])
+    }, [status, bookingSliceData, roomSliceData, dispatch])
  
     const filteredBookings = useMemo(() => {
         let newBookingsList = [];
@@ -92,6 +93,14 @@ export const BookingsPage = () => {
         dispatch(deleteBooking(idToFilter))
     }
 
+    function handleEditBooking(idToFilter){
+        navigate("edit/"+idToFilter)
+    }
+
+    const handleCreateBooking = () => {
+        navigate("create")
+    }
+
     function handleDropdownChange(event){
         let order = {property: event.target.value}
         if(event.target.value === "fullName")
@@ -112,10 +121,6 @@ export const BookingsPage = () => {
         setSearch({property: "fullName", value: event.target.value});
     };
 
-    const handleCreateButton = () => {
-        navigate("create")
-    }
-
     const columns = [
         { header: 'Guest', render: (row) => <Guest fullName={row.fullName} bookingId={row.id} />, },
         { header: 'Order Date', render: (row) => <p>{row.bookDate}</p>, },
@@ -124,7 +129,7 @@ export const BookingsPage = () => {
         { header: 'Special Request', render: (row) => <SpecialRequest message={row.specialRequest} handlePopUp={handlePopUp}/>, },
         { header: 'Room Type', render: (row) => <p>{row.roomType}</p>, },
         { header: 'Status', render: (row) => <RoomStatus status={row.status}/>, },
-        { header: '',  render: (row) => <DeleteData id={row.id} deleteFunc={handleDeleteBooking}/>, },
+        { header: '',  render: (row) => <ManageData id={row.id} editFunc={handleEditBooking} deleteFunc={handleDeleteBooking}/>, },
     ];
 
     if(status === 'idle')
@@ -168,7 +173,7 @@ export const BookingsPage = () => {
                         <option value="checkOut">Check Out</option>
                     </select>
 
-                    <button onClick={handleCreateButton}>Create Booking</button>
+                    <button onClick={handleCreateBooking}>Create Booking</button>
                     
                     {status === "pending" ? <h1>LOADING TABLE</h1> : null}
                     <Table data={paginatedData} columns={columns} />

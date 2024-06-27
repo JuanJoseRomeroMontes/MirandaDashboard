@@ -1,8 +1,8 @@
-import employees from '../data/employeesData.json';
-import { Menus } from '../components/Menus/menus';
+import employees from '../../data/employeesData.json';
+import { Menus } from '../../components/Menus/menus';
 import { useMemo, useState } from 'react';
-import { Table } from '../components/Tables/Table';
-import { DeleteData, Pagination, Image, FilterTab } from '../components/Tables/GeneralTableComponents';
+import { Table } from '../../components/Tables/Table';
+import { Pagination, Image, FilterTab, ManageData } from '../../components/Tables/GeneralTableComponents';
 
 export const EmployeesPage = () => {
     const [tabsState, setTabsState] = useState([true, false, false])
@@ -60,6 +60,9 @@ export const EmployeesPage = () => {
         setEmployeeData(deletedData)
     }
 
+    function handleEditEmployee(idToFilter){
+    }
+
     function handleDropdownChange(event){
         let order = {property: event.target.value}
         if(event.target.value === "name")
@@ -89,7 +92,7 @@ export const EmployeesPage = () => {
         { header: 'Description', render: (row) => <p>{row.position.description}</p>, },
         { header: 'Contact', render: (row) => <p>{row.phone}</p>, },
         { header: 'Status', render: (row) => <p>{row.status ? "ACTIVE" : "INACTIVE"}</p>, },
-        { header: '',  render: (row) => <DeleteData id={row.id} deleteFunc={handleDeleteEmployee}/>, },
+        { header: '',  render: (row) => <ManageData id={row.id} editFunc={handleEditEmployee} deleteFunc={handleDeleteEmployee}/>, },
     ];
 
     return(

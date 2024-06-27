@@ -1,8 +1,11 @@
-import rooms from '../data/roomsData.json';
-import { Menus } from '../components/Menus/menus';
-import { useMemo, useState } from 'react';
-import { Table } from '../components/Tables/Table';
-import { DeleteData, Pagination, Image } from '../components/Tables/GeneralTableComponents';
+import rooms from '../../data/roomsData.json';
+import { Menus } from '../../components/Menus/menus';
+import { useEffect, useMemo, useState } from 'react';
+import { Table } from '../../components/Tables/Table';
+import { Pagination, Image, ManageData } from '../../components/Tables/GeneralTableComponents';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteRoom, fetchRoomList } from '../../features/RoomSlice/roomThunk';
+import { useNavigate } from 'react-router';
 
 export const RoomsPage = () => {
 
@@ -12,6 +15,26 @@ export const RoomsPage = () => {
     const [search, setSearch] = useState({property: "fullName", value: ""}); //object with properties: property, value
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const status = useSelector((state) => state.roomSlice.status);
+    const roomSliceData = useSelector((state) => state.roomSlice.items);
+
+    useEffect(() => {
+        if (status === 'idle') {
+            if(roomSliceData === null || roomSliceData.length === 0)
+                dispatch(fetchRoomList());
+        }
+        else if (status === 'fulfilled') {
+            if(roomSliceData !== null){
+                setRoomData(roomSliceData);
+            } 
+        }
+        else if (status === 'rejected') {
+            console.log("rejectedPetition")
+        }
+    }, [status, roomSliceData, dispatch])
 
     const filteredRooms = useMemo(() => {
         let newRoomsList = roomData.filter(rooms => rooms[filter.property] == filter.value);
@@ -56,8 +79,15 @@ export const RoomsPage = () => {
     }
 
     function handleDeleteRoom(idToFilter){
-        const deletedData = [...roomData].filter(rooms => rooms.id !== idToFilter);
-        setRoomData(deletedData)
+        dispatch(deleteRoom(idToFilter))
+    }
+
+    function handleEditRoom(idToFilter){
+        navigat("edit/"+idToFilter)
+    }
+
+    const handleCreateRoom = () => {
+        navigate("create")
     }
 
     const columns = [
@@ -67,13 +97,15 @@ export const RoomsPage = () => {
         { header: 'Amenities', render: (row) => <p>{getAmenitiesString(row.amenities)}</p>, },
         { header: 'Price', render: (row) => <p>{row.price}€</p>, },
         { header: 'Offer Price', render: (row) => <p>{ calculateDiscount(row.price, row.discount)}€ | {row.discount}%</p>, },
-        { header: '',  render: (row) => <DeleteData id={row.id} deleteFunc={handleDeleteRoom}/>, },
+        { header: '',  render: (row) => <ManageData id={row.id} editFunc={handleEditRoom} deleteFunc={handleDeleteRoom}/>, },
     ];
 
     return(
         <>
             <Menus title="rooms">
                 <div style={{padding: "15px"}}>
+                    <button onClick={handleCreateRoom}>Create Room</button>
+
                     <Table data={paginatedData} columns={columns} />
 
                     <Pagination>

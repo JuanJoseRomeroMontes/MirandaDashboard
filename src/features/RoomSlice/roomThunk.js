@@ -1,17 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import commentsData from '../../data/commentsData.json';
-
-function delay(data){
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(data);
-        }, 200)
-    });
-}
+import roomsData from '../../data/roomsData.json';
+import { delay } from '../../utils'
 
 export const fetchRoomList = createAsyncThunk("room/fetchRoomList", async () => {
     try{
-        const data = await delay(commentsData);
+        const data = await delay(roomsData);
         return data;
     }
     catch(error){
@@ -21,8 +14,8 @@ export const fetchRoomList = createAsyncThunk("room/fetchRoomList", async () => 
 
 export const fetchRoom = createAsyncThunk("room/fecthRoom", async (id) => {
     try{
-        let data = await delay(commentsData.find(i => i.id === id));
-        return data;
+        await delay()
+        return id;
     }
     catch(error){
         return data;
@@ -31,6 +24,7 @@ export const fetchRoom = createAsyncThunk("room/fecthRoom", async (id) => {
 
 export const createRoom = createAsyncThunk("room/createRoom", async (room) => {
     try{
+        await delay()
         return room;
     }
     catch(error){
@@ -40,6 +34,7 @@ export const createRoom = createAsyncThunk("room/createRoom", async (room) => {
 
 export const updateRoom = createAsyncThunk("room/updateRoom", async (room) => {
     try{
+        await delay()
         return room;
     }
     catch(error){
@@ -49,6 +44,7 @@ export const updateRoom = createAsyncThunk("room/updateRoom", async (room) => {
 
 export const deleteRoom = createAsyncThunk("room/deleteRoom", async (id) => {
     try{
+        await delay()
         return id;
     }
     catch(error){

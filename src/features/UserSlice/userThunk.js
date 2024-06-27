@@ -1,17 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import commentsData from '../../data/commentsData.json';
-
-function delay(data){
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(data);
-        }, 200)
-    });
-}
+import userData from '../../data/employeesData.json';
+import { delay } from '../../utils'
 
 export const fetchUserList = createAsyncThunk("user/fetchUserList", async () => {
     try{
-        const data = await delay(commentsData);
+        const data = await delay(userData);
         return data;
     }
     catch(error){
@@ -21,8 +14,8 @@ export const fetchUserList = createAsyncThunk("user/fetchUserList", async () => 
 
 export const fetchUser = createAsyncThunk("user/fecthUser", async (id) => {
     try{
-        let data = await delay(commentsData.find(i => i.id === id));
-        return data;
+        await delay()
+        return id;
     }
     catch(error){
         return data;
@@ -31,6 +24,7 @@ export const fetchUser = createAsyncThunk("user/fecthUser", async (id) => {
 
 export const createUser = createAsyncThunk("user/createUser", async (user) => {
     try{
+        await delay()
         return user;
     }
     catch(error){
@@ -40,6 +34,7 @@ export const createUser = createAsyncThunk("user/createUser", async (user) => {
 
 export const updateUser = createAsyncThunk("user/updateUser", async (user) => {
     try{
+        await delay()
         return user;
     }
     catch(error){
@@ -49,6 +44,7 @@ export const updateUser = createAsyncThunk("user/updateUser", async (user) => {
 
 export const deleteUser = createAsyncThunk("user/deleteUser", async (id) => {
     try{
+        await delay()
         return id;
     }
     catch(error){

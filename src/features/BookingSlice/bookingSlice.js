@@ -28,7 +28,7 @@ export const bookingSlice = createSlice({
         })
         .addCase(fetchBooking.fulfilled, (state, action) => {
             state.status = 'fulfilled'
-            state.single = items.find(i => i.id === action.payload)
+            state.single = state.items.find(i => i.id === action.payload)
         })
         .addCase(fetchBooking.rejected, (state, action) => {
             state.status = 'rejected'

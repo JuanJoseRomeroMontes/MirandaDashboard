@@ -35,11 +35,6 @@ export const SpecialRequest = ({message, handlePopUp}) =>
         <ViewNotes $message={message} onClick={() => {handlePopUp(message)}}>View Notes</ViewNotes>
     </div>;
 
-export const DeleteBookingData = ({id, deleteFunc}) => 
-    <div >
-        <RiDeleteBin6Fill onClick={() => {deleteFunc(id)}}/>
-    </div>;
-
 export const RequestPopUp = styled.div`
     width: 100%;
     height: 100%;

@@ -1,8 +1,8 @@
-import comments from '../data/commentsData.json';
-import { Menus } from '../components/Menus/menus';
-import { Table } from '../components/Tables/Table';
+import comments from '../../data/commentsData.json';
+import { Menus } from '../../components/Menus/menus';
+import { Table } from '../../components/Tables/Table';
 import { useMemo, useState } from 'react';
-import { Pagination, FilterTab, DeleteData } from '../components/Tables/GeneralTableComponents';
+import { Pagination, FilterTab, ManageData } from '../../components/Tables/GeneralTableComponents';
 
 export const ContactPage = () => {
     const [commentData, setcommentData] = useState(comments)
@@ -60,6 +60,10 @@ export const ContactPage = () => {
         setcommentData(deletedData)
     }
 
+    function handleEditComment(idToFilter){
+        
+    }
+
     function handlectiveTab(newActiveTab){
         let newTabsState = [false, false, false, false]
     
@@ -80,7 +84,7 @@ export const ContactPage = () => {
         { header: 'Phone', render: (row) => <p>{row.client.phone}</p>, },
         { header: 'Subject', render: (row) => <p>{row.subject}</p>, },
         { header: 'Comment', render: (row) => <p>{row.comment}</p>, },
-        { header: '',  render: (row) => <DeleteData id={row.id} deleteFunc={handleDeleteComment}/>, },
+        { header: '',  render: (row) => <ManageData id={row.id} editFunc={handleEditComment} deleteFunc={handleDeleteComment}/>, },
     ];
 
     return(

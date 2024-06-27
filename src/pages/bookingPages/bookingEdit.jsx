@@ -1,22 +1,43 @@
-import { useState } from 'react';
-import { Menus } from '../components/Menus/menus';
-import { Form, Label } from '../components/form'
+import { useEffect, useState } from 'react';
+import { Menus } from '../../components/Menus/menus';
+import { Form, Label } from '../../components/form'
 import { useDispatch, useSelector } from 'react-redux';
-import { createBooking } from '../features/BookingSlice/bookingThunk';
-import { useNavigate } from 'react-router';
+import { updateBooking, fetchBooking } from '../../features/BookingSlice/bookingThunk';
+import { useNavigate, useParams } from 'react-router';
 
-export const BookingCreatePage = () => {
-    const dataSlice = useSelector((state) => state.bookingSlice.items);
+export const BookingEditPage = () => {
+    const data = useSelector((state) => state.bookingSlice.single);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const { id } = useParams();
     const [form, setForm] = useState({
-        fullName: 'Pablo',
+        fullName: 'ChangedName',
+        bookDate: '2000-01-01',
         checkIn: '2024-06-01',
         checkOut: '2024-06-30',
-        specialRequest: '',
-        roomNumber: '11'
+        specialRequest: 'ChangedRequest',
+        roomId: '0',
     });
+
+    useEffect(() => {
+        const fetch = async () => {
+            await dispatch(fetchBooking(+id)).unwrap;
+        }
+        
+        fetch();
+    })
+
+    useEffect(() => {
+        if(data != null)
+            setForm({
+                fullName: data.fullName,
+                bookDate: data.bookDate,
+                checkIn: data.checkIn,
+                checkOut: data.checkOut,
+                specialRequest: data.specialRequest,
+                roomId: data.roomId,
+        })
+    }, [data])
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -28,27 +49,27 @@ export const BookingCreatePage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const id = dataSlice.length;
+        const bookingId = +id;
         const dateTemp = new Date();
         const currentDate = `${dateTemp.getFullYear()}-${(dateTemp.getMonth() + 1).toString().padStart(2, '0')}-${dateTemp.getDate().toString().padStart(2, '0')}`;
 
         const newBooking = {
             "fullName": form.fullName,
-            "id": id,
+            "id": bookingId,
             "bookDate": currentDate,
             "checkIn": form.checkIn,
             "checkOut": form.checkOut,
             "specialRequest": form.specialRequest,
-            "roomId": +form.roomNumber
+            "roomId": +form.roomId
         }
 
-        dispatch(createBooking(newBooking))
+        dispatch(updateBooking(newBooking))
         navigate(-1);
     };
 
     return(
         <>
-            <Menus title="Booking Create">
+            <Menus title="Booking Edit">
                 <Form onSubmit={handleSubmit}>
                     <Label>
                         Client full name:
@@ -57,7 +78,15 @@ export const BookingCreatePage = () => {
                             name="fullName"
                             value={form.fullName}
                             onChange={handleChange}
-                            required
+                        />
+                    </Label>
+                    <Label>
+                        Book Date:
+                        <input
+                            type="date"
+                            name="bookDate"
+                            value={form.bookDate}
+                            onChange={handleChange}
                         />
                     </Label>
                     <Label>
@@ -67,7 +96,6 @@ export const BookingCreatePage = () => {
                             name="checkIn"
                             value={form.checkIn}
                             onChange={handleChange}
-                            required
                         />
                     </Label>
                     <Label>
@@ -77,7 +105,6 @@ export const BookingCreatePage = () => {
                             name="checkOut"
                             value={form.checkOut}
                             onChange={handleChange}
-                            required
                         />
                     </Label>
                     <Label>
@@ -90,11 +117,11 @@ export const BookingCreatePage = () => {
                         />
                     </Label>
                     <Label>
-                        Room number:
+                        Room id:
                         <input
                             type="number"
-                            name="roomNumber"
-                            value={form.roomNumber}
+                            name="roomId"
+                            value={form.roomId}
                             onChange={handleChange}
                             required
                         />
