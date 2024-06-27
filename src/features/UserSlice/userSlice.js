@@ -51,6 +51,7 @@ export const userSlice = createSlice({
         })
         .addCase(updateUser.fulfilled, (state, action) => {
             state.status = 'fulfilled'
+            console.log(action.payload)
             state.items = state.items.map(i => i.id === action.payload.id ? action.payload : i);
         })
         .addCase(updateUser.rejected, (state, action) => {

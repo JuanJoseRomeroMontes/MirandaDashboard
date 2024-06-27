@@ -1,8 +1,11 @@
 import employees from '../../data/employeesData.json';
 import { Menus } from '../../components/Menus/menus';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Table } from '../../components/Tables/Table';
 import { Pagination, Image, FilterTab, ManageData } from '../../components/Tables/GeneralTableComponents';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { deleteUser, fetchUserList } from '../../features/UserSlice/userThunk';
 
 export const EmployeesPage = () => {
     const [tabsState, setTabsState] = useState([true, false, false])
@@ -12,6 +15,23 @@ export const EmployeesPage = () => {
     const [search, setSearch] = useState({property: "fullName", value: ""}); //object with properties: property, value
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const status = useSelector((state) => state.userSlice.status);
+    const employeeSliceData = useSelector((state) => state.userSlice.items);
+
+    useEffect(() => {
+        if (status === 'idle') {
+            dispatch(fetchUserList());
+        }
+        else if (status === 'fulfilled') {
+            setEmployeeData(employeeSliceData);
+        }
+        else if (status === 'rejected') {
+            console.log("rejectedPetition")
+        }
+    }, [status, employeeSliceData, dispatch])
 
     const filteredEmployees = useMemo(() => {
         let newEmployeesList = employeeData.filter(employees => employees[filter.property] == filter.value);
@@ -56,11 +76,15 @@ export const EmployeesPage = () => {
     }
 
     function handleDeleteEmployee(idToFilter){
-        const deletedData = [...employeeData].filter(employees => employees.id !== idToFilter);
-        setEmployeeData(deletedData)
+        dispatch(deleteUser(idToFilter))
     }
 
     function handleEditEmployee(idToFilter){
+        navigate("edit/"+idToFilter)
+    }
+
+    const handleCreateEmployee = () => {
+        navigate("create")
     }
 
     function handleDropdownChange(event){
@@ -95,11 +119,14 @@ export const EmployeesPage = () => {
         { header: '',  render: (row) => <ManageData id={row.id} editFunc={handleEditEmployee} deleteFunc={handleDeleteEmployee}/>, },
     ];
 
+    if(status === 'idle')
+        return (<Menus title="Employees"><h1>LOADING</h1></Menus>)
+
     return(
         <>
-            <Menus title="employees">
+            <Menus title="Employees">
                 <div style={{padding: "15px"}}>
-                <div style={{display: "inline-flex"}}>
+                    <div style={{display: "inline-flex"}}>
                         <FilterTab $selected={tabsState[0]} onClick={() => {
                             handlectiveTab(0); 
                             setFilter({});
@@ -125,6 +152,8 @@ export const EmployeesPage = () => {
                         <option value="name">Nombre</option>
                         <option value="date">Fecha</option>
                     </select>
+
+                    <button onClick={handleCreateEmployee}>Create Employee</button>
 
                     <Table data={paginatedData} columns={columns} />
 

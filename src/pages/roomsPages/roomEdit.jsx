@@ -10,7 +10,6 @@ export const RoomEditPage = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const dataSlice = useSelector((state) => state.roomSlice.items);
     const [form, setForm] = useState({
         roomNumber: '04',
         availability: false,

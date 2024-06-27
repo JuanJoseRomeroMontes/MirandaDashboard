@@ -8,7 +8,6 @@ import { deleteRoom, fetchRoomList } from '../../features/RoomSlice/roomThunk';
 import { useNavigate } from 'react-router';
 
 export const RoomsPage = () => {
-
     const [roomData, setRoomData] = useState(rooms)
     const [order, setOrder] = useState({defaultOrder: true}); //object with properties: property, value
     const [filter, setFilter] = useState({defaultFilter: true}); //object with properties: property, value
@@ -100,9 +99,12 @@ export const RoomsPage = () => {
         { header: '',  render: (row) => <ManageData id={row.id} editFunc={handleEditRoom} deleteFunc={handleDeleteRoom}/>, },
     ];
 
+    if(status === 'idle')
+        return (<Menus title="Rooms"><h1>LOADING</h1></Menus>)
+
     return(
         <>
-            <Menus title="rooms">
+            <Menus title="Rooms">
                 <div style={{padding: "15px"}}>
                     <button onClick={handleCreateRoom}>Create Room</button>
 

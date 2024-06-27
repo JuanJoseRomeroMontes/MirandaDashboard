@@ -55,7 +55,7 @@ export const RoomCreatePage = () => {
             "discount": +form.discount,
             "cancellation": form.cancellation,
             "amenities": form.amenities,
-            "photosArray": ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3GniyT5BwWC29mxaTGA1Dbjtbzm7IGPVlNezsbvCbgG3VEgPXorn_JadGn3wBOWMRis0&usqp=CAU', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.flaticon.com%2Ffree-icon%2Fwip_10157938&psig=AOvVaw2k1Mwph7-df_Ca6znZlr2X&ust=1719599928789000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCOCtrI23_IYDFQAAAAAdAAAAABAJ', 'https://www.shutterstock.com/image-vector/grunge-red-work-process-square-260nw-1035090301.jpg']
+            "photosArray": ['https://www.shutterstock.com/image-vector/grunge-red-work-process-square-260nw-1035090301.jpg', 'https://www.shutterstock.com/image-vector/grunge-red-work-process-square-260nw-1035090301.jpg', 'https://www.shutterstock.com/image-vector/grunge-red-work-process-square-260nw-1035090301.jpg']
         }
 
         dispatch(createRoom(newBooking));
