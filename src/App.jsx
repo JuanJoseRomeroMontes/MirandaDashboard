@@ -20,7 +20,8 @@ import { EmployeeCreatePage } from './pages/employeesPages/employeeCreate'
 import { EmployeeEditPage } from './pages/employeesPages/employeeEdit'
 
 import { ContactPage } from './pages/contactsPages/contact'
-
+import { ContactCreatePage } from './pages/contactsPages/contactCreate'
+import { ContactEditPage } from './pages/contactsPages/contactEdit'
 
 export default function App() {
     return (
@@ -42,6 +43,8 @@ export default function App() {
                                 <Route path='employee/create' element={ <PrivateRoute> <EmployeeCreatePage/> </PrivateRoute> }/>
                                 <Route path='employee/edit/:id' element={ <PrivateRoute> <EmployeeEditPage/> </PrivateRoute> }/>
                                 <Route path='contact' element={ <PrivateRoute> <ContactPage/> </PrivateRoute> }/>
+                                <Route path='contact/create' element={ <PrivateRoute> <ContactCreatePage/> </PrivateRoute> }/>
+                                <Route path='contact/edit/:id' element={ <PrivateRoute> <ContactEditPage/> </PrivateRoute> }/>
                             </Routes>
                         </BrowserRouter>
                 </Provider>
