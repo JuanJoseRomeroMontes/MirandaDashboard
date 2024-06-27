@@ -5,6 +5,8 @@ import { LuMail } from "react-icons/lu";
 import { FaRegBell } from "react-icons/fa";
 import { IconContext } from "react-icons";
 import { useNavigate } from "react-router";
+import { useContext } from "react";
+import { AuthContext } from "../authProvider";
 
 const Background = styled.div`
   width: 100%;
@@ -19,10 +21,11 @@ const Background = styled.div`
 
 export const TopMenu = ({ title, toggleLeftMenu, ...rest }) => {
     const navigate = useNavigate();
+    const auth = useContext(AuthContext)
 
     const LogOut = () => {
-        localStorage.setItem("mirandaDashboardLogin", false);
-        navigate("login")
+        auth.authDispatch({type: 'logOut'})
+        navigate("/login")
     }
 
     return(

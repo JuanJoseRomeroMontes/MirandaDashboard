@@ -30,14 +30,9 @@ const ViewNotes = styled.button`
     background-color:  ${(props) => (props.$message === "" ? "grey" : "green")};
 `;
 
-export const SpecialRequest = ({message, showPopUp}) => 
+export const SpecialRequest = ({message, handlePopUp}) => 
     <div >
-        <ViewNotes $message={message} onClick={() => {showPopUp(message)}}>View Notes</ViewNotes>
-    </div>;
-
-export const DeleteBookingData = ({id, deleteFunc}) => 
-    <div >
-        <RiDeleteBin6Fill onClick={() => {deleteFunc(id)}}/>
+        <ViewNotes $message={message} onClick={() => {handlePopUp(message)}}>View Notes</ViewNotes>
     </div>;
 
 export const RequestPopUp = styled.div`

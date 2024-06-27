@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { RiDeleteBin6Fill } from "react-icons/ri";
+import { FaPencilAlt } from "react-icons/fa";
 
 export const FilterTab = styled.div`
     padding: 15px;
@@ -11,6 +12,19 @@ export const FilterTab = styled.div`
 export const Pagination = styled.div`
     display: inline-flex;
     align-items: center;
+`;
+
+export const ManageDataDiv = styled.div`
+    width: fit-content;
+    margin: 0 auto;
+
+    .padding-left{
+        margin-left: 7px;
+    }
+
+    svg:hover{
+        cursor: pointer;
+    }
 `;
 
 export const Image = styled.img`
@@ -44,7 +58,8 @@ const RequestPopUp = styled.div`
     }
 `;
 
-export const DeleteData = ({id, deleteFunc}) => 
-    <div >
+export const ManageData = ({id, editFunc, deleteFunc}) => 
+    <ManageDataDiv >
         <RiDeleteBin6Fill onClick={() => {deleteFunc(id)}}/>
-    </div>;
+        <FaPencilAlt className='padding-left' onClick={() => {editFunc(id)}}/>
+    </ManageDataDiv>;

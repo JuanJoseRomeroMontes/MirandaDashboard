@@ -1,15 +1,19 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router";
+import { AuthContext } from "../components/authProvider";
 
 export const LoginPage = () => {
     const navigate = useNavigate();
     const masterEmail = "miranda@gmail.com";
     const masterPassword = "mirapass";
+    const auth = useContext(AuthContext)
 
     const validateLogin = (event) => {
         event.preventDefault();
         if(event.target.email.value == masterEmail && event.target.password.value == masterPassword)
         {
-            localStorage.setItem("mirandaDashboardLogin", true);
+            //localStorage.setItem("mirandaDashboardLogin", true);
+            auth.authDispatch({type: 'logIn', value: {email: event.target.email.value, name: 'TEMP'}})
             navigate("/")
         }
         else

@@ -1,5 +1,5 @@
-import bookings from '../data/bookingsData.json';
-import { Menus } from '../components/Menus/menus';
+import bookings from '../../data/bookingsData.json';
+import { Menus } from '../../components/Menus/menus';
 
 export const BookingInfoPage = () => {
 

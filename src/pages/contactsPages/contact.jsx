@@ -1,8 +1,12 @@
-import comments from '../data/commentsData.json';
-import { Menus } from '../components/Menus/menus';
-import { Table } from '../components/Tables/Table';
-import { useMemo, useState } from 'react';
-import { Pagination, FilterTab, DeleteData } from '../components/Tables/GeneralTableComponents';
+import comments from '../../data/commentsData.json';
+import { Menus } from '../../components/Menus/menus';
+import { Table } from '../../components/Tables/Table';
+import { useEffect, useMemo, useState } from 'react';
+import { Pagination, FilterTab, ManageData } from '../../components/Tables/GeneralTableComponents';
+import { deleteContact, fetchContactList } from '../../features/ContactSlice/contactThunk';
+import { useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserList } from '../../features/UserSlice/userThunk';
 
 export const ContactPage = () => {
     const [commentData, setcommentData] = useState(comments)
@@ -12,6 +16,23 @@ export const ContactPage = () => {
     const [search, setSearch] = useState({property: "fullName", value: ""}); //object with properties: property, value
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const status = useSelector((state) => state.contactSlice.status);
+    const contactSliceData = useSelector((state) => state.contactSlice.items);
+
+    useEffect(() => {
+        if (status === 'idle') {
+            dispatch(fetchContactList());
+        }
+        else if (status === 'fulfilled') {
+            setcommentData(contactSliceData);
+        }
+        else if (status === 'rejected') {
+            console.log("rejectedPetition")
+        }
+    }, [status, contactSliceData, dispatch])
 
     const filteredComments = useMemo(() => {
         let newCommentsList = commentData.filter(comment => comment[filter.property] == filter.value);
@@ -56,8 +77,15 @@ export const ContactPage = () => {
     }
 
     function handleDeleteComment(idToFilter){
-        const deletedData = [...commentData].filter(comment => comment.id !== idToFilter);
-        setcommentData(deletedData)
+        dispatch(deleteContact(idToFilter))
+    }
+
+    function handleEditComment(idToFilter){
+        navigate("edit/"+idToFilter)
+    }
+
+    const handleCreateComment = () => {
+        navigate("create")
     }
 
     function handlectiveTab(newActiveTab){
@@ -80,7 +108,7 @@ export const ContactPage = () => {
         { header: 'Phone', render: (row) => <p>{row.client.phone}</p>, },
         { header: 'Subject', render: (row) => <p>{row.subject}</p>, },
         { header: 'Comment', render: (row) => <p>{row.comment}</p>, },
-        { header: '',  render: (row) => <DeleteData id={row.id} deleteFunc={handleDeleteComment}/>, },
+        { header: '',  render: (row) => <ManageData id={row.id} editFunc={handleEditComment} deleteFunc={handleDeleteComment}/>, },
     ];
 
     return(
@@ -100,6 +128,8 @@ export const ContactPage = () => {
                             setCurrentPage(1);
                         }} >Archived</FilterTab>
                     </div>
+
+                    <button onClick={handleCreateComment}>Create Employee</button>
 
                     <Table data={paginatedData} columns={columns} />
 
