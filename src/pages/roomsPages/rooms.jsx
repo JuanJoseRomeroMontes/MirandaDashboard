@@ -83,7 +83,7 @@ export const RoomsPage = () => {
     }
 
     function handleEditRoom(idToFilter){
-        navigat("edit/"+idToFilter)
+        navigate("edit/"+idToFilter)
     }
 
     const handleCreateRoom = () => {

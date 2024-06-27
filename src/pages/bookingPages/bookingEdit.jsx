@@ -7,9 +7,9 @@ import { useNavigate, useParams } from 'react-router';
 
 export const BookingEditPage = () => {
     const data = useSelector((state) => state.bookingSlice.single);
+    const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { id } = useParams();
     const [form, setForm] = useState({
         fullName: 'ChangedName',
         bookDate: '2000-01-01',

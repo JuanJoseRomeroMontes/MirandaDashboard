@@ -13,13 +13,13 @@ import { BookingEditPage } from './pages/bookingPages/bookingEdit'
 
 import { RoomsPage } from './pages/roomsPages/rooms'
 import { RoomCreatePage } from './pages/roomsPages/roomCreate'
+import { RoomEditPage } from './pages/roomsPages/roomEdit'
 
 import { EmployeesPage } from './pages/employeesPages/employees'
 import { EmployeeCreatePage } from './pages/employeesPages/employeeCreate'
 import { EmployeeEditPage } from './pages/employeesPages/employeeEdit'
 
 import { ContactPage } from './pages/contactsPages/contact'
-
 
 
 export default function App() {
@@ -37,7 +37,7 @@ export default function App() {
                                 <Route path='booking/view/:id' element={ <PrivateRoute> <BookingInfoPage/> </PrivateRoute> }/>
                                 <Route path='room' element={ <PrivateRoute> <RoomsPage/> </PrivateRoute> }/>
                                 <Route path='room/create' element={ <PrivateRoute> <RoomCreatePage/> </PrivateRoute> }/>
-                                <Route path='room/edit/:id' element={ <PrivateRoute> <BookingEditPage/> </PrivateRoute> }/>
+                                <Route path='room/edit/:id' element={ <PrivateRoute> <RoomEditPage/> </PrivateRoute> }/>
                                 <Route path='employee' element={ <PrivateRoute> <EmployeesPage/> </PrivateRoute> }/>
                                 <Route path='employee/create' element={ <PrivateRoute> <EmployeeCreatePage/> </PrivateRoute> }/>
                                 <Route path='employee/edit/:id' element={ <PrivateRoute> <EmployeeEditPage/> </PrivateRoute> }/>

@@ -19,7 +19,7 @@ export const BookingCreatePage = () => {
     });
 
     const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
+        const { name, value } = e.target;
         setForm(prevState => ({
             ...prevState,
             [name]: value
@@ -48,7 +48,7 @@ export const BookingCreatePage = () => {
 
     return(
         <>
-            <Menus title="Booking Create">
+            <Menus title="Create Booking">
                 <Form onSubmit={handleSubmit}>
                     <Label>
                         Client full name:
