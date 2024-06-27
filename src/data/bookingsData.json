@@ -4,7 +4,7 @@
         "id": 0,
         "bookDate": "2024-05-12",
         "checkIn": "2024-06-08",
-        "checkOut": "2024-06-17",
+        "checkOut": "2024-07-17",
         "specialRequest": "",
         "roomId": 0
     },
@@ -31,7 +31,7 @@
         "id": 3,
         "bookDate": "2024-05-24",
         "checkIn": "2024-06-07",
-        "checkOut": "2024-06-20",
+        "checkOut": "2024-07-20",
         "specialRequest": "ut in velit",
         "roomId": 3
     },
@@ -58,7 +58,7 @@
         "id": 6,
         "bookDate": "2024-05-25",
         "checkIn": "2024-06-05",
-        "checkOut": "2024-06-27",
+        "checkOut": "2024-07-27",
         "specialRequest": "do",
         "roomId": 6
     },

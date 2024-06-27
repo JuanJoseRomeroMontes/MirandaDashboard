@@ -7,6 +7,7 @@ export const bookingSlice = createSlice({
         status: 'idle',
         data: {items: [], single: null},
         error: null,
+        loaded: false,
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -15,8 +16,8 @@ export const bookingSlice = createSlice({
             state.status = 'pending'
         })
         .addCase(fetchBookingList.fulfilled, (state, action) => {
-            state.status = 'fulfilled'
-            state.data.items = action.payload
+            state.status = 'fulfilled';
+            state.data.items = action.payload;
         })
         .addCase(fetchBookingList.rejected, (state, action) => {
             state.status = 'rejected'

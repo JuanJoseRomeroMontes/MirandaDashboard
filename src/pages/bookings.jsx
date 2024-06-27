@@ -9,7 +9,7 @@ import { createBooking, deleteBooking, fetchBooking, fetchBookingList, updateBoo
 import { useDispatch, useSelector } from 'react-redux';
 
 export const BookingsPage = () => {
-    const [bookingData, setBookingData] = useState(getBookingData(bookings, rooms))
+    let bookingData;
     const [popUpMessage, setpopUpMessage] = useState("");
     const [tabsState, setTabsState] = useState([true, false, false, false])
     const [order, setOrder] = useState({defaultOrder: true}); //object with properties: property, value
@@ -18,43 +18,32 @@ export const BookingsPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
-    //----------------------------------
-
-    const [loading, setLoading] = useState(true);
+    const [firstLoad, setFirstLoad] = useState(false);
     const dispatch = useDispatch();
-    const bookingStatus = useSelector((state) => state.bookingSlice.status);
-    const bookingDataSlice = useSelector((state) => state.bookingSlice.data);
-    const bookingError = useSelector((state) => state.bookingSlice.error);
+    const status = useSelector((state) => state.bookingSlice.status);
+    const dataSlice = useSelector((state) => state.bookingSlice.data);
+    const error = useSelector((state) => state.bookingSlice.error);
 
     useEffect(() => {
-        if (bookingStatus === 'idle') {
-            dispatch(fetchBookingList())
+        const initialFetch = async () => {
+            if(status === 'idle'){
+                await dispatch(fetchBookingList()).unwrap();
+                setFirstLoad(true);
+            }            
         }
-        else if (bookingStatus === 'fulfilled') {
-            setLoading(false)
-            //setImages(searchData)
-        }
-        else if (bookingStatus === 'rejected') {
-            setLoading(false)
-            console.log(searchError)
-            toast.error('API request limit reach, try searching for photos again in 1 hour', {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Bounce,
-            });
-        }
-    }, [bookingStatus])
+        
+        initialFetch();
+    }, [])
 
-    //----------------------------------
+    bookingData = useMemo(() => {
+        return getBookingData(dataSlice.items, rooms);
+    }, [dataSlice])
 
     const filteredBookings = useMemo(() => {
-        let newBookingsList = bookingData.filter(booking => booking[filter.property] == filter.value);
+        let newBookingsList = [];
+
+        if(bookingData != null)
+            newBookingsList = bookingData.filter(booking => booking[filter.property] == filter.value);
         setCurrentPage(1);
 
         if (search.value !== "") {
@@ -100,8 +89,12 @@ export const BookingsPage = () => {
     }
 
     function handleDeleteBooking(idToFilter){
-        const deletedData = [...bookingData].filter(booking => booking.id !== idToFilter);
-        setBookingData(deletedData)
+
+        const asyncDelete = async (idToFilter) => {
+            const a = await dispatch(deleteBooking(idToFilter)).unwrap();
+        }
+
+        asyncDelete(idToFilter);
     }
 
     function handleDropdownChange(event){
@@ -135,8 +128,8 @@ export const BookingsPage = () => {
         { header: '',  render: (row) => <DeleteData id={row.id} deleteFunc={handleDeleteBooking}/>, },
     ];
 
-    if(loading)
-        return (<h1>LOADING</h1>)
+    if(!firstLoad)
+        return (<Menus title="Bookings"><h1>LOADING</h1></Menus>)
 
     return(
         <>
@@ -175,7 +168,8 @@ export const BookingsPage = () => {
                         <option value="checkIn">Check In</option>
                         <option value="checkOut">Check Out</option>
                     </select>
-
+                    
+                    {status === "pending" ? <h1>LOADING TABLE</h1> : null}
                     <Table data={paginatedData} columns={columns} />
 
                     <Pagination>
