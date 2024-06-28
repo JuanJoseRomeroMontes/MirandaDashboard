@@ -1,4 +1,3 @@
-import employees from '../../data/employeesData.json';
 import { Menus } from '../../components/Menus/menus';
 import { useEffect, useMemo, useState } from 'react';
 import { Table } from '../../components/Tables/Table';
@@ -9,7 +8,7 @@ import { deleteUser, fetchUserList } from '../../features/UserSlice/userThunk';
 
 export const EmployeesPage = () => {
     const [tabsState, setTabsState] = useState([true, false, false])
-    const [employeeData, setEmployeeData] = useState(employees)
+    const [employeeData, setEmployeeData] = useState([])
     const [order, setOrder] = useState({defaultOrder: true}); //object with properties: property, value
     const [filter, setFilter] = useState({defaultFilter: true}); //object with properties: property, value
     const [search, setSearch] = useState({property: "fullName", value: ""}); //object with properties: property, value

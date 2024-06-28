@@ -1,4 +1,3 @@
-import rooms from '../../data/roomsData.json';
 import { Menus } from '../../components/Menus/menus';
 import { useEffect, useMemo, useState } from 'react';
 import { Table } from '../../components/Tables/Table';
@@ -8,7 +7,7 @@ import { deleteRoom, fetchRoomList } from '../../features/RoomSlice/roomThunk';
 import { useNavigate } from 'react-router';
 
 export const RoomsPage = () => {
-    const [roomData, setRoomData] = useState(rooms)
+    const [roomData, setRoomData] = useState([]);
     const [order, setOrder] = useState({defaultOrder: true}); //object with properties: property, value
     const [filter, setFilter] = useState({defaultFilter: true}); //object with properties: property, value
     const [search, setSearch] = useState({property: "fullName", value: ""}); //object with properties: property, value

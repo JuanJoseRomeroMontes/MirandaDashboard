@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router';
 import { fetchRoomList } from '../../features/RoomSlice/roomThunk';
 
 export const BookingsPage = () => {
-    const [bookingData, setBookingData] = useState()
+    const [bookingData, setBookingData] = useState([])
     const [popUpMessage, setpopUpMessage] = useState("");
     const [tabsState, setTabsState] = useState([true, false, false, false])
     const [order, setOrder] = useState({defaultOrder: true}); //object with properties: property, value

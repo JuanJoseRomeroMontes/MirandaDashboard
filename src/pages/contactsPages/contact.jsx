@@ -1,4 +1,3 @@
-import comments from '../../data/commentsData.json';
 import { Menus } from '../../components/Menus/menus';
 import { Table } from '../../components/Tables/Table';
 import { useEffect, useMemo, useState } from 'react';
@@ -9,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserList } from '../../features/UserSlice/userThunk';
 
 export const ContactPage = () => {
-    const [commentData, setcommentData] = useState(comments)
+    const [commentData, setcommentData] = useState([])
     const [tabsState, setTabsState] = useState([true, false, false, false])
     const [order, setOrder] = useState({defaultOrder: true}); //object with properties: property, value
     const [filter, setFilter] = useState({defaultFilter: true}); //object with properties: property, value
