@@ -101,6 +101,10 @@ export const BookingsPage = () => {
         navigate("create")
     }
 
+    const handleViewBooking = (bookingId) => {
+        navigate("view/"+bookingId)
+    }
+
     function handleDropdownChange(event){
         let order = {property: event.target.value}
         if(event.target.value === "fullName")
@@ -122,7 +126,7 @@ export const BookingsPage = () => {
     };
 
     const columns = [
-        { header: 'Guest', render: (row) => <Guest fullName={row.fullName} bookingId={row.id} />, },
+        { header: 'Guest', render: (row) => <Guest fullName={row.fullName} bookingId={row.id} viewFunc={handleViewBooking} />, },
         { header: 'Order Date', render: (row) => <p>{row.bookDate}</p>, },
         { header: 'Check In', render: (row) => <p>{row.checkIn}</p>, },
         { header: 'Check Out', render: (row) => <p>{row.checkOut}</p>, },
