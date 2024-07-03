@@ -1,17 +1,19 @@
 import styled from "styled-components";
 
-export const Guest = ({fullName, bookingId}) => 
-    <div>
+export const Guest = ({fullName, bookingId, viewFunc}) => 
+    <div onClick={() => {viewFunc(bookingId)}}>
         <p>{fullName}</p>
         <p>#{bookingId}</p>
     </div>;
 
+export const StatusDiv = styled.div`
+    background-color:  ${(props) => (getStatusColor(props.$status))};
+`;
+
 export const RoomStatus = ({status}) => 
-    <div>
-        <div style={{backgroundColor: getStatusColor(status)}}>
-            <p>{status}</p>
-        </div>
-    </div>;
+    <StatusDiv $status={status}>
+        <p>{status}</p>
+    </StatusDiv>;
 
 function getStatusColor(status){
     let color = "white";
