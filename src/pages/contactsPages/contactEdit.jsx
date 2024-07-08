@@ -76,7 +76,7 @@ export const ContactEditPage = () => {
 
     return(
         <>
-            <Menus title="Employee Create">
+            <Menus title="Edit Contact">
                 <Form onSubmit={handleSubmit}>
                         <Label>
                             Client Name:

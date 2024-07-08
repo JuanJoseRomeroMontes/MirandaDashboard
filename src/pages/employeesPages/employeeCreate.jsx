@@ -53,7 +53,7 @@ export const EmployeeCreatePage = () => {
 
     return(
         <>
-            <Menus title="Employee Create">
+            <Menus title="Create Employee">
                 <Form onSubmit={handleSubmit}>
                         <Label>
                             Name:

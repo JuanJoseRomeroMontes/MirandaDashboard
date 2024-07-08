@@ -16,7 +16,7 @@ describe('My First Test', () => {
 
     cy.url().should('include', '/login')
 
-    cy.get('[id^=email]').type('miranda@gmail.com')
+    cy.get('[id^=email]').type('invalid@gmail.com')
     cy.get('[id^=password]').type('invalidPassword')
     cy.get('form').submit()
 

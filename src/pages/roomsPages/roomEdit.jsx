@@ -86,7 +86,7 @@ export const RoomEditPage = () => {
     };
 
     return (
-        <Menus title="Create Room">
+        <Menus title="Edit Room">
             <Form onSubmit={handleSubmit}>
                     <Label>
                         Room Number:

@@ -50,7 +50,7 @@ export const ContactCreatePage = () => {
 
     return(
         <>
-            <Menus title="Employee Create">
+            <Menus title="Create Contact">
                 <Form onSubmit={handleSubmit}>
                         <Label>
                             Client Name:

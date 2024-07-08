@@ -69,7 +69,7 @@ export const BookingEditPage = () => {
 
     return(
         <>
-            <Menus title="Booking Edit">
+            <Menus title="Edit Booking">
                 <Form onSubmit={handleSubmit}>
                     <Label>
                         Client full name:
