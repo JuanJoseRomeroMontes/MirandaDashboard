@@ -12,7 +12,6 @@ export const LoginPage = () => {
         event.preventDefault();
         if(event.target.email.value == masterEmail && event.target.password.value == masterPassword)
         {
-            //localStorage.setItem("mirandaDashboardLogin", true);
             auth.authDispatch({type: 'logIn', value: {email: event.target.email.value, name: 'TEMP'}})
             navigate("/")
         }
