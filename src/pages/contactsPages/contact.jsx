@@ -79,14 +79,6 @@ export const ContactPage = () => {
         dispatch(deleteContact(idToFilter))
     }
 
-    function handleEditComment(idToFilter){
-        navigate("edit/"+idToFilter)
-    }
-
-    const handleCreateComment = () => {
-        navigate("create")
-    }
-
     function handlectiveTab(newActiveTab){
         let newTabsState = [false, false, false, false]
     
@@ -94,10 +86,6 @@ export const ContactPage = () => {
     
         setTabsState(newTabsState);
     }
-
-    function handleInputChange(event){
-        setSearch({property: "fullName", value: event.target.value});
-    };
 
     const columns = [
         { header: 'Date', render: (row) =>  <p>{row.date}</p>, },
@@ -107,7 +95,7 @@ export const ContactPage = () => {
         { header: 'Phone', render: (row) => <p>{row.client.phone}</p>, },
         { header: 'Subject', render: (row) => <p>{row.subject}</p>, },
         { header: 'Comment', render: (row) => <p>{row.comment}</p>, },
-        { header: '',  render: (row) => <ManageData id={row.id} editFunc={handleEditComment} deleteFunc={handleDeleteComment}/>, },
+        { header: '',  render: (row) => <ManageData id={row.id} deleteFunc={handleDeleteComment}/>, },
     ];
 
     return(
@@ -127,8 +115,6 @@ export const ContactPage = () => {
                             setCurrentPage(1);
                         }} >Archived</FilterTab>
                     </div>
-
-                    <button onClick={handleCreateComment}>Create Employee</button>
 
                     <Table data={paginatedData} columns={columns} />
 

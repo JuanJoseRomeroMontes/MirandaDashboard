@@ -1,21 +1,27 @@
 import styled from "styled-components";
 
-export const Guest = ({fullName, bookingId, viewFunc}) => 
+interface GuestProps {
+    fullName: string;
+    bookingId: number;
+    viewFunc: (bookingId: number) => void;
+}
+
+export const Guest: React.FC<GuestProps> = ({fullName, bookingId, viewFunc}) => 
     <div onClick={() => {viewFunc(bookingId)}}>
         <p>{fullName}</p>
         <p>#{bookingId}</p>
     </div>;
 
-export const StatusDiv = styled.div`
+export const StatusDiv = styled.div<{$status:string}>`
     background-color:  ${(props) => (getStatusColor(props.$status))};
 `;
 
-export const RoomStatus = ({status}) => 
+export const RoomStatus: React.FC<{status:string}> = ({status}) => 
     <StatusDiv $status={status}>
         <p>{status}</p>
     </StatusDiv>;
 
-function getStatusColor(status){
+function getStatusColor(status:string):string{
     let color = "white";
 
     if(status === "In progress")
@@ -28,31 +34,16 @@ function getStatusColor(status){
     return color;
 }
 
-const ViewNotes = styled.button`
+const ViewNotes = styled.button<{$message:string}>`
     background-color:  ${(props) => (props.$message === "" ? "grey" : "green")};
 `;
 
-export const SpecialRequest = ({message, handlePopUp}) => 
+interface SpecialRequestProps {
+    message: string;
+    handlePopUp: (message: string) => void;
+}
+
+export const SpecialRequest: React.FC<SpecialRequestProps> = ({message, handlePopUp}) => 
     <div >
         <ViewNotes $message={message} onClick={() => {handlePopUp(message)}}>View Notes</ViewNotes>
     </div>;
-
-export const RequestPopUp = styled.div`
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    z-index: 99;
-    background-color: #80808050;
-    display: ${(props) => (props.$display ? "flex" : "none")};
-    align-items: center;
-    justify-content: center;
-
-    div{
-        padding: 15px;
-        width: fit-content;
-        background-color: white;
-        min-width: 250px;
-        text-align: center;
-    }
-`;

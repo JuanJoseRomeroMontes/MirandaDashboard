@@ -1,8 +1,8 @@
 import { Menus } from '../../components/Menus/menus';
 import { Table } from '../../components/Tables/Table';
 import { useEffect, useMemo, useState } from 'react';
-import { Guest, RoomStatus, SpecialRequest, RequestPopUp } from '../../components/Tables/BookingTableComponents';
-import { Pagination, FilterTab, ManageData } from '../../components/Tables/GeneralTableComponents';
+import { Guest, RoomStatus, SpecialRequest } from '../../components/Tables/BookingTableComponents';
+import { Pagination, FilterTab, ManageData, RequestPopUp } from '../../components/Tables/GeneralTableComponents';
 import { deleteBooking, fetchBookingList } from '../../features/BookingSlice/bookingThunk';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';

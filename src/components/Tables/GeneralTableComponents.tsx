@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { FaPencilAlt } from "react-icons/fa";
 
-export const FilterTab = styled.div`
+export const FilterTab = styled.div<{$selected: boolean;}>`
     padding: 15px;
     border: none;
     border-bottom: 1px solid ${(props) => (props.$selected ? "#135846" : "#D4D4D4")};
@@ -27,7 +27,7 @@ export const ManageDataDiv = styled.div`
     }
 `;
 
-export const Image = styled.img`
+export const Image = styled.img<{$src:string;}>`
     height: 0;
     width: 100%;
     padding-bottom: 56%;
@@ -37,8 +37,7 @@ export const Image = styled.img`
     background-image: url(${(props) => props.$src}); 
 `;
 
-//Bookings popUp
-const RequestPopUp = styled.div`
+export const RequestPopUp = styled.div<{$display:boolean;}>`
     width: 100%;
     height: 100%;
     position: absolute;
@@ -58,8 +57,16 @@ const RequestPopUp = styled.div`
     }
 `;
 
-export const ManageData = ({id, editFunc, deleteFunc}) => 
+interface ManageDataProps {
+    id: number;
+    editFunc?: (id: number) => void;
+    deleteFunc: (id: number) => void;
+}
+
+export const ManageData: React.FC<ManageDataProps> = ({id, editFunc, deleteFunc}) => 
     <ManageDataDiv >
         <RiDeleteBin6Fill onClick={() => {deleteFunc(id)}}/>
-        <FaPencilAlt className='padding-left' onClick={() => {editFunc(id)}}/>
+        {editFunc && (
+        <FaPencilAlt className='padding-left' onClick={() => editFunc(id)} />
+        )}
     </ManageDataDiv>;
