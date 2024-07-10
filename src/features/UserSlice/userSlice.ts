@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { createUser, deleteUser, fetchUser, fetchUserList, updateUser } from './userThunk';
 import {EmployeeInterface} from '../../utils'
 
@@ -27,7 +27,7 @@ export const userSlice = createSlice({
         .addCase(fetchUserList.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(fetchUserList.fulfilled, (state, action) => {
+        .addCase(fetchUserList.fulfilled, (state, action:PayloadAction<EmployeeInterface[]>) => {
             state.status = 'fulfilled'
             state.items = action.payload
         })
@@ -38,7 +38,7 @@ export const userSlice = createSlice({
         .addCase(fetchUser.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(fetchUser.fulfilled, (state, action) => {
+        .addCase(fetchUser.fulfilled, (state, action:PayloadAction<number>) => {
             state.status = 'fulfilled'
             state.single = state.items.find(i => i.id === action.payload)
         })
@@ -49,7 +49,7 @@ export const userSlice = createSlice({
         .addCase(createUser.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(createUser.fulfilled, (state, action) => {
+        .addCase(createUser.fulfilled, (state, action:PayloadAction<EmployeeInterface>) => {
             state.status = 'fulfilled'
             state.items = [...state.items, action.payload];
         })
@@ -60,7 +60,7 @@ export const userSlice = createSlice({
         .addCase(updateUser.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(updateUser.fulfilled, (state, action) => {
+        .addCase(updateUser.fulfilled, (state, action:PayloadAction<EmployeeInterface>) => {
             state.status = 'fulfilled'
             console.log(action.payload)
             state.items = state.items.map(i => i.id === action.payload.id ? action.payload : i);
@@ -72,7 +72,7 @@ export const userSlice = createSlice({
         .addCase(deleteUser.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(deleteUser.fulfilled, (state, action) => {
+        .addCase(deleteUser.fulfilled, (state, action:PayloadAction<number>) => {
             state.status = 'fulfilled'
             state.items = state.items.filter(i => i.id !== action.payload);
         })

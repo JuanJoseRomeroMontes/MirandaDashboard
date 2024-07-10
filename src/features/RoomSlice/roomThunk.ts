@@ -1,53 +1,53 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import roomsData from '../../data/roomsData.json';
-import { delay } from '../../utils'
+import { delay, RoomInterface } from '../../utils'
 
-export const fetchRoomList = createAsyncThunk("room/fetchRoomList", async () => {
+export const fetchRoomList = createAsyncThunk<RoomInterface[]>("room/fetchRoomList", async () => {
     try{
         const data = await delay(roomsData);
-        return data;
+        return data as RoomInterface[];
     }
     catch(error){
-        return error;
+        throw new Error;
     }
 })
 
-export const fetchRoom = createAsyncThunk("room/fecthRoom", async (id) => {
+export const fetchRoom = createAsyncThunk<number>("room/fecthRoom", async (id:number | void) => {
     try{
         await delay(null)
-        return id;
+        return id as number;
     }
     catch(error){
-        return error;
+        throw new Error;
     }
 })
 
-export const createRoom = createAsyncThunk("room/createRoom", async (room) => {
+export const createRoom = createAsyncThunk<RoomInterface>("room/createRoom", async (room:RoomInterface|void) => {
     try{
         await delay(null)
-        return room;
+        return room as RoomInterface;
     }
     catch(error){
-        return error;
+        throw new Error;
     }
 })
 
-export const updateRoom = createAsyncThunk("room/updateRoom", async (room) => {
+export const updateRoom = createAsyncThunk<RoomInterface>("room/updateRoom", async (room:RoomInterface|void) => {
     try{
         await delay(null)
-        return room;
+        return room as RoomInterface;
     }
     catch(error){
-        return error;
+        throw new Error;
     }
 })
 
-export const deleteRoom = createAsyncThunk("room/deleteRoom", async (id) => {
+export const deleteRoom = createAsyncThunk<number>("room/deleteRoom", async (id:number | void) => {
     try{
         await delay(null)
-        return id;
+        return id as number;
     }
     catch(error){
-        return error;
+        throw new Error;
     }
 })

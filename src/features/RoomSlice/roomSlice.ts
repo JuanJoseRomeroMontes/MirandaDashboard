@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { createRoom, deleteRoom, fetchRoom, fetchRoomList, updateRoom } from './roomThunk';
 import { RoomInterface } from "../../utils";
 
@@ -27,7 +27,7 @@ export const roomSlice = createSlice({
         .addCase(fetchRoomList.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(fetchRoomList.fulfilled, (state, action) => {
+        .addCase(fetchRoomList.fulfilled, (state, action:PayloadAction<RoomInterface[]>) => {
             state.status = 'fulfilled'
             state.items = action.payload
         })
@@ -38,7 +38,7 @@ export const roomSlice = createSlice({
         .addCase(fetchRoom.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(fetchRoom.fulfilled, (state, action) => {
+        .addCase(fetchRoom.fulfilled, (state, action:PayloadAction<number>) => {
             state.status = 'fulfilled'
             state.single = state.items.find(i => i.id === action.payload)
         })
@@ -49,7 +49,7 @@ export const roomSlice = createSlice({
         .addCase(createRoom.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(createRoom.fulfilled, (state, action) => {
+        .addCase(createRoom.fulfilled, (state, action:PayloadAction<RoomInterface>) => {
             state.status = 'fulfilled'
             state.items = [...state.items, action.payload];
         })
@@ -60,7 +60,7 @@ export const roomSlice = createSlice({
         .addCase(updateRoom.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(updateRoom.fulfilled, (state, action) => {
+        .addCase(updateRoom.fulfilled, (state, action:PayloadAction<RoomInterface>) => {
             state.status = 'fulfilled'
             state.items = state.items.map(i => i.id === action.payload.id ? action.payload : i);
         })
@@ -71,7 +71,7 @@ export const roomSlice = createSlice({
         .addCase(deleteRoom.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(deleteRoom.fulfilled, (state, action) => {
+        .addCase(deleteRoom.fulfilled, (state, action:PayloadAction<number>) => {
             state.status = 'fulfilled'
             state.items = state.items.filter(i => i.id !== action.payload);
         })

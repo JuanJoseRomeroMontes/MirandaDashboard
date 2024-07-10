@@ -1,53 +1,53 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import userData from '../../data/employeesData.json';
-import { delay } from '../../utils'
+import { delay, EmployeeInterface } from '../../utils'
 
-export const fetchUserList = createAsyncThunk("user/fetchUserList", async () => {
+export const fetchUserList = createAsyncThunk<EmployeeInterface[]>("user/fetchUserList", async () => {
     try{
         const data = await delay(userData);
-        return data;
+        return data as EmployeeInterface[];
     }
     catch(error){
-        return error;
+        throw new Error;
     }
 })
 
-export const fetchUser = createAsyncThunk("user/fecthUser", async (id) => {
+export const fetchUser = createAsyncThunk<number>("user/fecthUser", async (id:number | void) => {
     try{
         await delay(null)
-        return id;
+        return id as number;
     }
     catch(error){
-        return error;
+        throw new Error;
     }
 })
 
-export const createUser = createAsyncThunk("user/createUser", async (user) => {
+export const createUser = createAsyncThunk<EmployeeInterface>("user/createUser", async (user:EmployeeInterface | void) => {
     try{
         await delay(null)
-        return user;
+        return user as EmployeeInterface;
     }
     catch(error){
-        return error;
+        throw new Error;
     }
 })
 
-export const updateUser = createAsyncThunk("user/updateUser", async (user) => {
+export const updateUser = createAsyncThunk<EmployeeInterface>("user/updateUser", async (user:EmployeeInterface | void) => {
     try{
         await delay(null)
-        return user;
+        return user as EmployeeInterface;
     }
     catch(error){
-        return error;
+        throw new Error;
     }
 })
 
-export const deleteUser = createAsyncThunk("user/deleteUser", async (id) => {
+export const deleteUser = createAsyncThunk<number>("user/deleteUser", async (id:number | void) => {
     try{
         await delay(null)
-        return id;
+        return id as number;
     }
     catch(error){
-        return error;
+        throw new Error;
     }
 })

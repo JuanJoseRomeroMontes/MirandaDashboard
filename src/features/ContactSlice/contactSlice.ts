@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { createContact, deleteContact, fetchContact, fetchContactList, updateContact } from './contactThunk';
 import { ContactInterface } from "../../utils";
 
@@ -27,7 +27,7 @@ export const contactSlice = createSlice({
         .addCase(fetchContactList.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(fetchContactList.fulfilled, (state, action) => {
+        .addCase(fetchContactList.fulfilled, (state, action:PayloadAction<ContactInterface[]>) => {
             state.status = 'fulfilled'
             state.items = action.payload
         })
@@ -38,7 +38,7 @@ export const contactSlice = createSlice({
         .addCase(fetchContact.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(fetchContact.fulfilled, (state, action) => {
+        .addCase(fetchContact.fulfilled, (state, action:PayloadAction<number>) => {
             state.status = 'fulfilled'
             state.single = state.items.find(i => i.id === action.payload)
         })
@@ -49,7 +49,7 @@ export const contactSlice = createSlice({
         .addCase(createContact.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(createContact.fulfilled, (state, action) => {
+        .addCase(createContact.fulfilled, (state, action:PayloadAction<ContactInterface>) => {
             state.status = 'fulfilled'
             state.items = [...state.items, action.payload];
         })
@@ -60,7 +60,7 @@ export const contactSlice = createSlice({
         .addCase(updateContact.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(updateContact.fulfilled, (state, action) => {
+        .addCase(updateContact.fulfilled, (state, action:PayloadAction<ContactInterface>) => {
             state.status = 'fulfilled'
             state.items = state.items.map(i => i.id === action.payload.id ? action.payload : i);
         })
@@ -71,7 +71,7 @@ export const contactSlice = createSlice({
         .addCase(deleteContact.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(deleteContact.fulfilled, (state, action) => {
+        .addCase(deleteContact.fulfilled, (state, action:PayloadAction<number>) => {
             state.status = 'fulfilled'
             state.items = state.items.filter(i => i.id !== action.payload);
         })
