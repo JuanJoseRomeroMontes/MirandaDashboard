@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { FormEvent, useContext } from "react";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../components/authProvider";
 
@@ -8,17 +8,21 @@ export const LoginPage = () => {
     const masterPassword = "mirapass";
     const auth = useContext(AuthContext)
 
-    const validateLogin = (event) => {
+    const validateLogin = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if(event.target.email.value == masterEmail && event.target.password.value == masterPassword)
+        const form = event.currentTarget;
+        const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+        const password = (form.elements.namedItem("password") as HTMLInputElement).value;
+
+        if(email == masterEmail && password == masterPassword)
         {
-            auth.authDispatch({type: 'logIn', value: {email: event.target.email.value, name: 'TEMP'}})
+            auth.authDispatch({type: 'logIn', payload: {email: email, name: 'TEMP'}})
             navigate("/")
         }
         else
         {
-            localStorage.setItem("mirandaDashboardLogin", false);
-        }  
+            //Display visual error in screen
+        }
     }
 
     return(

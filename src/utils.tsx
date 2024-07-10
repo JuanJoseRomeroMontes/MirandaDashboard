@@ -1,3 +1,9 @@
+import { ReactNode } from "react";
+
+export interface AuthProviderProps {
+    children: ReactNode;
+}
+
 export const delay =(data:any) => {
     return new Promise((resolve) => {
         setTimeout(() => {
@@ -6,6 +12,7 @@ export const delay =(data:any) => {
     });
 }
 
+//#region DataStructures
 function checkDay(checkIn:string, checkOut:string):string{
     let roomState = "No state";
     const date = new Date();
@@ -221,3 +228,4 @@ export class Room {
         this.photosArray = photosArray;
     }
 }
+//#endregion
