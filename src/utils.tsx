@@ -1,9 +1,3 @@
-import { ReactNode } from "react";
-
-export interface AuthProviderProps {
-    children: ReactNode;
-}
-
 export const delay =(data:any) => {
     return new Promise((resolve) => {
         setTimeout(() => {

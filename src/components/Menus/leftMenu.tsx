@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { LiaHotelSolid } from "react-icons/lia";
 import { Link } from "react-router-dom";
 
-const Background = styled.div`
+const Background = styled.div<{$closed:boolean;}>`
   height: calc(100% - 60px);
   width: ${(props) => (props.$closed ? 0 : 15)}%;
   background-color: #111;
@@ -13,7 +13,7 @@ const Background = styled.div`
   box-shadow: 13px 3px 40px #00000005;
 `;
 
-export const LeftMenu = ({ leftMenuClosed }) => {
+export const LeftMenu: React.FC<{leftMenuClosed:boolean}> = ({ leftMenuClosed }) => {
   return (
     <Background $closed={leftMenuClosed}>
       <LiaHotelSolid />

@@ -1,5 +1,4 @@
 import React, { createContext, ReactNode, useEffect, useReducer } from 'react'
-import { AuthProviderProps } from '../utils';
 
 interface AuthData{
   loggedIn: boolean, 
@@ -28,7 +27,7 @@ export const AuthContext = createContext<AuthContextProps>({
   authDispatch: () => {}
 });
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+export const AuthProvider: React.FC<{children: ReactNode;}> = ({ children }) => {
   const [authState, authDispatch] = useReducer(authReducer, getInitialAuthState());
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { LeftMenu } from "./leftMenu";
 import { TopMenu } from "./topMenu";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 const Page = styled.div`
   width: 100%;
@@ -18,7 +18,12 @@ const Page = styled.div`
   }
 `;
 
-export const Menus = ({ title: Title, children }) => {
+interface MenusProps {
+    title: string;
+    children: ReactNode;
+}
+
+export const Menus: React.FC<MenusProps> = ({ title: Title, children }) => {
 
     const [leftMenuClosed, setLeftMenuClosed] = useState(false);
 

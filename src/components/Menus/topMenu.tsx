@@ -19,7 +19,12 @@ const Background = styled.div`
   .topBarIcon:hover{cursor: pointer;};
 `;
 
-export const TopMenu = ({ title, toggleLeftMenu, ...rest }) => {
+interface TopMenuProps {
+    title: string;
+    toggleLeftMenu: () => void;
+}
+
+export const TopMenu: React.FC<TopMenuProps> = ({ title, toggleLeftMenu }) => {
     const navigate = useNavigate();
     const auth = useContext(AuthContext)
 
