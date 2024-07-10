@@ -18,7 +18,7 @@ const Page = styled.div`
   }
 `;
 
-export const Menus = ({ title: Title, children, ...rest }) => {
+export const Menus = ({ title: Title, children }) => {
 
     const [leftMenuClosed, setLeftMenuClosed] = useState(false);
 

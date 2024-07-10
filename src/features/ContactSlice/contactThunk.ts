@@ -14,17 +14,17 @@ export const fetchContactList = createAsyncThunk("contact/fetchContactList", asy
 
 export const fetchContact = createAsyncThunk("contact/fecthContact", async (id) => {
     try{
-        await delay()
+        await delay(null)
         return id;
     }
     catch(error){
-        return data;
+        return error;
     }
 })
 
 export const createContact = createAsyncThunk("contact/createContact", async (contact) => {
     try{
-        await delay()
+        await delay(null)
         return contact;
     }
     catch(error){
@@ -34,7 +34,7 @@ export const createContact = createAsyncThunk("contact/createContact", async (co
 
 export const updateContact = createAsyncThunk("contact/updateContact", async (contact) => {
     try{
-        await delay()
+        await delay(null)
         return contact;
     }
     catch(error){
@@ -44,7 +44,7 @@ export const updateContact = createAsyncThunk("contact/updateContact", async (co
 
 export const deleteContact = createAsyncThunk("Contact/deleteContact", async (id) => {
     try{
-        await delay()
+        await delay(null)
         return id;
     }
     catch(error){

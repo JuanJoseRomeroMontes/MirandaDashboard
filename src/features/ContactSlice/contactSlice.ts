@@ -1,15 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createContact, deleteContact, fetchContact, fetchContactList, updateContact } from './contactThunk';
+import { ContactInterface } from "../../utils";
 
+// Define a type for the slice state
+interface CounterState {
+    status:string,
+    items:ContactInterface[],
+    single:ContactInterface | undefined,
+    error:any,
+}
+
+// Define the initial state using that type
+const initialState: CounterState = {
+    status: 'idle',
+    items: [],
+    single: undefined,
+    error: null,
+}
 
 export const contactSlice = createSlice({
     name: "contact",
-    initialState:{
-        status: 'idle',
-        items: [],
-        single: null,
-        error: null,
-    },
+    initialState: initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder

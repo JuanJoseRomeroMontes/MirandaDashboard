@@ -14,17 +14,17 @@ export const fetchRoomList = createAsyncThunk("room/fetchRoomList", async () => 
 
 export const fetchRoom = createAsyncThunk("room/fecthRoom", async (id) => {
     try{
-        await delay()
+        await delay(null)
         return id;
     }
     catch(error){
-        return data;
+        return error;
     }
 })
 
 export const createRoom = createAsyncThunk("room/createRoom", async (room) => {
     try{
-        await delay()
+        await delay(null)
         return room;
     }
     catch(error){
@@ -34,7 +34,7 @@ export const createRoom = createAsyncThunk("room/createRoom", async (room) => {
 
 export const updateRoom = createAsyncThunk("room/updateRoom", async (room) => {
     try{
-        await delay()
+        await delay(null)
         return room;
     }
     catch(error){
@@ -44,7 +44,7 @@ export const updateRoom = createAsyncThunk("room/updateRoom", async (room) => {
 
 export const deleteRoom = createAsyncThunk("room/deleteRoom", async (id) => {
     try{
-        await delay()
+        await delay(null)
         return id;
     }
     catch(error){

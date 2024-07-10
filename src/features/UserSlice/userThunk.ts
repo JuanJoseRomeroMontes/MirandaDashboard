@@ -14,17 +14,17 @@ export const fetchUserList = createAsyncThunk("user/fetchUserList", async () => 
 
 export const fetchUser = createAsyncThunk("user/fecthUser", async (id) => {
     try{
-        await delay()
+        await delay(null)
         return id;
     }
     catch(error){
-        return data;
+        return error;
     }
 })
 
 export const createUser = createAsyncThunk("user/createUser", async (user) => {
     try{
-        await delay()
+        await delay(null)
         return user;
     }
     catch(error){
@@ -34,7 +34,7 @@ export const createUser = createAsyncThunk("user/createUser", async (user) => {
 
 export const updateUser = createAsyncThunk("user/updateUser", async (user) => {
     try{
-        await delay()
+        await delay(null)
         return user;
     }
     catch(error){
@@ -44,7 +44,7 @@ export const updateUser = createAsyncThunk("user/updateUser", async (user) => {
 
 export const deleteUser = createAsyncThunk("user/deleteUser", async (id) => {
     try{
-        await delay()
+        await delay(null)
         return id;
     }
     catch(error){

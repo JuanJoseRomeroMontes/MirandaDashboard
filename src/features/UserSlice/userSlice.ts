@@ -1,15 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createUser, deleteUser, fetchUser, fetchUserList, updateUser } from './userThunk';
+import {EmployeeInterface} from '../../utils'
 
+// Define a type for the slice state
+interface CounterState {
+    status:string,
+    items:EmployeeInterface[],
+    single:EmployeeInterface | undefined,
+    error:any,
+}
+
+// Define the initial state using that type
+const initialState: CounterState = {
+    status: 'idle',
+    items: [],
+    single: undefined,
+    error: null,
+}
 
 export const userSlice = createSlice({
     name: "user",
-    initialState:{
-        status: 'idle',
-        items: [],
-        single: null,
-        error: null,
-    },
+    initialState: initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
