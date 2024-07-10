@@ -1,7 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import { BookingCompleteInterface, ContactInterface, EmployeeInterface, RoomInterface } from '../../utils';
 
-export const Table = ({ data, columns }) => {
+interface TableProps {
+  data: BookingCompleteInterface[] | ContactInterface[] | EmployeeInterface[] | RoomInterface[];
+  columns: {
+    header:string;
+    render: (row: BookingCompleteInterface | ContactInterface | EmployeeInterface | RoomInterface) => React.ReactNode;
+  }[];
+}
+
+export const Table: React.FC<TableProps> = ({ data, columns }) => {
   return (
     <TableContainer>
       <StyledTable>
