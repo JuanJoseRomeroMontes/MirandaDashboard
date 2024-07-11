@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { createBooking, deleteBooking, fetchBooking, fetchBookingList, updateBooking } from './bookingThunk';
-import { BookingComplete } from "../../utils";
+import { BookingInterface } from "../../utils";
 
 // Define a type for the slice state
 interface CounterState {
     status:string,
-    items:BookingComplete[],
-    single:BookingComplete | undefined,
+    items:BookingInterface[],
+    single:BookingInterface | undefined,
     error:any,
 }
 
@@ -27,7 +27,7 @@ export const bookingSlice = createSlice({
         .addCase(fetchBookingList.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(fetchBookingList.fulfilled, (state, action:PayloadAction<BookingComplete[]>) => {
+        .addCase(fetchBookingList.fulfilled, (state, action:PayloadAction<BookingInterface[]>) => {
             state.status = 'fulfilled';
             state.items = action.payload;
         })
@@ -38,7 +38,7 @@ export const bookingSlice = createSlice({
         .addCase(fetchBooking.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(fetchBooking.fulfilled, (state, action:PayloadAction<BookingComplete>) => {
+        .addCase(fetchBooking.fulfilled, (state, action:PayloadAction<BookingInterface>) => {
             state.status = 'fulfilled'
             state.single = action.payload
         })
@@ -49,7 +49,7 @@ export const bookingSlice = createSlice({
         .addCase(createBooking.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(createBooking.fulfilled, (state, action:PayloadAction<BookingComplete>) => {
+        .addCase(createBooking.fulfilled, (state, action:PayloadAction<BookingInterface>) => {
             state.status = 'fulfilled'
             state.items = [...state.items, action.payload];
         })
@@ -60,7 +60,7 @@ export const bookingSlice = createSlice({
         .addCase(updateBooking.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(updateBooking.fulfilled, (state, action:PayloadAction<BookingComplete>) => {
+        .addCase(updateBooking.fulfilled, (state, action:PayloadAction<BookingInterface>) => {
             state.status = 'fulfilled'
             state.items = state.items.map(i => i.id === action.payload.id ? action.payload : i);
         })
