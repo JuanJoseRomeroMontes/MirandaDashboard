@@ -38,9 +38,9 @@ export const roomSlice = createSlice({
         .addCase(fetchRoom.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(fetchRoom.fulfilled, (state, action:PayloadAction<number>) => {
+        .addCase(fetchRoom.fulfilled, (state, action:PayloadAction<RoomInterface>) => {
             state.status = 'fulfilled'
-            state.single = state.items.find(i => i.id === action.payload)
+            state.single = action.payload
         })
         .addCase(fetchRoom.rejected, (state, action) => {
             state.status = 'rejected'

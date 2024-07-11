@@ -6,8 +6,7 @@ export const delay =(data:any) => {
     });
 }
 
-//#region DataStructures
-function checkDay(checkIn:string, checkOut:string):string{
+export function checkDay(checkIn:string, checkOut:string):string{
     let roomState = "No state";
     const date = new Date();
 
@@ -24,12 +23,13 @@ function checkDay(checkIn:string, checkOut:string):string{
     return roomState;
 }
 
-function convertStringToDate(stringDate:string):Date{
+export function convertStringToDate(stringDate:string):Date{
     const dateSplit = stringDate.split('-');
     //Javascript months are indexed from 0, thats why they are substracted 1
     return new Date(parseInt(dateSplit[0]), parseInt(dateSplit[1])-1, parseInt(dateSplit[2]));
 }
 
+//#region DataInterfaces
 export interface BookingInterface {
     fullName: string;
     id:number;
@@ -40,6 +40,63 @@ export interface BookingInterface {
     roomId:number;
 }
 
+export interface BookingCompleteInterface {
+    fullName: string;
+    id:number;
+    bookDate:string;
+    checkIn:string;
+    checkOut:string;
+    specialRequest:string;
+    roomId:number;
+    roomType:string;
+    roomNumber:number;
+    status:string;
+}
+
+export interface ContactInterface {
+    date:string;
+    client: {
+        name:string;
+        email:string;
+        phone:string;
+    };
+    id:number;
+    subject:string;
+    comment:string;
+    archived:boolean
+}
+
+export interface EmployeeInterface {
+    id:number;
+    name:string;
+    email:string;
+    phone:string;
+    photo:string;
+    position: {
+        name:string;
+        description:string
+    };
+    date:string;
+    status:boolean;
+    password:string
+}
+
+export interface RoomInterface {
+    id:number;
+    roomNumber:number;
+    availability: boolean;
+    roomType:string;
+    description:string;
+    offer:boolean;
+    price:number;
+    discount:number;
+    cancellation:string;
+    amenities: string[];
+    photosArray: string[]
+}
+//#endregion
+
+//#region DataClasses
 export class Booking {
     fullName: string;
     id:number;
@@ -58,19 +115,6 @@ export class Booking {
         this.specialRequest = specialRequest;
         this.roomId = roomId;
     }
-}
-
-export interface BookingCompleteInterface {
-    fullName: string;
-    id:number;
-    bookDate:string;
-    checkIn:string;
-    checkOut:string;
-    specialRequest:string;
-    roomId:number;
-    roomType:string;
-    roomNumber:number;
-    status:string;
 }
 
 export class BookingComplete {
@@ -100,19 +144,6 @@ export class BookingComplete {
     }
 }
 
-export interface ContactInterface {
-    date:string;
-    client: {
-        name:string;
-        email:string;
-        phone:string;
-    };
-    id:number;
-    subject:string;
-    comment:string;
-    archived:boolean
-}
-
 export class Contact {
     date:string;
     client: {
@@ -133,21 +164,6 @@ export class Contact {
         this.comment = comment;
         this.archived = archived
     }
-}
-
-export interface EmployeeInterface {
-    id:number;
-    name:string;
-    email:string;
-    phone:string;
-    photo:string;
-    position: {
-        name:string;
-        description:string
-    };
-    date:string;
-    Estatus:boolean;
-    password:string
 }
 
 export class Employee {
@@ -177,20 +193,6 @@ export class Employee {
         this.Estatus = status;
         this.password = password;
     }
-}
-
-export interface RoomInterface {
-    id:number;
-    roomNumber:number;
-    availability: boolean;
-    roomType:string;
-    description:string;
-    offer:boolean;
-    price:number;
-    discount:number;
-    cancellation:string;
-    amenities: string[];
-    photosArray: string[]
 }
 
 export class Room {
