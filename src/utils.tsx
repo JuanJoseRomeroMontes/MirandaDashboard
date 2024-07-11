@@ -70,7 +70,7 @@ export interface BookingCompleteInterface {
     roomId:number;
     roomType:string;
     roomNumber:number;
-    status:string
+    status:string;
 }
 
 export class BookingComplete {
@@ -83,7 +83,7 @@ export class BookingComplete {
     roomId:number;
     roomType:string;
     roomNumber:number;
-    status:string
+    status:string;
 
     constructor(name:string, id:number, bookDate:string, checkIn:string, checkOut:string, specialRequest:string, 
         roomId:number, roomType:string, roomNumber:number){
@@ -146,7 +146,7 @@ export interface EmployeeInterface {
         description:string
     };
     date:string;
-    status:boolean;
+    Estatus:boolean;
     password:string
 }
 
@@ -161,7 +161,7 @@ export class Employee {
         description:string
     };
     date:string;
-    status:boolean;
+    Estatus:boolean;
     password:string
 
     constructor( id: number, name: string, email: string, phone: string, photo: string,
@@ -174,7 +174,7 @@ export class Employee {
         this.photo = photo;
         this.position = position;
         this.date = date;
-        this.status = status;
+        this.Estatus = status;
         this.password = password;
     }
 }

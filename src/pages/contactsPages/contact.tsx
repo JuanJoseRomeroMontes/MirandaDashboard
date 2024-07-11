@@ -1,25 +1,34 @@
 import { Menus } from '../../components/Menus/menus';
-import { Table } from '../../components/Tables/Table';
-import { useEffect, useMemo, useState } from 'react';
+import { Table, TableProps } from '../../components/Tables/Table';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { Pagination, FilterTab, ManageData } from '../../components/Tables/GeneralTableComponents';
 import { deleteContact, fetchContactList } from '../../features/ContactSlice/contactThunk';
-import { useNavigate } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchUserList } from '../../features/UserSlice/userThunk';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { ContactInterface } from '../../utils';
+
+interface Order {
+    property: 'date' | 'id' | 'subject' | 'comment' | 'archived' | 'client';
+    defaultOrder: boolean;
+    inversed?: boolean;
+}
+
+interface Filter {
+    property: 'date' | 'id' | 'subject' | 'comment' | 'archived' | 'client';
+    value?: string | boolean | number | ContactInterface['client'];
+    defaultFilter: boolean;
+}
 
 export const ContactPage = () => {
-    const [commentData, setcommentData] = useState([])
-    const [tabsState, setTabsState] = useState([true, false, false, false])
-    const [order, setOrder] = useState({defaultOrder: true}); //object with properties: property, value
-    const [filter, setFilter] = useState({defaultFilter: true}); //object with properties: property, value
-    const [search, setSearch] = useState({property: "fullName", value: ""}); //object with properties: property, value
-    const [currentPage, setCurrentPage] = useState(1);
+    const [commentData, setcommentData] = useState<ContactInterface[]>([])
+    const [tabsState, setTabsState] = useState<boolean[]>([true, false, false, false])
+    const [order, setOrder] = useState<Order>({defaultOrder: false, property:'date'}); //object with properties: property, value
+    const [filter, setFilter] = useState<Filter>({defaultFilter:true, property:'date'}); //object with properties: property, value
+    const [currentPage, setCurrentPage] = useState<number>(1);
     const itemsPerPage = 10;
 
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const status = useSelector((state) => state.contactSlice.status);
-    const contactSliceData = useSelector((state) => state.contactSlice.items);
+    const dispatch = useAppDispatch();
+    const status = useAppSelector((state) => state.contactSlice.status);
+    const contactSliceData = useAppSelector((state) => state.contactSlice.items);
 
     useEffect(() => {
         if (status === 'idle') {
@@ -34,14 +43,11 @@ export const ContactPage = () => {
     }, [status, contactSliceData, dispatch])
 
     const filteredComments = useMemo(() => {
-        let newCommentsList = commentData.filter(comment => comment[filter.property] == filter.value);
+        let newCommentsList: ContactInterface[] = [...commentData]; //importante hacer una copia, ya que sort no se puede hacer en el original
+        if(!filter.defaultFilter)
+            newCommentsList = commentData.filter(comment => comment[filter.property] == filter.value);
+        
         setCurrentPage(1);
-
-        if (search.value !== "") {
-            newCommentsList = newCommentsList.filter(comment => 
-                comment[search.property] && comment[search.property].toLowerCase().includes(search.value.toLowerCase())
-            );
-        }
         
         if(!(order.defaultOrder))
         {
@@ -60,7 +66,7 @@ export const ContactPage = () => {
         }
 
         return newCommentsList;
-    }, [order, filter, search, commentData])
+    }, [order, filter, commentData])
 
     const paginatedData = useMemo(() =>{
         return filteredComments.slice(getPaginationIndex(), getPaginationIndex() + itemsPerPage);
@@ -70,16 +76,16 @@ export const ContactPage = () => {
         return (currentPage - 1) * itemsPerPage;
     }
 
-    function handlePaginationChange(page){
+    function handlePaginationChange(page:number){
         if(page <= Math.ceil(filteredComments.length / itemsPerPage) && page > 0)
             setCurrentPage(page);
     }
 
-    function handleDeleteComment(idToFilter){
-        dispatch(deleteContact(idToFilter))
+    function handleDeleteComment(idToFilter:number){
+        dispatch(deleteContact(idToFilter));
     }
 
-    function handlectiveTab(newActiveTab){
+    function handlectiveTab(newActiveTab:number){
         let newTabsState = [false, false, false, false]
     
         newTabsState[newActiveTab] = true;
@@ -87,15 +93,17 @@ export const ContactPage = () => {
         setTabsState(newTabsState);
     }
 
-    const columns = [
-        { header: 'Date', render: (row) =>  <p>{row.date}</p>, },
-        { header: 'Id', render: (row) => <p>{row.id}</p>, },
-        { header: 'Customer', render: (row) => <p>{row.client.name}</p>, },
-        { header: 'Email Request', render: (row) => <p>{row.client.email}</p>, },
-        { header: 'Phone', render: (row) => <p>{row.client.phone}</p>, },
-        { header: 'Subject', render: (row) => <p>{row.subject}</p>, },
-        { header: 'Comment', render: (row) => <p>{row.comment}</p>, },
-        { header: '',  render: (row) => <ManageData id={row.id} deleteFunc={handleDeleteComment}/>, },
+    const test: React.ReactNode = <h1>Hello, world!</h1>;
+
+    const columns: TableProps['columns'] = [
+        { header: 'Date', render: (row: ContactInterface) => <p>{row.date}</p> },
+        { header: 'Id', render: (row: ContactInterface) => <p>{row.id}</p> },
+        { header: 'Customer', render: (row: ContactInterface) => <p>{row.client.name}</p> },
+        { header: 'Email Request', render: (row: ContactInterface) => <p>{row.client.email}</p> },
+        { header: 'Phone', render: (row: ContactInterface) => <p>{row.client.phone}</p> },
+        { header: 'Subject', render: (row: ContactInterface) => <p>{row.subject}</p> },
+        { header: 'Comment', render: (row: ContactInterface) => <p>{row.comment}</p> },
+        { header: '', render: (row: ContactInterface) => <ManageData id={row.id} deleteFunc={handleDeleteComment} /> },
     ];
 
     return(
@@ -105,13 +113,13 @@ export const ContactPage = () => {
                     <div style={{display: "inline-flex"}}>
                         <FilterTab $selected={tabsState[0]} onClick={() => {
                             handlectiveTab(0); 
-                            setFilter({});
-                            setOrder({defaultOrder: true}); //DefaultOrder value doens't matter, only if the property exist or not
+                            setFilter({property: "archived", defaultFilter:true});
+                            setOrder({defaultOrder: false, property:'date'});
                         }}>All contacts</FilterTab>
                         <FilterTab $selected={tabsState[1]} onClick={() => {
                             handlectiveTab(1);
-                            setFilter({property: "archived", value: true}); 
-                            setOrder({property: "checkIn"});
+                            setFilter({property: "archived", value: true, defaultFilter:false}); 
+                            setOrder({defaultOrder: false, property: "date"});
                             setCurrentPage(1);
                         }} >Archived</FilterTab>
                     </div>
@@ -123,7 +131,7 @@ export const ContactPage = () => {
 
                             <div>
                                 <button onClick={() => handlePaginationChange(currentPage-1)}>Prev</button>
-                                <input type="number" value={currentPage} onChange={() => handlePaginationChange(event.target.value)}/>
+                                <input type="number" value={currentPage} onChange={(e) => handlePaginationChange(Number(e.target.value))}/>
                                 <button onClick={() => handlePaginationChange(currentPage+1)}>Next</button>
                             </div>
                     </Pagination>

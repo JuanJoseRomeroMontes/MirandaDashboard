@@ -38,9 +38,9 @@ export const contactSlice = createSlice({
         .addCase(fetchContact.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(fetchContact.fulfilled, (state, action:PayloadAction<number>) => {
+        .addCase(fetchContact.fulfilled, (state, action:PayloadAction<ContactInterface>) => {
             state.status = 'fulfilled'
-            state.single = state.items.find(i => i.id === action.payload)
+            state.single = action.payload;
         })
         .addCase(fetchContact.rejected, (state, action) => {
             state.status = 'rejected'

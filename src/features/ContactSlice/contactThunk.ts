@@ -8,46 +8,49 @@ export const fetchContactList = createAsyncThunk<ContactInterface[]>("contact/fe
         return data as ContactInterface[];
     }
     catch(error){
-        throw new Error;
+        throw new Error('Failed to fetch contact list');
     }
 })
 
-export const fetchContact = createAsyncThunk<number>("contact/fecthContact", async (id:number|void) => {
+export const fetchContact = createAsyncThunk("contact/fecthContact", async (id:number): Promise<ContactInterface> => {
     try{
-        await delay(null)
-        return id as number;
+        const contactId:number = await delay(id) as number;
+        const contact: ContactInterface | undefined = commentsData.find(contact => contact.id === contactId);
+        if (!contact) 
+            throw('Failed to fecth contact');
+        return contact as ContactInterface;
     }
     catch(error){
-        throw new Error;
+        throw new Error('Failed to fecth contact');
     }
 })
 
-export const createContact = createAsyncThunk<ContactInterface>("contact/createContact", async (contact:ContactInterface|void) => {
+export const createContact = createAsyncThunk("contact/createContact", async (contact:ContactInterface): Promise<ContactInterface> => {
     try{
         await delay(null)
         return contact as ContactInterface;
     }
     catch(error){
-        throw new Error;
+        throw new Error('Failed to create contact');
     }
 })
 
-export const updateContact = createAsyncThunk<ContactInterface>("contact/updateContact", async (contact:ContactInterface|void) => {
+export const updateContact = createAsyncThunk("contact/updateContact", async (contact:ContactInterface): Promise<ContactInterface> => {
     try{
         await delay(null)
         return contact as ContactInterface;
     }
     catch(error){
-        throw new Error;
+        throw new Error('Failed to update contact');
     }
 })
 
-export const deleteContact = createAsyncThunk<number>("Contact/deleteContact", async (id:number|void) => {
+export const deleteContact = createAsyncThunk("Contact/deleteContact", async (id:number): Promise<number> => {
     try{
         await delay(null)
         return id as number;
     }
     catch(error){
-        throw new Error;
+        throw new Error('Failed to delete contact');
     }
 })
