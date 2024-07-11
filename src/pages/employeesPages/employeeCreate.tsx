@@ -1,15 +1,15 @@
 import { Menus } from '../../components/Menus/menus';
 import { Form, Label } from '../../components/form'
-import { useNavigate, useParams } from 'react-router';
-import { fetchUser, updateUser } from '../../features/UserSlice/userThunk';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
+import { createUser } from '../../features/UserSlice/userThunk';
+import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import React from 'react'; // Importar React para usar los tipos
 
-export const EmployeeEditPage = () => {
-    const data = useSelector((state) => state.userSlice.single);
-    const { id } = useParams();
-    const dispatch = useDispatch();
+export const EmployeeCreatePage = () => {
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const dataSlice = useAppSelector((state) => state.userSlice.items);
     const [form, setform] = useState({
         name: 'TEST',
         email: 'test@gmail.com',
@@ -21,61 +21,38 @@ export const EmployeeEditPage = () => {
         password: 'testing092'
     });
 
-    useEffect(() => {
-        const fetch = async () => {
-            await dispatch(fetchUser(+id)).unwrap;
-        }
-        
-        fetch();
-    })
-
-    useEffect(() => {
-        if(data != null)
-            setform({
-                name: data.name,
-                email: data.email,
-                phone: data.phone,
-                positionName: data.position.name,
-                positionDescription: data.position.description,
-                date: data.date,
-                status: data.status,
-                password: data.password
-            })
-    }, [data])
-
-    const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setform({
-        ...form,
-        [name]: type === 'checkbox' ? checked : value
-    });
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value, type, checked } = e.target; //Funciona a pesar de que da problema con los tipos
+        setform({
+            ...form,
+            [name]: type === 'checkbox' ? checked : value
+        });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const employeeId = dataSlice.length;
 
         const newEmployee = {
-            id: +id,
+            id: employeeId,
             name: form.name,
             email: form.email,
             phone: form.phone,
             photo: 'https://www.shutterstock.com/image-vector/grunge-red-work-process-square-260nw-1035090301.jpg',
-            position: {
-                name: form.positionName,
-                description: form.positionDescription,
-            },
+            positionName: form.positionName,
+            positionDescription: form.positionDescription,
             date: form.date,
             status: form.status,
             password: form.password,
         }
 
-        dispatch(updateUser(newEmployee));
+        dispatch(createUser(newEmployee));
         navigate(-1);
     };
 
     return(
         <>
-            <Menus title="Edit Employee">
+            <Menus title="Create Employee">
                 <Form onSubmit={handleSubmit}>
                         <Label>
                             Name:

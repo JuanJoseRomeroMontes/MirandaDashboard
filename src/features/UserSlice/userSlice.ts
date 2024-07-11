@@ -14,7 +14,7 @@ interface CounterState {
 const initialState: CounterState = {
     status: 'idle',
     items: [],
-    single: undefined,
+    single: undefined, //{id:-1, name:"", email:"", phone:"", photo:"",positionName:"" ,positionDescription:"", date:"", status:false, password:""},
     error: null,
 }
 
@@ -38,9 +38,9 @@ export const userSlice = createSlice({
         .addCase(fetchUser.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(fetchUser.fulfilled, (state, action:PayloadAction<number>) => {
+        .addCase(fetchUser.fulfilled, (state, action:PayloadAction<EmployeeInterface>) => {
             state.status = 'fulfilled'
-            state.single = state.items.find(i => i.id === action.payload)
+            state.single =action.payload
         })
         .addCase(fetchUser.rejected, (state, action) => {
             state.status = 'rejected'

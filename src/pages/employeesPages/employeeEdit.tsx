@@ -1,14 +1,15 @@
 import { Menus } from '../../components/Menus/menus';
 import { Form, Label } from '../../components/form'
-import { useNavigate } from 'react-router';
-import { createUser } from '../../features/UserSlice/userThunk';
-import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
+import { fetchUser, updateUser } from '../../features/UserSlice/userThunk';
+import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 
-export const EmployeeCreatePage = () => {
-    const dispatch = useDispatch();
+export const EmployeeEditPage = () => {
+    const data = useAppSelector((state) => state.userSlice.single);
+    const { id=0 } = useParams(); //In case there is an error with the param, it will use 0 by default.
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const dataSlice = useSelector((state) => state.userSlice.items);
     const [form, setform] = useState({
         name: 'TEST',
         email: 'test@gmail.com',
@@ -20,7 +21,29 @@ export const EmployeeCreatePage = () => {
         password: 'testing092'
     });
 
-    const handleChange = (e) => {
+    useEffect(() => {
+        const fetch = async () => {
+            await dispatch(fetchUser(+id)).unwrap;
+        }
+        
+        fetch();
+    })
+
+    useEffect(() => {
+        if(data != null)
+            setform({
+                name: data.name,
+                email: data.email,
+                phone: data.phone,
+                positionName: data.positionName,
+                positionDescription: data.positionDescription,
+                date: data.date,
+                status: data.status,
+                password: data.password
+            })
+    }, [data])
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type, checked } = e.target;
     setform({
         ...form,
@@ -28,32 +51,29 @@ export const EmployeeCreatePage = () => {
     });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const employeeId = dataSlice.length;
 
         const newEmployee = {
-            id: employeeId,
+            id: +id,
             name: form.name,
             email: form.email,
             phone: form.phone,
             photo: 'https://www.shutterstock.com/image-vector/grunge-red-work-process-square-260nw-1035090301.jpg',
-            position: {
-                name: form.positionName,
-                description: form.positionDescription,
-            },
+            positionName: form.positionName,
+            positionDescription: form.positionDescription,
             date: form.date,
             status: form.status,
             password: form.password,
         }
 
-        dispatch(createUser(newEmployee));
+        dispatch(updateUser(newEmployee));
         navigate(-1);
     };
 
     return(
         <>
-            <Menus title="Create Employee">
+            <Menus title="Edit Employee">
                 <Form onSubmit={handleSubmit}>
                         <Label>
                             Name:
