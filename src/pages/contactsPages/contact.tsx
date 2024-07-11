@@ -4,16 +4,16 @@ import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { Pagination, FilterTab, ManageData } from '../../components/Tables/GeneralTableComponents';
 import { deleteContact, fetchContactList } from '../../features/ContactSlice/contactThunk';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { ContactInterface } from '../../utils';
+import { ContactInterface, ContactProperties } from '../../utils';
 
 interface Order {
-    property: 'date' | 'id' | 'subject' | 'comment' | 'archived' | 'client';
+    property: ContactProperties;
     defaultOrder: boolean;
     inversed?: boolean;
 }
 
 interface Filter {
-    property: 'date' | 'id' | 'subject' | 'comment' | 'archived' | 'client';
+    property: ContactProperties;
     value?: string | boolean | number | ContactInterface['client'];
     defaultFilter: boolean;
 }
@@ -21,7 +21,7 @@ interface Filter {
 export const ContactPage = () => {
     const [commentData, setcommentData] = useState<ContactInterface[]>([])
     const [tabsState, setTabsState] = useState<boolean[]>([true, false, false, false])
-    const [order, setOrder] = useState<Order>({defaultOrder: false, property:'date'}); //object with properties: property, value
+    const [order, setOrder] = useState<Order>({defaultOrder: true, property:'date'}); //object with properties: property, value
     const [filter, setFilter] = useState<Filter>({defaultFilter:true, property:'date'}); //object with properties: property, value
     const [currentPage, setCurrentPage] = useState<number>(1);
     const itemsPerPage = 10;

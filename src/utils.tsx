@@ -66,20 +66,22 @@ export interface ContactInterface {
     archived:boolean
 }
 
+export type ContactProperties = 'date' | 'id' | 'subject' | 'comment' | 'archived' | 'client';
+
 export interface EmployeeInterface {
     id:number;
     name:string;
     email:string;
     phone:string;
     photo:string;
-    position: {
-        name:string;
-        description:string
-    };
+    positionName:string,
+    positionDescription:string,
     date:string;
     status:boolean;
     password:string
 }
+
+export type EmployeeProperties = 'name' | 'id' | 'email' | 'phone' | 'photo' | 'date' | 'status' | 'password' | 'positionName' | 'positionDescription';
 
 export interface RoomInterface {
     id:number;

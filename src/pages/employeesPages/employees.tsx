@@ -1,24 +1,42 @@
 import { Menus } from '../../components/Menus/menus';
-import { useEffect, useMemo, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { Table } from '../../components/Tables/Table';
 import { Pagination, Image, FilterTab, ManageData } from '../../components/Tables/GeneralTableComponents';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { deleteUser, fetchUserList } from '../../features/UserSlice/userThunk';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { EmployeeInterface, EmployeeProperties } from '../../utils';
+
+interface Order {
+    property: EmployeeProperties;
+    inversed?: boolean;
+    defaultOrder: boolean;
+}
+
+interface Filter {
+    property: EmployeeProperties;
+    value?: string | boolean | number;
+    defaultFilter: boolean;
+}
+
+interface Search {
+    property: EmployeeProperties;
+    value: string;
+}
 
 export const EmployeesPage = () => {
     const [tabsState, setTabsState] = useState([true, false, false])
-    const [employeeData, setEmployeeData] = useState([])
-    const [order, setOrder] = useState({defaultOrder: true}); //object with properties: property, value
-    const [filter, setFilter] = useState({defaultFilter: true}); //object with properties: property, value
-    const [search, setSearch] = useState({property: "fullName", value: ""}); //object with properties: property, value
+    const [employeeData, setEmployeeData] = useState<EmployeeInterface[]>([])
+    const [order, setOrder] = useState<Order>({property:'id', defaultOrder: true});
+    const [filter, setFilter] = useState<Filter>({property:'id', defaultFilter: true});
+    const [search, setSearch] = useState<Search>({property: "name", value: ""});
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const status = useSelector((state) => state.userSlice.status);
-    const employeeSliceData = useSelector((state) => state.userSlice.items);
+    const dispatch = useAppDispatch();
+    const status = useAppSelector((state) => state.userSlice.status);
+    const employeeSliceData = useAppSelector((state) => state.userSlice.items);
 
     useEffect(() => {
         if (status === 'idle') {
@@ -33,12 +51,15 @@ export const EmployeesPage = () => {
     }, [status, employeeSliceData, dispatch])
 
     const filteredEmployees = useMemo(() => {
-        let newEmployeesList = employeeData.filter(employees => employees[filter.property] == filter.value);
+        let newEmployeesList:EmployeeInterface[] = [...employeeData];//employeeData.filter(employees => employees[filter.property] == filter.value);
+        if(!filter.defaultFilter)
+            newEmployeesList = employeeData.filter(employee => employee[filter.property] == filter.value)
+
         setCurrentPage(1);
 
         if (search.value !== "") {
             newEmployeesList = newEmployeesList.filter(employees => 
-                employees[search.property] && employees[search.property].toLowerCase().includes(search.value.toLowerCase())
+                employees[search.property] && employees[search.property].toString().toLowerCase().includes(search.value.toLowerCase())
             );
         }
         
@@ -69,16 +90,16 @@ export const EmployeesPage = () => {
         return (currentPage - 1) * itemsPerPage;
     }
 
-    function handlePaginationChange(page){
+    function handlePaginationChange(page:number){
         if(page <= Math.ceil(filteredEmployees.length / itemsPerPage) && page > 0)
             setCurrentPage(page);
     }
 
-    function handleDeleteEmployee(idToFilter){
+    function handleDeleteEmployee(idToFilter:number){
         dispatch(deleteUser(idToFilter))
     }
 
-    function handleEditEmployee(idToFilter){
+    function handleEditEmployee(idToFilter:number){
         navigate("edit/"+idToFilter)
     }
 
@@ -86,15 +107,16 @@ export const EmployeesPage = () => {
         navigate("create")
     }
 
-    function handleDropdownChange(event){
-        let order = {property: event.target.value}
+    function handleDropdownChange(event: React.ChangeEvent<HTMLSelectElement>){
+        let order:Order = {property: event.target.value as EmployeeProperties,
+             defaultOrder:false}
         if(event.target.value === "name")
             order.inversed = true;
         
         setOrder(order)
     }
 
-    function handlectiveTab(newActiveTab){
+    function handlectiveTab(newActiveTab:number){
         let newTabsState = [false, false, false]
     
         newTabsState[newActiveTab] = true;
@@ -102,20 +124,20 @@ export const EmployeesPage = () => {
         setTabsState(newTabsState);
     }
 
-    function handleInputChange(event){
+    function handleInputChange(event: React.ChangeEvent<HTMLInputElement>){
         setSearch({property: "name", value: event.target.value});
     };
 
     const columns = [
-        { header: 'Photo', render: (row) => <Image $src={row.photo}/>, },
-        { header: 'Name', render: (row) => <p>{row.name}</p>, },
-        { header: 'Id', render: (row) => <p>{row.id}</p>, },
-        { header: 'Email', render: (row) => <p>{row.email}</p>, },
-        { header: 'Start date', render: (row) => <p>{row.date}</p>, },
-        { header: 'Description', render: (row) => <p>{row.position.description}</p>, },
-        { header: 'Contact', render: (row) => <p>{row.phone}</p>, },
-        { header: 'Status', render: (row) => <p>{row.status ? "ACTIVE" : "INACTIVE"}</p>, },
-        { header: '',  render: (row) => <ManageData id={row.id} editFunc={handleEditEmployee} deleteFunc={handleDeleteEmployee}/>, },
+        { header: 'Photo', render: (row:EmployeeInterface) => <Image $src={row.photo}/>, },
+        { header: 'Name', render: (row:EmployeeInterface) => <p>{row.name}</p>, },
+        { header: 'Id', render: (row:EmployeeInterface) => <p>{row.id}</p>, },
+        { header: 'Email', render: (row:EmployeeInterface) => <p>{row.email}</p>, },
+        { header: 'Start date', render: (row:EmployeeInterface) => <p>{row.date}</p>, },
+        { header: 'Description', render: (row:EmployeeInterface) => <p>{row.positionDescription}</p>, },
+        { header: 'Contact', render: (row:EmployeeInterface) => <p>{row.phone}</p>, },
+        { header: 'Status', render: (row:EmployeeInterface) => <p>{row.status ? "ACTIVE" : "INACTIVE"}</p>, },
+        { header: '',  render: (row:EmployeeInterface) => <ManageData id={row.id} editFunc={handleEditEmployee} deleteFunc={handleDeleteEmployee}/>, },
     ];
 
     if(status === 'idle')
@@ -128,19 +150,19 @@ export const EmployeesPage = () => {
                     <div style={{display: "inline-flex"}}>
                         <FilterTab $selected={tabsState[0]} onClick={() => {
                             handlectiveTab(0); 
-                            setFilter({});
-                            setOrder({property: "name", inversed: true}); //DefaultOrder value doens't matter, only if the property exist or not
+                            setFilter({property:'id', defaultFilter: true});
+                            setOrder({property: "name", inversed: true, defaultOrder: false});
                         }}>All Employee</FilterTab>
                         <FilterTab $selected={tabsState[1]} onClick={() => {
                             handlectiveTab(1);
-                            setFilter({property: "status", value: true}); 
-                            setOrder({property: "name", inversed: true});
+                            setFilter({property: "status", value: true, defaultFilter: false}); 
+                            setOrder({property: "name", inversed: true, defaultOrder: false});
                             setCurrentPage(1);
                         }} >Active Employee</FilterTab>
                         <FilterTab $selected={tabsState[2]} onClick={() => {
                             handlectiveTab(2);
-                            setFilter({property: "status", value: false}); 
-                            setOrder({property: "name", inversed: true});
+                            setFilter({property: "status", value: false, defaultFilter: false}); 
+                            setOrder({property: "name", inversed: true, defaultOrder: false});
                             }}>Inactive Employee</FilterTab>
                     </div>
 
@@ -161,7 +183,7 @@ export const EmployeesPage = () => {
 
                             <div>
                                 <button onClick={() => handlePaginationChange(currentPage-1)}>Prev</button>
-                                <input type="number" value={currentPage} onChange={() => handlePaginationChange(event.target.value)} />
+                                <input type="number" value={currentPage} onChange={(e) => handlePaginationChange(Number(e.target.value))} />
                                 <button onClick={() => handlePaginationChange(currentPage+1)}>Next</button>
                             </div>
                     </Pagination>
