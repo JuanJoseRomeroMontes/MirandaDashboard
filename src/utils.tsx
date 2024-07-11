@@ -96,6 +96,8 @@ export interface RoomInterface {
     amenities: string[];
     photosArray: string[]
 }
+
+export type RoomProperties = 'id' | 'roomNumber' | 'availability' | 'roomType' | 'description' | 'offer' | 'price' | 'discount' | 'cancellation' | 'amenities' | 'photosArray';
 //#endregion
 
 //#region DataClasses

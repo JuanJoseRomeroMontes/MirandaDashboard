@@ -5,12 +5,23 @@ import { fetchUser, updateUser } from '../../features/UserSlice/userThunk';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 
+interface FormState {
+    name: string;
+    email: string;
+    phone: string;
+    positionName: string;
+    positionDescription: string;
+    date: string;
+    status: boolean;
+    password: string;
+}
+
 export const EmployeeEditPage = () => {
     const data = useAppSelector((state) => state.userSlice.single);
     const { id=0 } = useParams(); //In case there is an error with the param, it will use 0 by default.
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const [form, setform] = useState({
+    const [form, setform] = useState<FormState>({
         name: 'TEST',
         email: 'test@gmail.com',
         phone: '123456789',
@@ -44,7 +55,7 @@ export const EmployeeEditPage = () => {
     }, [data])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type, checked } = e.target; //Funciona a pesar de que da problema con los tipos
     setform({
         ...form,
         [name]: type === 'checkbox' ? checked : value

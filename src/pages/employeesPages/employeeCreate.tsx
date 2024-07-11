@@ -6,11 +6,22 @@ import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import React from 'react'; // Importar React para usar los tipos
 
+interface FormState {
+    name: string;
+    email: string;
+    phone: string;
+    positionName: string;
+    positionDescription: string;
+    date: string;
+    status: boolean;
+    password: string;
+}
+
 export const EmployeeCreatePage = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const dataSlice = useAppSelector((state) => state.userSlice.items);
-    const [form, setform] = useState({
+    const [form, setform] = useState<FormState>({
         name: 'TEST',
         email: 'test@gmail.com',
         phone: '123456789',

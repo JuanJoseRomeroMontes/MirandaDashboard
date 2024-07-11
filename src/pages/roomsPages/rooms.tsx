@@ -2,22 +2,27 @@ import { Menus } from '../../components/Menus/menus';
 import { useEffect, useMemo, useState } from 'react';
 import { Table } from '../../components/Tables/Table';
 import { Pagination, Image, ManageData } from '../../components/Tables/GeneralTableComponents';
-import { useDispatch, useSelector } from 'react-redux';
 import { deleteRoom, fetchRoomList } from '../../features/RoomSlice/roomThunk';
 import { useNavigate } from 'react-router';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { RoomInterface, RoomProperties } from '../../utils';
+
+interface Order {
+    property: RoomProperties;
+    inversed?: boolean;
+    defaultOrder: boolean;
+}
 
 export const RoomsPage = () => {
-    const [roomData, setRoomData] = useState([]);
-    const [order, setOrder] = useState({defaultOrder: true}); //object with properties: property, value
-    const [filter, setFilter] = useState({defaultFilter: true}); //object with properties: property, value
-    const [search, setSearch] = useState({property: "fullName", value: ""}); //object with properties: property, value
+    const [roomData, setRoomData] = useState<RoomInterface[]>([]);
+    const [order, setOrder] = useState<Order>({property: "id", defaultOrder: true}); //object with properties: property, value
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const status = useSelector((state) => state.roomSlice.status);
-    const roomSliceData = useSelector((state) => state.roomSlice.items);
+    const dispatch = useAppDispatch();
+    const status = useAppSelector((state) => state.roomSlice.status);
+    const roomSliceData = useAppSelector((state) => state.roomSlice.items);
 
     useEffect(() => {
         if (status === 'idle') {
@@ -35,14 +40,9 @@ export const RoomsPage = () => {
     }, [status, roomSliceData, dispatch])
 
     const filteredRooms = useMemo(() => {
-        let newRoomsList = roomData.filter(rooms => rooms[filter.property] == filter.value);
+        let newRoomsList = [...roomData];
+        
         setCurrentPage(1);
-
-        if (search.value !== "") {
-            newRoomsList = newRoomsList.filter(rooms => 
-                rooms[search.property] && rooms[search.property].toLowerCase().includes(search.value.toLowerCase())
-            );
-        }
         
         if(!(order.defaultOrder))
         {
@@ -61,7 +61,7 @@ export const RoomsPage = () => {
         }
 
         return newRoomsList;
-    }, [order, filter, search, roomData])
+    }, [order, roomData])
 
     const paginatedData = useMemo(() =>{
         return filteredRooms.slice(getPaginationIndex(), getPaginationIndex() + itemsPerPage);
@@ -71,16 +71,16 @@ export const RoomsPage = () => {
         return (currentPage - 1) * itemsPerPage;
     }
 
-    function handlePaginationChange(page){
+    function handlePaginationChange(page:number){
         if(page <= Math.ceil(filteredRooms.length / itemsPerPage) && page > 0)
             setCurrentPage(page);
     }
 
-    function handleDeleteRoom(idToFilter){
+    function handleDeleteRoom(idToFilter:number){
         dispatch(deleteRoom(idToFilter))
     }
 
-    function handleEditRoom(idToFilter){
+    function handleEditRoom(idToFilter:number){
         navigate("edit/"+idToFilter)
     }
 
@@ -89,13 +89,13 @@ export const RoomsPage = () => {
     }
 
     const columns = [
-        { header: 'Photo', render: (row) => <Image $src={row.photosArray[0]}/>, },
-        { header: 'Room number', render: (row) => <p>{row.roomNumber}</p>, },
-        { header: 'Room id', render: (row) => <p>{row.id}</p>, },
-        { header: 'Amenities', render: (row) => <p>{getAmenitiesString(row.amenities)}</p>, },
-        { header: 'Price', render: (row) => <p>{row.price}€</p>, },
-        { header: 'Offer Price', render: (row) => <p>{ calculateDiscount(row.price, row.discount)}€ | {row.discount}%</p>, },
-        { header: '',  render: (row) => <ManageData id={row.id} editFunc={handleEditRoom} deleteFunc={handleDeleteRoom}/>, },
+        { header: 'Photo', render: (row:RoomInterface) => <Image $src={row.photosArray[0]}/>, },
+        { header: 'Room number', render: (row:RoomInterface) => <p>{row.roomNumber}</p>, },
+        { header: 'Room id', render: (row:RoomInterface) => <p>{row.id}</p>, },
+        { header: 'Amenities', render: (row:RoomInterface) => <p>{getAmenitiesString(row.amenities)}</p>, },
+        { header: 'Price', render: (row:RoomInterface) => <p>{row.price}€</p>, },
+        { header: 'Offer Price', render: (row:RoomInterface) => <p>{ calculateDiscount(row.price, row.discount)}€ | {row.discount}%</p>, },
+        { header: '',  render: (row:RoomInterface) => <ManageData id={row.id} editFunc={handleEditRoom} deleteFunc={handleDeleteRoom}/>, },
     ];
 
     if(status === 'idle')
@@ -114,7 +114,7 @@ export const RoomsPage = () => {
 
                             <div>
                                 <button onClick={() => handlePaginationChange(currentPage-1)}>Prev</button>
-                                <input type="number" value={currentPage} onChange={() => handlePaginationChange(event.target.value)} />
+                                <input type="number" value={currentPage} onChange={(e) => handlePaginationChange(Number(e.target.value))} />
                                 <button onClick={() => handlePaginationChange(currentPage+1)}>Next</button>
                             </div>
                     </Pagination>
@@ -124,12 +124,12 @@ export const RoomsPage = () => {
     )
 };
 
-function calculateDiscount(price, discount){
+function calculateDiscount(price:number, discount:number){
     const priceDiscount = price * (discount/100)
     return Math.round(price - priceDiscount);
 }
 
-function getAmenitiesString(list){
+function getAmenitiesString(list:string[]){
     let string = "";
     list.forEach(amenity => {
         string = string + amenity + ", ";

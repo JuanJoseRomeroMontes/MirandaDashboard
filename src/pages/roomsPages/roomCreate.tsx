@@ -1,18 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Menus } from '../../components/Menus/menus';
-import { useDispatch, useSelector } from 'react-redux';
 import { Form, Label } from '../../components/form'
-import { fetchRoom, updateRoom } from '../../features/RoomSlice/roomThunk';
-import { useNavigate, useParams } from 'react-router';
+import { createRoom } from '../../features/RoomSlice/roomThunk';
+import { useNavigate } from 'react-router';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { RoomInterface } from '../../utils';
 
-export const RoomEditPage = () => {
-    const data = useSelector((state) => state.roomSlice.single);
-    const { id } = useParams();
-    const dispatch = useDispatch();
+interface FormState {
+    roomNumber: string;
+    roomType: string;
+    description: string;
+    offer: boolean;
+    price: string;
+    discount: string;
+    cancellation: string;
+    amenities: string[];
+}
+
+export const RoomCreatePage = () => {
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const [form, setForm] = useState({
+    const dataSlice = useAppSelector((state) => state.roomSlice.items);
+    const [form, setForm] = useState<FormState>({
         roomNumber: '04',
-        availability: false,
         roomType: 'Single Bed',
         description: 'Description',
         offer: false,
@@ -22,40 +32,17 @@ export const RoomEditPage = () => {
         amenities: []
     });
 
-    useEffect(() => {
-        const fetch = async () => {
-            await dispatch(fetchRoom(+id)).unwrap;
-        }
-        
-        fetch();
-    })
-
-    useEffect(() => {
-        if(data != null)
-            setForm({
-                roomNumber: data.roomNumber,
-                availability: data.availability,
-                roomType: data.roomType,
-                description: data.description,
-                offer: data.offer,
-                price: data.price,
-                discount: data.discount,
-                cancellation: data.cancellation,
-                amenities: data.amenities,
-        })
-    }, [data])
-
     const amenitiesList = ['WiFi', 'TV', 'Minibar', 'Air Conditioning', 'Room Service'];
 
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value, type, checked } = e.target; //Funciona a pesar de que da problema con los tipos
         setForm(prevState => ({
             ...prevState,
             [name]: type === 'checkbox' ? checked : value
         }));
     };
 
-    const handleAmenitiesChange = (e) => {
+    const handleAmenitiesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value, checked } = e.target;
         setForm(prevState => {
             const amenities = checked
@@ -65,28 +52,30 @@ export const RoomEditPage = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const roomId = dataSlice.length;
 
-        const newBooking = {
-            "id": +id,
-            "roomNumber": form.roomNumber,
-            "availability": form.availability,
+        const newRoom:RoomInterface = {
+            "id": +roomId,
+            "roomNumber": +form.roomNumber,
+            "availability": true,
             "roomType": form.roomType,
             "description": form.description,
             "offer": form.offer,
-            "price": form.price,
+            "price": +form.price,
             "discount": +form.discount,
             "cancellation": form.cancellation,
             "amenities": form.amenities,
-            "photosArray": ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3GniyT5BwWC29mxaTGA1Dbjtbzm7IGPVlNezsbvCbgG3VEgPXorn_JadGn3wBOWMRis0&usqp=CAU', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.flaticon.com%2Ffree-icon%2Fwip_10157938&psig=AOvVaw2k1Mwph7-df_Ca6znZlr2X&ust=1719599928789000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCOCtrI23_IYDFQAAAAAdAAAAABAJ', 'https://www.shutterstock.com/image-vector/grunge-red-work-process-square-260nw-1035090301.jpg']
+            "photosArray": ['https://www.shutterstock.com/image-vector/grunge-red-work-process-square-260nw-1035090301.jpg', 'https://www.shutterstock.com/image-vector/grunge-red-work-process-square-260nw-1035090301.jpg', 'https://www.shutterstock.com/image-vector/grunge-red-work-process-square-260nw-1035090301.jpg']
         }
-        dispatch(updateRoom(newBooking));
+
+        dispatch(createRoom(newRoom));
         navigate(-1);
     };
 
     return (
-        <Menus title="Edit Room">
+        <Menus title="Create Room">
             <Form onSubmit={handleSubmit}>
                     <Label>
                         Room Number:
@@ -116,15 +105,6 @@ export const RoomEditPage = () => {
                             value={form.description}
                             onChange={handleChange}
                             required
-                        />
-                    </Label>
-                    <Label>
-                        Availability:
-                        <input
-                            type="checkbox"
-                            name="availability"
-                            checked={form.availability}
-                            onChange={handleChange}
                         />
                     </Label>
                     <Label>
