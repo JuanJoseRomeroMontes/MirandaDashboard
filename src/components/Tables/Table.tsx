@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BookingCompleteInterface, ContactInterface, EmployeeInterface, RoomInterface } from '../../utils';
+import { BookingInterface, ContactInterface, EmployeeInterface, RoomInterface } from '../../types';
 
+//Usar <T>
 export interface TableProps {
-  data: (ContactInterface | BookingCompleteInterface | EmployeeInterface | RoomInterface)[];
+  data: (ContactInterface | BookingInterface | EmployeeInterface | RoomInterface)[];
   columns: {
     header:string;
-    render: ((row: ContactInterface) => JSX.Element) | ((row: BookingCompleteInterface) => JSX.Element) | 
+    render: ((row: ContactInterface) => JSX.Element) | ((row: BookingInterface) => JSX.Element) | 
             ((row: EmployeeInterface) => JSX.Element) | ((row: RoomInterface) => JSX.Element);
   }[];
 }

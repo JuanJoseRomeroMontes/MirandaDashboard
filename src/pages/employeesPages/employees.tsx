@@ -5,7 +5,7 @@ import { Pagination, Image, FilterTab, ManageData } from '../../components/Table
 import { useNavigate } from 'react-router';
 import { deleteUser, fetchUserList } from '../../features/UserSlice/userThunk';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { EmployeeInterface, EmployeeProperties } from '../../utils';
+import { EmployeeInterface, EmployeeProperties } from '../../types';
 
 interface Order {
     property: EmployeeProperties;
@@ -108,8 +108,7 @@ export const EmployeesPage = () => {
     }
 
     function handleDropdownChange(event: React.ChangeEvent<HTMLSelectElement>){
-        let order:Order = {property: event.target.value as EmployeeProperties,
-             defaultOrder:false}
+        let order:Order = {property: event.target.value as EmployeeProperties, defaultOrder:false}
         if(event.target.value === "name")
             order.inversed = true;
         

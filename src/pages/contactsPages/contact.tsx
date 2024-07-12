@@ -4,7 +4,7 @@ import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { Pagination, FilterTab, ManageData } from '../../components/Tables/GeneralTableComponents';
 import { deleteContact, fetchContactList } from '../../features/ContactSlice/contactThunk';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { ContactInterface, ContactProperties } from '../../utils';
+import { ContactInterface, ContactProperties } from '../../types';
 
 interface Order {
     property: ContactProperties;

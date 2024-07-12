@@ -5,7 +5,7 @@ import { Pagination, Image, ManageData } from '../../components/Tables/GeneralTa
 import { deleteRoom, fetchRoomList } from '../../features/RoomSlice/roomThunk';
 import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { RoomInterface, RoomProperties } from '../../utils';
+import { RoomInterface, RoomProperties } from '../../types';
 
 interface Order {
     property: RoomProperties;

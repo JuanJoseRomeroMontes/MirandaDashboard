@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { createRoom, deleteRoom, fetchRoom, fetchRoomList, updateRoom } from './roomThunk';
-import { RoomInterface } from "../../utils";
+import { RoomInterface } from "../../types";
 
 // Define a type for the slice state
-interface CounterState {
+interface RoomState {
     status:string,
     items:RoomInterface[],
     single:RoomInterface | undefined,
@@ -11,7 +11,7 @@ interface CounterState {
 }
 
 // Define the initial state using that type
-const initialState: CounterState = {
+const initialState: RoomState = {
     status: 'idle',
     items: [],
     single: undefined,

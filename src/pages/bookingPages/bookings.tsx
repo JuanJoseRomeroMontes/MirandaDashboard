@@ -4,56 +4,67 @@ import { useEffect, useMemo, useState } from 'react';
 import { Guest, RoomStatus, SpecialRequest } from '../../components/Tables/BookingTableComponents';
 import { Pagination, FilterTab, ManageData, RequestPopUp } from '../../components/Tables/GeneralTableComponents';
 import { deleteBooking, fetchBookingList } from '../../features/BookingSlice/bookingThunk';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { fetchRoomList } from '../../features/RoomSlice/roomThunk';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { BookingInterface, BookingProperties } from '../../types';
 
-export const BookingsPage = () => {
-    const [bookingData, setBookingData] = useState([])
+interface Order {
+    property: BookingProperties;
+    inversed?: boolean;
+}
+
+interface Filter {
+    property: BookingProperties;
+    value?: string | boolean | number;
+    defaultFilter: boolean;
+}
+
+interface Search {
+    property: BookingProperties;
+    value: string;
+}
+
+export const BookingsPage = () => {    
+    const [bookingData, setBookingData] = useState<BookingInterface[]>([])
     const [popUpMessage, setpopUpMessage] = useState("");
     const [tabsState, setTabsState] = useState([true, false, false, false])
-    const [order, setOrder] = useState({defaultOrder: true}); //object with properties: property, value
-    const [filter, setFilter] = useState({defaultFilter: true}); //object with properties: property, value
-    const [search, setSearch] = useState({property: "fullName", value: ""}); //object with properties: property, value
+    const [order, setOrder] = useState<Order>({property:"id"});
+    const [filter, setFilter] = useState<Filter>({property:"fullName", defaultFilter: true});
+    const [search, setSearch] = useState<Search>({property: "fullName", value: ""});
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const status = useSelector((state) => state.bookingSlice.status);
-    const bookingSliceData = useSelector((state) => state.bookingSlice.items);
-    const roomSliceData = useSelector((state) => state.roomSlice.items);
+    const dispatch = useAppDispatch();
+    const status = useAppSelector((state) => state.bookingSlice.status);
+    const bookingSliceData = useAppSelector((state) => state.bookingSlice.items);
 
     useEffect(() => {
         if (status === 'idle') {
             dispatch(fetchBookingList());
-            if(roomSliceData === null || roomSliceData.length === 0)
-                dispatch(fetchRoomList());
         }
         else if (status === 'fulfilled') {
-            if(bookingSliceData !== null){
-                setBookingData(getBookingData(bookingSliceData, roomSliceData));
-            } 
+            setBookingData(bookingSliceData);
         }
         else if (status === 'rejected') {
             console.log("rejectedPetition")
         }
-    }, [status, bookingSliceData, roomSliceData, dispatch])
- 
-    const filteredBookings = useMemo(() => {
-        let newBookingsList = [];
+    }, [status, bookingSliceData, dispatch])
 
-        if(bookingData != null)
+    const filteredBookings = useMemo(() => {
+        let newBookingsList:BookingInterface[] = [... bookingData];
+        if(!filter.defaultFilter)
             newBookingsList = bookingData.filter(booking => booking[filter.property] == filter.value);
+
         setCurrentPage(1);
 
         if (search.value !== "") {
             newBookingsList = newBookingsList.filter(booking => 
-                booking[search.property] && booking[search.property].toLowerCase().includes(search.value.toLowerCase())
+                booking[search.property] && booking[search.property].toString().toLowerCase().includes(search.value.toLowerCase())
             );
         }
         
-        if(!(order.defaultOrder))
+        if(order.property !== "id")
         {
             newBookingsList.sort((a,b) => {
                 let value = 0;
@@ -80,20 +91,20 @@ export const BookingsPage = () => {
         return (currentPage - 1) * itemsPerPage;
     }
 
-    function handlePaginationChange(page){
+    function handlePaginationChange(page:number){
         if(page <= Math.ceil(filteredBookings.length / itemsPerPage) && page > 0)
             setCurrentPage(page);
     }
 
-    function handlePopUp(message){
+    function handlePopUp(message:string){
         setpopUpMessage(message)
     }
 
-    function handleDeleteBooking(idToFilter){
+    function handleDeleteBooking(idToFilter:number){
         dispatch(deleteBooking(idToFilter))
     }
 
-    function handleEditBooking(idToFilter){
+    function handleEditBooking(idToFilter:number){
         navigate("edit/"+idToFilter)
     }
 
@@ -101,19 +112,19 @@ export const BookingsPage = () => {
         navigate("create")
     }
 
-    const handleViewBooking = (bookingId) => {
+    const handleViewBooking = (bookingId:number) => {
         navigate("view/"+bookingId)
     }
 
-    function handleDropdownChange(event){
-        let order = {property: event.target.value}
+    function handleDropdownChange(event: React.ChangeEvent<HTMLSelectElement>){
+        let order:Order = {property: event.target.value as BookingProperties}
         if(event.target.value === "fullName")
             order.inversed = true;
         
         setOrder(order)
     }
 
-    function handlectiveTab(newActiveTab){
+    function handlectiveTab(newActiveTab:number){
         let newTabsState = [false, false, false, false]
     
         newTabsState[newActiveTab] = true;
@@ -121,19 +132,19 @@ export const BookingsPage = () => {
         setTabsState(newTabsState);
     }
 
-    function handleInputChange(event){
+    function handleInputChange(event: React.ChangeEvent<HTMLInputElement>){
         setSearch({property: "fullName", value: event.target.value});
     };
 
     const columns = [
-        { header: 'Guest', render: (row) => <Guest fullName={row.fullName} bookingId={row.id} viewFunc={handleViewBooking} />, },
-        { header: 'Order Date', render: (row) => <p>{row.bookDate}</p>, },
-        { header: 'Check In', render: (row) => <p>{row.checkIn}</p>, },
-        { header: 'Check Out', render: (row) => <p>{row.checkOut}</p>, },
-        { header: 'Special Request', render: (row) => <SpecialRequest message={row.specialRequest} handlePopUp={handlePopUp}/>, },
-        { header: 'Room Type', render: (row) => <p>{row.roomType}</p>, },
-        { header: 'Status', render: (row) => <RoomStatus status={row.status}/>, },
-        { header: '',  render: (row) => <ManageData id={row.id} editFunc={handleEditBooking} deleteFunc={handleDeleteBooking}/>, },
+        { header: 'Guest', render: (row:BookingInterface) => <Guest fullName={row.fullName} bookingId={row.id} viewFunc={handleViewBooking} />, },
+        { header: 'Order Date', render: (row:BookingInterface) => <p>{row.bookDate}</p>, },
+        { header: 'Check In', render: (row:BookingInterface) => <p>{row.checkIn}</p>, },
+        { header: 'Check Out', render: (row:BookingInterface) => <p>{row.checkOut}</p>, },
+        { header: 'Special Request', render: (row:BookingInterface) => <SpecialRequest message={row.specialRequest} handlePopUp={handlePopUp}/>, },
+        { header: 'Room Type', render: (row:BookingInterface) => <p>{row.roomType}</p>, },
+        { header: 'Status', render: (row:BookingInterface) => <RoomStatus status={row.status}/>, },
+        { header: '',  render: (row:BookingInterface) => <ManageData id={row.id} editFunc={handleEditBooking} deleteFunc={handleDeleteBooking}/>, },
     ];
 
     if(status === 'idle')
@@ -146,23 +157,23 @@ export const BookingsPage = () => {
                     <div style={{display: "inline-flex"}}>
                         <FilterTab $selected={tabsState[0]} onClick={() => {
                             handlectiveTab(0); 
-                            setFilter({});
-                            setOrder({defaultOrder: true}); //DefaultOrder value doens't matter, only if the property exist or not
+                            setFilter({property:"id", defaultFilter:true});
+                            setOrder({property:"id"});
                         }}>All Bookings</FilterTab>
                         <FilterTab $selected={tabsState[1]} onClick={() => {
                             handlectiveTab(1);
-                            setFilter({}); 
+                            setFilter({property:"id", defaultFilter:true});
                             setOrder({property: "checkIn"});
                             setCurrentPage(1);
                         }} >Checking In</FilterTab>
                         <FilterTab $selected={tabsState[2]} onClick={() => {
                             handlectiveTab(2);
-                            setFilter({}); 
+                            setFilter({property:"id", defaultFilter:true});
                             setOrder({property: "checkOut"});
                             }}>Checking Out</FilterTab>
                         <FilterTab $selected={tabsState[3]} onClick={() => {
                             handlectiveTab(3);
-                            setFilter({property: "status", value: "Check in"});
+                            setFilter({property: "status", value: "Check in", defaultFilter: false});
                             setOrder({property: "bookDate"});
                             }}>In Progress</FilterTab>
                     </div>
@@ -187,7 +198,7 @@ export const BookingsPage = () => {
 
                             <div>
                                 <button onClick={() => handlePaginationChange(currentPage-1)}>Prev</button>
-                                <input type="number" value={currentPage} onChange={() => handlePaginationChange(event.target.value)}/>
+                                <input type="number" value={currentPage} onChange={(e) => handlePaginationChange(Number(e.target.value))} />
                                 <button onClick={() => handlePaginationChange(currentPage+1)}>Next</button>
                             </div>
                     </Pagination>
@@ -197,52 +208,3 @@ export const BookingsPage = () => {
         </>
     )
 };
-
-function getBookingData(bookingList, roomList){
-    const data = [];
-
-    bookingList.forEach(element => {
-        const modifiedElement = { ...element };
-        const bookedRoom = roomList.find(room => room.id === modifiedElement.roomId);
-        
-        if(bookedRoom != null)
-            {
-                modifiedElement.roomType = bookedRoom.roomType;
-                modifiedElement.roomNumber = bookedRoom.roomNumber;
-                modifiedElement.status = checkDay(modifiedElement.checkIn, modifiedElement.checkOut);
-            }
-        else
-            {
-                modifiedElement.roomType = "NaN";
-                modifiedElement.roomNumber = -1;
-                modifiedElement.status = "NaN";
-            }
-
-        data.push(modifiedElement)
-    });
-
-    return data;
-}
-
-function checkDay(checkIn, checkOut){
-    let roomState = null;
-    const date = new Date();
-
-    const checkInDate = convertStringToDate(checkIn);
-    const checkOutDate = convertStringToDate(checkOut);
-
-    if (date < checkInDate) 
-        roomState = 'In progress'
-    else if (date > checkOutDate) 
-        roomState = 'Check out'
-    else 
-        roomState = 'Check in' 
-
-    return roomState;
-}
-
-function convertStringToDate(date){
-    const dateSplit = date.split('-');
-    //Javascript months are indexed from 0, thats why they are substracted 1
-    return new Date(parseInt(dateSplit[0]), parseInt(dateSplit[1])-1, parseInt(dateSplit[2]));
-}

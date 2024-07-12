@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import roomsData from '../../data/roomsData.json';
-import { delay, RoomInterface } from '../../utils'
+import { delay } from '../../utils'
+import { RoomInterface } from "../../types";
 
 export const fetchRoomList = createAsyncThunk("room/fetchRoomList", async (): Promise<RoomInterface[]> => {
     try{

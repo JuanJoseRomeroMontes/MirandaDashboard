@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import commentsData from '../../data/commentsData.json';
-import { ContactInterface, delay } from '../../utils'
+import { delay } from '../../utils'
+import { ContactInterface } from "../../types";
 
 export const fetchContactList = createAsyncThunk<ContactInterface[]>("contact/fetchContactList", async () => {
     try{

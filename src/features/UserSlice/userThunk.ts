@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import userData from '../../data/employeesData.json';
-import { delay, EmployeeInterface } from '../../utils'
+import { delay } from '../../utils'
+import { EmployeeInterface } from "../../types";
 
 export const fetchUserList = createAsyncThunk("user/fetchUserList", async (): Promise<EmployeeInterface[]> => {
     try{

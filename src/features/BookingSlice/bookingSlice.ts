@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { createBooking, deleteBooking, fetchBooking, fetchBookingList, updateBooking } from './bookingThunk';
-import { BookingInterface } from "../../utils";
+import { BookingInterface } from "../../types";
 
 // Define a type for the slice state
-interface CounterState {
+interface BookingState {
     status:string,
     items:BookingInterface[],
     single:BookingInterface | undefined,
@@ -11,7 +11,7 @@ interface CounterState {
 }
 
 // Define the initial state using that type
-const initialState: CounterState = {
+const initialState: BookingState = {
     status: 'idle',
     items: [],
     single: undefined,

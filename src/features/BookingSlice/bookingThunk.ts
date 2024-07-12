@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import bookingsData from '../../data/bookingsData.json';
-import { BookingInterface, delay } from '../../utils'
+import { delay } from '../../utils'
+import { BookingInterface } from "../../types";
 
 export const fetchBookingList = createAsyncThunk("booking/fetchBookingList", async (): Promise<BookingInterface[]> => {
     try{

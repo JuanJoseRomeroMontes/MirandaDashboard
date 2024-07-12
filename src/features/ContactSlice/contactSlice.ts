@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { createContact, deleteContact, fetchContact, fetchContactList, updateContact } from './contactThunk';
-import { ContactInterface } from "../../utils";
+import { ContactInterface } from "../../types";
 
 // Define a type for the slice state
-interface CounterState {
+interface ContactState {
     status:string,
     items:ContactInterface[],
     single:ContactInterface | undefined,
@@ -11,7 +11,7 @@ interface CounterState {
 }
 
 // Define the initial state using that type
-const initialState: CounterState = {
+const initialState: ContactState = {
     status: 'idle',
     items: [],
     single: undefined,

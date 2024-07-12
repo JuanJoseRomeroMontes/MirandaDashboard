@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { createUser, deleteUser, fetchUser, fetchUserList, updateUser } from './userThunk';
-import {EmployeeInterface} from '../../utils'
+import {EmployeeInterface} from "../../types"
 
 // Define a type for the slice state
-interface CounterState {
+interface UserState {
     status:string,
     items:EmployeeInterface[],
     single:EmployeeInterface | undefined,
@@ -11,7 +11,7 @@ interface CounterState {
 }
 
 // Define the initial state using that type
-const initialState: CounterState = {
+const initialState: UserState = {
     status: 'idle',
     items: [],
     single: undefined, //{id:-1, name:"", email:"", phone:"", photo:"",positionName:"" ,positionDescription:"", date:"", status:false, password:""},
