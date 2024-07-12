@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router';
 import { deleteUser, fetchUserList } from '../../features/UserSlice/userThunk';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { EmployeeInterface, EmployeeProperties } from '../../types';
+import { MenuChild, TabsContainer } from '../../components/pagesGeneralComponents';
 
 interface Order {
     property: EmployeeProperties;
@@ -145,8 +146,8 @@ export const EmployeesPage = () => {
     return(
         <>
             <Menus title="Employees">
-                <div style={{padding: "15px"}}>
-                    <div style={{display: "inline-flex"}}>
+                <MenuChild>
+                    <TabsContainer>
                         <FilterTab $selected={tabsState[0]} onClick={() => {
                             handlectiveTab(0); 
                             setFilter({property:'id', defaultFilter: true});
@@ -163,7 +164,7 @@ export const EmployeesPage = () => {
                             setFilter({property: "status", value: false, defaultFilter: false}); 
                             setOrder({property: "name", inversed: true, defaultOrder: false});
                             }}>Inactive Employee</FilterTab>
-                    </div>
+                    </TabsContainer>
 
                     <input type="text" value={search.value} onChange={handleInputChange} />
 
@@ -186,7 +187,7 @@ export const EmployeesPage = () => {
                                 <button onClick={() => handlePaginationChange(currentPage+1)}>Next</button>
                             </div>
                     </Pagination>
-                </div>
+                </MenuChild>
             </Menus>
         </>
     )

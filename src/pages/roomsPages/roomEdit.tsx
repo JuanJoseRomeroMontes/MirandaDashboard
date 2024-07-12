@@ -4,7 +4,7 @@ import { Form, Label } from '../../components/form'
 import { fetchRoom, updateRoom } from '../../features/RoomSlice/roomThunk';
 import { useNavigate, useParams } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { RoomInterface } from '../../utils';
+import { RoomInterface } from '../../types';
 
 interface FormState {
     roomNumber: string;

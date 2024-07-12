@@ -6,8 +6,10 @@ export const delay =(data:any) => {
     });
 }
 
-export function checkDay(checkIn:string, checkOut:string):string{
-    let roomState = "No state";
+type Statuses = "In progress" | "Check in" | "Check out";
+
+export function getStatus(checkIn:string, checkOut:string):Statuses{
+    let roomState:Statuses = "Check in";
     const date = new Date();
 
     const checkInDate:Date = convertStringToDate(checkIn);
@@ -17,8 +19,6 @@ export function checkDay(checkIn:string, checkOut:string):string{
         roomState = "In progress"
     else if (date > checkOutDate) 
         roomState = "Check out"
-    else 
-        roomState = "Check in" 
 
     return roomState;
 }

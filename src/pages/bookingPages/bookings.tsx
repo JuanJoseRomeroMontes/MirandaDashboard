@@ -7,6 +7,7 @@ import { deleteBooking, fetchBookingList } from '../../features/BookingSlice/boo
 import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { BookingInterface, BookingProperties } from '../../types';
+import { MenuChild, TabsContainer } from '../../components/pagesGeneralComponents';
 
 interface Order {
     property: BookingProperties;
@@ -153,8 +154,8 @@ export const BookingsPage = () => {
     return(
         <>
             <Menus title="Bookings">
-                <div style={{padding: "15px", height: 'calc(100% - 140px)'}}>
-                    <div style={{display: "inline-flex"}}>
+                <MenuChild>
+                    <TabsContainer>
                         <FilterTab $selected={tabsState[0]} onClick={() => {
                             handlectiveTab(0); 
                             setFilter({property:"id", defaultFilter:true});
@@ -176,7 +177,7 @@ export const BookingsPage = () => {
                             setFilter({property: "status", value: "Check in", defaultFilter: false});
                             setOrder({property: "bookDate"});
                             }}>In Progress</FilterTab>
-                    </div>
+                    </TabsContainer>
 
                     <input type="text" value={search.value} onChange={handleInputChange} />
 
@@ -202,7 +203,7 @@ export const BookingsPage = () => {
                                 <button onClick={() => handlePaginationChange(currentPage+1)}>Next</button>
                             </div>
                     </Pagination>
-                </div>
+                </MenuChild>
             </Menus>
             <RequestPopUp $display={popUpMessage!==""} onClick={() => {setpopUpMessage("")}}><div>{popUpMessage}</div></RequestPopUp>
         </>

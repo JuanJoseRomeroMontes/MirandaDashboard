@@ -1,54 +1,80 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Menus } from '../../components/Menus/menus';
 import { Form, Label } from '../../components/form'
-import { useDispatch, useSelector } from 'react-redux';
-import { createBooking } from '../../features/BookingSlice/bookingThunk';
-import { useNavigate } from 'react-router';
+import { updateBooking, fetchBooking } from '../../features/BookingSlice/bookingThunk';
+import { useNavigate, useParams } from 'react-router';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { BookingInterface } from '../../types';
+import { getStatus } from '../../utils';
 
-export const BookingCreatePage = () => {
-    const dataSlice = useSelector((state) => state.bookingSlice.items);
-    const dispatch = useDispatch();
+export const BookingEditPage = () => {
+    const data = useAppSelector((state) => state.bookingSlice.single);
+    const { id = 0 } = useParams(); //In case there is an error with the param, it will use 0 by default.
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
-
     const [form, setForm] = useState({
-        fullName: 'Pablo',
+        fullName: 'ChangedName',
+        bookDate: '2000-01-01',
         checkIn: '2024-06-01',
         checkOut: '2024-06-30',
-        specialRequest: '',
-        roomId: '11'
+        specialRequest: 'ChangedRequest',
+        roomId: 0,
     });
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
+    useEffect(() => {
+        const fetch = async () => {
+            await dispatch(fetchBooking(+id)).unwrap;
+        }
+        
+        fetch();
+    })
+
+    useEffect(() => {
+        if(data != null)
+            setForm({
+                fullName: data.fullName,
+                bookDate: data.bookDate,
+                checkIn: data.checkIn,
+                checkOut: data.checkOut,
+                specialRequest: data.specialRequest,
+                roomId: data.roomId,
+        })
+    }, [data])
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value, type, checked } = e.target;
         setForm(prevState => ({
             ...prevState,
             [name]: value
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const bookingId = dataSlice.length;
+        const bookingId = +id;
         const dateTemp = new Date();
         const currentDate = `${dateTemp.getFullYear()}-${(dateTemp.getMonth() + 1).toString().padStart(2, '0')}-${dateTemp.getDate().toString().padStart(2, '0')}`;
 
-        const newBooking = {
+        const newBooking:BookingInterface = {
             "fullName": form.fullName,
             "id": bookingId,
             "bookDate": currentDate,
             "checkIn": form.checkIn,
             "checkOut": form.checkOut,
             "specialRequest": form.specialRequest,
-            "roomId": +form.roomId
+            "roomId": +form.roomId,
+            "roomNumber": 99,
+            "roomType": "Temp",
+            "status": getStatus(form.checkIn, form.checkOut)
         }
 
-        dispatch(createBooking(newBooking))
+        dispatch(updateBooking(newBooking))
         navigate(-1);
     };
 
     return(
         <>
-            <Menus title="Create Booking">
+            <Menus title="Edit Booking">
                 <Form onSubmit={handleSubmit}>
                     <Label>
                         Client full name:
@@ -57,7 +83,15 @@ export const BookingCreatePage = () => {
                             name="fullName"
                             value={form.fullName}
                             onChange={handleChange}
-                            required
+                        />
+                    </Label>
+                    <Label>
+                        Book Date:
+                        <input
+                            type="date"
+                            name="bookDate"
+                            value={form.bookDate}
+                            onChange={handleChange}
                         />
                     </Label>
                     <Label>
@@ -67,7 +101,6 @@ export const BookingCreatePage = () => {
                             name="checkIn"
                             value={form.checkIn}
                             onChange={handleChange}
-                            required
                         />
                     </Label>
                     <Label>
@@ -77,7 +110,6 @@ export const BookingCreatePage = () => {
                             name="checkOut"
                             value={form.checkOut}
                             onChange={handleChange}
-                            required
                         />
                     </Label>
                     <Label>

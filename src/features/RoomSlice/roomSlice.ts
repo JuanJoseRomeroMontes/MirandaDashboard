@@ -6,7 +6,7 @@ import { RoomInterface } from "../../types";
 interface RoomState {
     status:string,
     items:RoomInterface[],
-    single:RoomInterface | undefined,
+    single:RoomInterface | null,
     error:any,
 }
 
@@ -14,7 +14,7 @@ interface RoomState {
 const initialState: RoomState = {
     status: 'idle',
     items: [],
-    single: undefined,
+    single: null,
     error: null,
 }
 

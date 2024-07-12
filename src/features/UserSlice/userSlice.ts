@@ -6,7 +6,7 @@ import {EmployeeInterface} from "../../types"
 interface UserState {
     status:string,
     items:EmployeeInterface[],
-    single:EmployeeInterface | undefined,
+    single:EmployeeInterface | null,
     error:any,
 }
 
@@ -14,7 +14,7 @@ interface UserState {
 const initialState: UserState = {
     status: 'idle',
     items: [],
-    single: undefined, //{id:-1, name:"", email:"", phone:"", photo:"",positionName:"" ,positionDescription:"", date:"", status:false, password:""},
+    single: null,
     error: null,
 }
 

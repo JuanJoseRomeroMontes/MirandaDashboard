@@ -6,7 +6,7 @@ import { BookingInterface } from "../../types";
 interface BookingState {
     status:string,
     items:BookingInterface[],
-    single:BookingInterface | undefined,
+    single:BookingInterface | null,
     error:any,
 }
 
@@ -14,7 +14,7 @@ interface BookingState {
 const initialState: BookingState = {
     status: 'idle',
     items: [],
-    single: undefined,
+    single: null,//{bookDate:"", checkIn:"", checkOut:"", fullName:"", id:-1, roomId:-1, roomNumber:-1, roomType:"", specialRequest:"", status:""},
     error: null,
 }
 

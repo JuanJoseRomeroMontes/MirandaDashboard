@@ -6,6 +6,7 @@ import { deleteRoom, fetchRoomList } from '../../features/RoomSlice/roomThunk';
 import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { RoomInterface, RoomProperties } from '../../types';
+import { MenuChild } from '../../components/pagesGeneralComponents';
 
 interface Order {
     property: RoomProperties;
@@ -104,7 +105,7 @@ export const RoomsPage = () => {
     return(
         <>
             <Menus title="Rooms">
-                <div style={{padding: "15px"}}>
+                <MenuChild>
                     <button onClick={handleCreateRoom}>Create Room</button>
 
                     <Table data={paginatedData} columns={columns} />
@@ -118,7 +119,7 @@ export const RoomsPage = () => {
                                 <button onClick={() => handlePaginationChange(currentPage+1)}>Next</button>
                             </div>
                     </Pagination>
-                </div>
+                </MenuChild>
             </Menus>
         </>
     )

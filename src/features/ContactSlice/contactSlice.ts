@@ -6,7 +6,7 @@ import { ContactInterface } from "../../types";
 interface ContactState {
     status:string,
     items:ContactInterface[],
-    single:ContactInterface | undefined,
+    single:ContactInterface | null,
     error:any,
 }
 
@@ -14,7 +14,7 @@ interface ContactState {
 const initialState: ContactState = {
     status: 'idle',
     items: [],
-    single: undefined,
+    single: null,
     error: null,
 }
 

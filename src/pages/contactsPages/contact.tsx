@@ -1,10 +1,11 @@
 import { Menus } from '../../components/Menus/menus';
 import { Table, TableProps } from '../../components/Tables/Table';
-import { ReactNode, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Pagination, FilterTab, ManageData } from '../../components/Tables/GeneralTableComponents';
 import { deleteContact, fetchContactList } from '../../features/ContactSlice/contactThunk';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { ContactInterface, ContactProperties } from '../../types';
+import { MenuChild, TabsContainer } from '../../components/pagesGeneralComponents'
 
 interface Order {
     property: ContactProperties;
@@ -109,8 +110,8 @@ export const ContactPage = () => {
     return(
         <>
             <Menus title="Contacts">               
-                <div style={{padding: "15px"}}>
-                    <div style={{display: "inline-flex"}}>
+                <MenuChild>
+                    <TabsContainer>
                         <FilterTab $selected={tabsState[0]} onClick={() => {
                             handlectiveTab(0); 
                             setFilter({property: "archived", defaultFilter:true});
@@ -122,7 +123,7 @@ export const ContactPage = () => {
                             setOrder({defaultOrder: false, property: "date"});
                             setCurrentPage(1);
                         }} >Archived</FilterTab>
-                    </div>
+                    </TabsContainer>
 
                     <Table data={paginatedData} columns={columns} />
 
@@ -135,7 +136,7 @@ export const ContactPage = () => {
                                 <button onClick={() => handlePaginationChange(currentPage+1)}>Next</button>
                             </div>
                     </Pagination>
-                </div>
+                </MenuChild>
             </Menus>
         </>
     )
