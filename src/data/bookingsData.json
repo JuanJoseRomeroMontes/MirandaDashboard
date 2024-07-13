@@ -9,7 +9,7 @@
         "roomId": 0,
         "roomType": "Single Bed",
         "roomNumber": 56,
-        "status": "Check out" 
+        "status": "Check in" 
     },
     {
         "fullName": "Mark Nicolas",
@@ -21,7 +21,7 @@
         "roomId": 1,
         "roomType": "Double Superior",
         "roomNumber": 93,
-        "status": "Check out" 
+        "status": "Check in" 
     },
     {
         "fullName": "Kelley Hintz",
@@ -33,7 +33,7 @@
         "roomId": 2,
         "roomType": "Suite",
         "roomNumber": 14,
-        "status": "Check out"
+        "status": "Check in"
     },
     {
         "fullName": "Peggy Bayer",
@@ -45,7 +45,7 @@
         "roomId": 3,
         "roomType": "Double Superior",
         "roomNumber": 57,
-        "status": "Check out" 
+        "status": "Check in" 
     },
     {
         "fullName": "Olivia Stoltenberg",
@@ -57,7 +57,7 @@
         "roomId": 4,
         "roomType": "Double Bed",
         "roomNumber": 99,
-        "status": "Check out"
+        "status": "Check in"
     },
     {
         "fullName": "Jenna Boehm",
@@ -69,7 +69,7 @@
         "roomId": 5,
         "roomType": "Suite",
         "roomNumber": 75,
-        "status": "Check out"
+        "status": "Check in"
     },
     {
         "fullName": "Laura Hammes",

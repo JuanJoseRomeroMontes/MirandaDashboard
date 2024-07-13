@@ -1,6 +1,6 @@
 import { Menus } from '../../components/Menus/menus';
 import { useEffect, useMemo, useState } from 'react';
-import { Table } from '../../components/Tables/Table';
+import { Table, TableProps } from '../../components/Tables/Table';
 import { Pagination, Image, ManageData } from '../../components/Tables/GeneralTableComponents';
 import { deleteRoom, fetchRoomList } from '../../features/RoomSlice/roomThunk';
 import { useNavigate } from 'react-router';
@@ -89,7 +89,7 @@ export const RoomsPage = () => {
         navigate("create")
     }
 
-    const columns = [
+    const columns: TableProps<RoomInterface>['columns'] = [
         { header: 'Photo', render: (row:RoomInterface) => <Image $src={row.photosArray[0]}/>, },
         { header: 'Room number', render: (row:RoomInterface) => <p>{row.roomNumber}</p>, },
         { header: 'Room id', render: (row:RoomInterface) => <p>{row.id}</p>, },
@@ -108,7 +108,7 @@ export const RoomsPage = () => {
                 <MenuChild>
                     <button onClick={handleCreateRoom}>Create Room</button>
 
-                    <Table data={paginatedData} columns={columns} />
+                    <Table<RoomInterface> data={paginatedData} columns={columns} />
 
                     <Pagination>
                             <p>Showing rooms from {getPaginationIndex()+1} to {getPaginationIndex()+itemsPerPage > filteredRooms.length ? filteredRooms.length : getPaginationIndex()+itemsPerPage} of {filteredRooms.length} total roomss </p>

@@ -96,7 +96,7 @@ export const ContactPage = () => {
 
     const test: React.ReactNode = <h1>Hello, world!</h1>;
 
-    const columns: TableProps['columns'] = [
+    const columns: TableProps<ContactInterface>['columns'] = [
         { header: 'Date', render: (row: ContactInterface) => <p>{row.date}</p> },
         { header: 'Id', render: (row: ContactInterface) => <p>{row.id}</p> },
         { header: 'Customer', render: (row: ContactInterface) => <p>{row.client.name}</p> },
@@ -125,7 +125,7 @@ export const ContactPage = () => {
                         }} >Archived</FilterTab>
                     </TabsContainer>
 
-                    <Table data={paginatedData} columns={columns} />
+                    <Table<ContactInterface> data={paginatedData} columns={columns} />
 
                     <Pagination>
                             <p>Showing comment from {getPaginationIndex()+1} to {getPaginationIndex()+itemsPerPage > filteredComments.length ? filteredComments.length : getPaginationIndex()+itemsPerPage} of {filteredComments.length} total comments </p>

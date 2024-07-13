@@ -1,6 +1,6 @@
 import { Menus } from '../../components/Menus/menus';
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
-import { Table } from '../../components/Tables/Table';
+import { Table, TableProps } from '../../components/Tables/Table';
 import { Pagination, Image, FilterTab, ManageData } from '../../components/Tables/GeneralTableComponents';
 import { useNavigate } from 'react-router';
 import { deleteUser, fetchUserList } from '../../features/UserSlice/userThunk';
@@ -128,7 +128,7 @@ export const EmployeesPage = () => {
         setSearch({property: "name", value: event.target.value});
     };
 
-    const columns = [
+    const columns: TableProps<EmployeeInterface>['columns'] = [
         { header: 'Photo', render: (row:EmployeeInterface) => <Image $src={row.photo}/>, },
         { header: 'Name', render: (row:EmployeeInterface) => <p>{row.name}</p>, },
         { header: 'Id', render: (row:EmployeeInterface) => <p>{row.id}</p>, },
@@ -176,7 +176,7 @@ export const EmployeesPage = () => {
 
                     <button onClick={handleCreateEmployee}>Create Employee</button>
 
-                    <Table data={paginatedData} columns={columns} />
+                    <Table<EmployeeInterface> data={paginatedData} columns={columns} />
 
                     <Pagination>
                         <p>Showing employee from {getPaginationIndex()+1} to {getPaginationIndex()+itemsPerPage > filteredEmployees.length ? filteredEmployees.length : getPaginationIndex()+itemsPerPage} of {filteredEmployees.length} total employees </p>

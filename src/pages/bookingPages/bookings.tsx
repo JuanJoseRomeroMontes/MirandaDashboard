@@ -1,5 +1,5 @@
 import { Menus } from '../../components/Menus/menus';
-import { Table } from '../../components/Tables/Table';
+import { Table, TableProps } from '../../components/Tables/Table';
 import { useEffect, useMemo, useState } from 'react';
 import { Guest, RoomStatus, SpecialRequest } from '../../components/Tables/BookingTableComponents';
 import { Pagination, FilterTab, ManageData, RequestPopUp } from '../../components/Tables/GeneralTableComponents';
@@ -137,7 +137,7 @@ export const BookingsPage = () => {
         setSearch({property: "fullName", value: event.target.value});
     };
 
-    const columns = [
+    const columns: TableProps<BookingInterface>['columns'] = [
         { header: 'Guest', render: (row:BookingInterface) => <Guest fullName={row.fullName} bookingId={row.id} viewFunc={handleViewBooking} />, },
         { header: 'Order Date', render: (row:BookingInterface) => <p>{row.bookDate}</p>, },
         { header: 'Check In', render: (row:BookingInterface) => <p>{row.checkIn}</p>, },
@@ -192,7 +192,7 @@ export const BookingsPage = () => {
                     <button onClick={handleCreateBooking}>Create Booking</button>
                     
                     {status === "pending" ? <h1>LOADING TABLE</h1> : null}
-                    <Table data={paginatedData} columns={columns} />
+                    <Table<BookingInterface> data={paginatedData} columns={columns} />
 
                     <Pagination>
                             <p>Showing booking from {getPaginationIndex()+1} to {getPaginationIndex()+itemsPerPage > filteredBookings.length ? filteredBookings.length : getPaginationIndex()+itemsPerPage} of {filteredBookings.length} total bookings </p>

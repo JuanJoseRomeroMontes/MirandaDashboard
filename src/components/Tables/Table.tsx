@@ -3,16 +3,15 @@ import styled from 'styled-components';
 import { BookingInterface, ContactInterface, EmployeeInterface, RoomInterface } from '../../types';
 
 //Usar <T>
-export interface TableProps {
-  data: (ContactInterface | BookingInterface | EmployeeInterface | RoomInterface)[];
+export interface TableProps<T> {
+  data: T[];
   columns: {
     header:string;
-    render: ((row: ContactInterface) => JSX.Element) | ((row: BookingInterface) => JSX.Element) | 
-            ((row: EmployeeInterface) => JSX.Element) | ((row: RoomInterface) => JSX.Element);
+    render: (row: T) => JSX.Element;
   }[];
 }
 
-export const Table: React.FC<TableProps> = ({ data, columns }) => {
+export function Table<T>({data, columns}:TableProps<T>){
   return (
     <TableContainer>
       <StyledTable>
