@@ -42,6 +42,7 @@ export default function App() {
                                 <Route path='employee/edit/:id' element={ <PrivateRoute> <EmployeeEditPage/> </PrivateRoute> }/>
                                 <Route path='contact' element={ <PrivateRoute> <ContactPage/> </PrivateRoute> }/>
                             </Routes>
+                            <ToastContainer/>
                         </BrowserRouter>
                 </Provider>
             </AuthProvider>

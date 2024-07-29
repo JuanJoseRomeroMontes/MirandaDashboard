@@ -18,7 +18,7 @@ export const fetchBooking = createAsyncThunk("booking/fecthBooking", async (id:n
         const bookingId:number = await delay(id) as number;
         const booking: BookingInterface | undefined = bookingsData.find(booking => booking.id === bookingId);
         if (!booking) 
-            throw('Failed to fecth contact');
+            throw('Failed to fecth booking');
         return booking as BookingInterface;
     }
     catch(error){

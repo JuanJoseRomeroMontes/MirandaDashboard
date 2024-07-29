@@ -18,7 +18,7 @@ export const fetchUser = createAsyncThunk("user/fecthUser", async (id:number): P
         const employeeId:number = await delay(id) as number;
         const employee: EmployeeInterface | undefined = userData.find(employee => employee.id === employeeId);
         if (!employee) 
-            throw('Failed to fecth contact');
+            throw('Failed to fecth user');
         return employee as EmployeeInterface;
     }
     catch(error){

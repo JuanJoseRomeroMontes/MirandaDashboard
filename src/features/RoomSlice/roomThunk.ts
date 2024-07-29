@@ -18,7 +18,7 @@ export const fetchRoom = createAsyncThunk("room/fecthRoom", async (id:number): P
         const roomId:number = await delay(id) as number;
         const room: RoomInterface | undefined = roomsData.find(room => room.id === roomId);
         if (!room) 
-            throw('Failed to fecth contact');
+            throw('Failed to fecth room');
         return room as RoomInterface;
     }
     catch(error){
