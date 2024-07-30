@@ -21,6 +21,9 @@ import { EmployeeEditPage } from './pages/employeesPages/employeeEdit'
 
 import { ContactPage } from './pages/contactsPages/contact'
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 export default function App() {
     return (
         <>

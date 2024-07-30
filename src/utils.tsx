@@ -33,7 +33,7 @@ export function convertStringToDate(stringDate:string):Date{
 
 type RequestMethods = "GET" | "POST" | "PATCH" | "DELETE";
 
-export async function APIRequest(endpoint:string, method:RequestMethods = 'GET', data = null){
+export async function APIRequest(endpoint:string, method:RequestMethods = 'GET', bodyData = null){
     const url:string = `${process.env.API_URL}/${endpoint}`; //install dotenv
     const token = localStorage.getItem('AUTH_TOKEN');
     const response = await fetch(url, {
@@ -41,7 +41,7 @@ export async function APIRequest(endpoint:string, method:RequestMethods = 'GET',
         headers: {
             'Authorization': `Token ${token}`,
         },
-        body: data ?? undefined,
+        body: bodyData ?? undefined,
     })
 
     if(!response.ok){

@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import roomsData from '../../data/roomsData.json';
-import { delay } from '../../utils'
+import { APIRequest, delay } from '../../utils'
 import { RoomInterface } from "../../types";
 
 export const fetchRoomList = createAsyncThunk("room/fetchRoomList", async (): Promise<RoomInterface[]> => {
     try{
-        const data = await delay(roomsData);
+        const data = await APIRequest("room");
         return data as RoomInterface[];
     }
     catch(error){
@@ -15,8 +15,7 @@ export const fetchRoomList = createAsyncThunk("room/fetchRoomList", async (): Pr
 
 export const fetchRoom = createAsyncThunk("room/fecthRoom", async (id:number): Promise<RoomInterface> => {
     try{
-        const roomId:number = await delay(id) as number;
-        const room: RoomInterface | undefined = roomsData.find(room => room.id === roomId);
+        const room = await APIRequest(`room/${id}`);
         if (!room) 
             throw('Failed to fecth room');
         return room as RoomInterface;
@@ -28,7 +27,7 @@ export const fetchRoom = createAsyncThunk("room/fecthRoom", async (id:number): P
 
 export const createRoom = createAsyncThunk("room/createRoom", async (room:RoomInterface): Promise<RoomInterface> => {
     try{
-        await delay(null)
+        const room = await APIRequest(`room`, 'POST'); //{"room": room}
         return room as RoomInterface;
     }
     catch(error){
@@ -38,7 +37,7 @@ export const createRoom = createAsyncThunk("room/createRoom", async (room:RoomIn
 
 export const updateRoom = createAsyncThunk("room/updateRoom", async (room:RoomInterface): Promise<RoomInterface> => {
     try{
-        await delay(null)
+        const room = await APIRequest(`room`, 'PATCH'); //{"room": room}
         return room as RoomInterface;
     }
     catch(error){
@@ -48,8 +47,8 @@ export const updateRoom = createAsyncThunk("room/updateRoom", async (room:RoomIn
 
 export const deleteRoom = createAsyncThunk("room/deleteRoom", async (id:number): Promise<number> => {
     try{
-        await delay(null)
-        return id as number;
+        const room = await APIRequest(`room/${id}`, 'DELETE');
+        return room._id as number;
     }
     catch(error){
         throw new Error;

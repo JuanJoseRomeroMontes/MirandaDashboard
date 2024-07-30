@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import userData from '../../data/employeesData.json';
-import { delay } from '../../utils'
+import { APIRequest, delay } from '../../utils'
 import { EmployeeInterface } from "../../types";
 
 export const fetchUserList = createAsyncThunk("user/fetchUserList", async (): Promise<EmployeeInterface[]> => {
     try{
-        const data = await delay(userData);
+        const data = await APIRequest("user");
         return data as EmployeeInterface[];
     }
     catch(error){
@@ -15,11 +15,10 @@ export const fetchUserList = createAsyncThunk("user/fetchUserList", async (): Pr
 
 export const fetchUser = createAsyncThunk("user/fecthUser", async (id:number): Promise<EmployeeInterface> => {
     try{
-        const employeeId:number = await delay(id) as number;
-        const employee: EmployeeInterface | undefined = userData.find(employee => employee.id === employeeId);
-        if (!employee) 
+        const user = await APIRequest(`user/${id}`);
+        if (!user) 
             throw('Failed to fecth user');
-        return employee as EmployeeInterface;
+        return user as EmployeeInterface;
     }
     catch(error){
         throw new Error;
@@ -28,7 +27,7 @@ export const fetchUser = createAsyncThunk("user/fecthUser", async (id:number): P
 
 export const createUser = createAsyncThunk("user/createUser", async (user:EmployeeInterface): Promise<EmployeeInterface> => {
     try{
-        await delay(null)
+        const user = await APIRequest(`user`, 'POST'); //{"room": room}
         return user as EmployeeInterface;
     }
     catch(error){
@@ -38,7 +37,7 @@ export const createUser = createAsyncThunk("user/createUser", async (user:Employ
 
 export const updateUser = createAsyncThunk("user/updateUser", async (user:EmployeeInterface): Promise<EmployeeInterface> => {
     try{
-        await delay(null)
+        const user = await APIRequest(`user`, 'PATCH'); //{"room": room}
         return user as EmployeeInterface;
     }
     catch(error){
@@ -48,8 +47,8 @@ export const updateUser = createAsyncThunk("user/updateUser", async (user:Employ
 
 export const deleteUser = createAsyncThunk("user/deleteUser", async (id:number): Promise<number> => {
     try{
-        await delay(null)
-        return id as number;
+        const user = await APIRequest(`user/${id}`, 'DELETE');
+        return user._id as number;
     }
     catch(error){
         throw new Error;
