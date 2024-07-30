@@ -31,7 +31,7 @@ export function convertStringToDate(stringDate:string):Date{
     return new Date(parseInt(dateSplit[0]), parseInt(dateSplit[1])-1, parseInt(dateSplit[2]));
 }
 
-type RequestMethods = "GET" | "POST" | "PATCH" | "DELETE";
+export type RequestMethods = "GET" | "POST" | "PATCH" | "DELETE";
 
 export async function APIRequest(endpoint:string, method:RequestMethods = 'GET', bodyData = null){
     const url:string = `${process.env.API_URL}/${endpoint}`; //install dotenv
