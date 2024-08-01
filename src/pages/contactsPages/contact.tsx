@@ -82,7 +82,7 @@ export const ContactPage = () => {
             setCurrentPage(page);
     }
 
-    function handleDeleteComment(idToFilter:number){
+    function handleDeleteComment(idToFilter:string){
         dispatch(deleteContact(idToFilter));
     }
 
@@ -98,13 +98,13 @@ export const ContactPage = () => {
 
     const columns: TableProps<ContactInterface>['columns'] = [
         { header: 'Date', render: (row: ContactInterface) => <p>{row.date}</p> },
-        { header: 'Id', render: (row: ContactInterface) => <p>{row.id}</p> },
+        { header: 'Id', render: (row: ContactInterface) => <p>{row._id}</p> },
         { header: 'Customer', render: (row: ContactInterface) => <p>{row.client.name}</p> },
         { header: 'Email Request', render: (row: ContactInterface) => <p>{row.client.email}</p> },
         { header: 'Phone', render: (row: ContactInterface) => <p>{row.client.phone}</p> },
         { header: 'Subject', render: (row: ContactInterface) => <p>{row.subject}</p> },
         { header: 'Comment', render: (row: ContactInterface) => <p>{row.comment}</p> },
-        { header: '', render: (row: ContactInterface) => <ManageData id={row.id} deleteFunc={handleDeleteComment} /> },
+        { header: '', render: (row: ContactInterface) => <ManageData id={row._id} deleteFunc={handleDeleteComment} /> },
     ];
 
     return(
