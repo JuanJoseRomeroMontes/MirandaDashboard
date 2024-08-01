@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { APIRequest } from '../../utils'
 import { EmployeeCreateInterface, EmployeeInterface } from "../../types";
+import { toast } from "react-toastify";
 
 export const fetchUserList = createAsyncThunk("user/fetchUserList", async (): Promise<EmployeeInterface[]> => {
     try{
@@ -27,6 +28,7 @@ export const fetchUser = createAsyncThunk("user/fecthUser", async (id:string): P
 export const createUser = createAsyncThunk("user/createUser", async (user:EmployeeCreateInterface): Promise<EmployeeInterface> => {
     try{
         const userAPI = await APIRequest(`user`, 'POST', user);
+        toast.success('Employee created sucessfully')
         return userAPI.user as EmployeeInterface;
     }
     catch(error){
@@ -37,6 +39,7 @@ export const createUser = createAsyncThunk("user/createUser", async (user:Employ
 export const updateUser = createAsyncThunk("user/updateUser", async (user:EmployeeInterface): Promise<EmployeeInterface> => {
     try{
         const userAPI = await APIRequest(`user/${user._id}`, 'PATCH', user);
+        toast.success('Employee updated sucessfully')
         return userAPI.user as EmployeeInterface;
     }
     catch(error){
@@ -47,6 +50,7 @@ export const updateUser = createAsyncThunk("user/updateUser", async (user:Employ
 export const deleteUser = createAsyncThunk("user/deleteUser", async (id:string): Promise<string> => {
     try{
         const user = await APIRequest(`user/${id}`, 'DELETE');
+        toast.success('Employee deleted sucessfully')
         return user.user._id as string;
     }
     catch(error){

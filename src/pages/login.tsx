@@ -14,6 +14,12 @@ export const LoginPage = () => {
         const email = (form.elements.namedItem("email") as HTMLInputElement).value;
         const password = (form.elements.namedItem("password") as HTMLInputElement).value;
 
+        if(email=="" && password=="")
+        {
+            toast.info('Please fill the credentials!')
+            return;
+        }
+
         const method:RequestMethods = 'POST'
         const body = JSON.stringify({email: email, password: password});
         const APIResponse = await fetch(`${import.meta.env.VITE_API_URL}login`, {

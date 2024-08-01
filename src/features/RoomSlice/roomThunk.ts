@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { APIRequest } from '../../utils'
 import { RoomCreateInterface, RoomInterface } from "../../types";
+import { toast } from "react-toastify";
 
 export const fetchRoomList = createAsyncThunk("room/fetchRoomList", async (): Promise<RoomInterface[]> => {
     try{
@@ -27,6 +28,7 @@ export const fetchRoom = createAsyncThunk("room/fecthRoom", async (id:string): P
 export const createRoom = createAsyncThunk("room/createRoom", async (room:RoomCreateInterface): Promise<RoomInterface> => {
     try{
         const roomAPI = await APIRequest(`room`, 'POST', room);
+        toast.success('Room created sucessfully')
         return roomAPI.room as RoomInterface;
     }
     catch(error){
@@ -37,6 +39,7 @@ export const createRoom = createAsyncThunk("room/createRoom", async (room:RoomCr
 export const updateRoom = createAsyncThunk("room/updateRoom", async (room:RoomInterface): Promise<RoomInterface> => {
     try{
         const roomAPI = await APIRequest(`room/${room._id}`, 'PATCH', room);
+        toast.success('Room updated sucessfully')
         return roomAPI.room as RoomInterface;
     }
     catch(error){
@@ -47,6 +50,7 @@ export const updateRoom = createAsyncThunk("room/updateRoom", async (room:RoomIn
 export const deleteRoom = createAsyncThunk("room/deleteRoom", async (id:string): Promise<string> => {
     try{
         const room = await APIRequest(`room/${id}`, 'DELETE');
+        toast.success('Room deleted sucessfully')
         return room.room._id as string;
     }
     catch(error){

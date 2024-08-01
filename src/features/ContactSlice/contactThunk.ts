@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { APIRequest } from '../../utils'
 import { ContactInterface } from "../../types";
+import { toast } from "react-toastify";
 
 export const fetchContactList = createAsyncThunk<ContactInterface[]>("contact/fetchContactList", async () => {
     try{
@@ -27,6 +28,7 @@ export const fetchContact = createAsyncThunk("contact/fecthContact", async (id:s
 export const createContact = createAsyncThunk("contact/createContact", async (contact:ContactInterface): Promise<ContactInterface> => {
     try{
         const contactAPI = await APIRequest(`contact`, 'POST', contact);
+        toast.success('Contact created sucessfully')
         return contactAPI.contact as ContactInterface;
     }
     catch(error){
@@ -37,6 +39,7 @@ export const createContact = createAsyncThunk("contact/createContact", async (co
 export const updateContact = createAsyncThunk("contact/updateContact", async (contact:ContactInterface): Promise<ContactInterface> => {
     try{
         const contactAPI = await APIRequest(`contact/${contact._id}`, 'PATCH', contact);
+        toast.success('Contact updated sucessfully')
         return contactAPI.contact as ContactInterface;
     }
     catch(error){
@@ -47,6 +50,7 @@ export const updateContact = createAsyncThunk("contact/updateContact", async (co
 export const deleteContact = createAsyncThunk("Contact/deleteContact", async (id:string): Promise<string> => {
     try{
         const contact = await APIRequest(`contact/${id}`, 'DELETE');
+        toast.success('Contact deleted sucessfully')
         return contact.contact._id as string;
     }
     catch(error){

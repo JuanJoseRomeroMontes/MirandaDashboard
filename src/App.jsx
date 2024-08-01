@@ -5,6 +5,8 @@ import { AuthProvider } from './components/authProvider'
 import { Provider } from 'react-redux'
 import { DashboardPage } from './pages/dashboard'
 import { LoginPage } from './pages/login'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 import { BookingsPage } from './pages/bookingPages/bookings'
 import { BookingInfoPage } from './pages/bookingPages/bookingsInfo'
@@ -20,7 +22,6 @@ import { EmployeeCreatePage } from './pages/employeesPages/employeeCreate'
 import { EmployeeEditPage } from './pages/employeesPages/employeeEdit'
 
 import { ContactPage } from './pages/contactsPages/contact'
-import { ToastContainer } from 'react-toastify'
 
 export default function App() {
     return (
@@ -43,10 +44,10 @@ export default function App() {
                                 <Route path='employee/edit/:id' element={ <PrivateRoute> <EmployeeEditPage/> </PrivateRoute> }/>
                                 <Route path='contact' element={ <PrivateRoute> <ContactPage/> </PrivateRoute> }/>
                             </Routes>
-                            <ToastContainer/>
                         </BrowserRouter>
                 </Provider>
             </AuthProvider>
+            <ToastContainer />
         </>
     )
 }
