@@ -5,6 +5,7 @@ import { createUser } from '../../features/UserSlice/userThunk';
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import React from 'react'; // Importar React para usar los tipos
+import { EmployeeCreateInterface } from '../../types';
 
 interface FormState {
     name: string;
@@ -44,8 +45,7 @@ export const EmployeeCreatePage = () => {
         e.preventDefault();
         const employeeId = dataSlice.length;
 
-        const newEmployee = {
-            id: employeeId,
+        const newEmployee:EmployeeCreateInterface = {
             name: form.name,
             email: form.email,
             phone: form.phone,

@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import roomsData from '../../data/roomsData.json';
-import { APIRequest, delay } from '../../utils'
-import { RoomInterface } from "../../types";
+import { APIRequest } from '../../utils'
+import { RoomCreateInterface, RoomInterface } from "../../types";
 
 export const fetchRoomList = createAsyncThunk("room/fetchRoomList", async (): Promise<RoomInterface[]> => {
     try{
@@ -25,7 +24,7 @@ export const fetchRoom = createAsyncThunk("room/fecthRoom", async (id:string): P
     }
 })
 
-export const createRoom = createAsyncThunk("room/createRoom", async (room:RoomInterface): Promise<RoomInterface> => {
+export const createRoom = createAsyncThunk("room/createRoom", async (room:RoomCreateInterface): Promise<RoomInterface> => {
     try{
         const roomAPI = await APIRequest(`room`, 'POST', room);
         return roomAPI.room as RoomInterface;

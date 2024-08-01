@@ -63,7 +63,7 @@ export const userSlice = createSlice({
         .addCase(updateUser.fulfilled, (state, action:PayloadAction<EmployeeInterface>) => {
             state.status = 'fulfilled'
             console.log(action.payload)
-            state.items = state.items.map(i => i.id === action.payload.id ? action.payload : i);
+            state.items = state.items.map(i => i._id === action.payload._id ? action.payload : i);
         })
         .addCase(updateUser.rejected, (state, action) => {
             state.status = 'rejected'
@@ -72,9 +72,9 @@ export const userSlice = createSlice({
         .addCase(deleteUser.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(deleteUser.fulfilled, (state, action:PayloadAction<number>) => {
+        .addCase(deleteUser.fulfilled, (state, action:PayloadAction<string>) => {
             state.status = 'fulfilled'
-            state.items = state.items.filter(i => i.id !== action.payload);
+            state.items = state.items.filter(i => i._id !== action.payload);
         })
         .addCase(deleteUser.rejected, (state, action) => {
             state.status = 'rejected'

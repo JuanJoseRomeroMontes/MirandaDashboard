@@ -37,6 +37,18 @@ export interface ContactInterface {
     archived:boolean
 }
 
+export interface ContactCreateInterface {
+    date:string;
+    client: {
+        name:string;
+        email:string;
+        phone:string;
+    };
+    subject:string;
+    comment:string;
+    archived:boolean
+}
+
 export type ContactProperties = 'date' | '_id' | 'subject' | 'comment' | 'archived' | 'client';
 
 export interface EmployeeInterface {
@@ -52,10 +64,35 @@ export interface EmployeeInterface {
     password:string
 }
 
+export interface EmployeeCreateInterface {
+    name:string;
+    email:string;
+    phone:string;
+    photo:string;
+    positionName:string,
+    positionDescription:string,
+    date:string;
+    status:boolean;
+    password:string
+}
+
 export type EmployeeProperties = 'name' | '_id' | 'email' | 'phone' | 'photo' | 'date' | 'status' | 'password' | 'positionName' | 'positionDescription';
 
 export interface RoomInterface {
     _id:string;
+    roomNumber:number;
+    availability: boolean;
+    roomType:string;
+    description:string;
+    offer:boolean;
+    price:number;
+    discount:number;
+    cancellation:string;
+    amenities: string[];
+    photosArray: string[]
+}
+
+export interface RoomCreateInterface {
     roomNumber:number;
     availability: boolean;
     roomType:string;

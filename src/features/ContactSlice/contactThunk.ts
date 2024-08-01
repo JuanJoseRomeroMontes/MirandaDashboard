@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { APIRequest, delay } from '../../utils'
+import { APIRequest } from '../../utils'
 import { ContactInterface } from "../../types";
 
 export const fetchContactList = createAsyncThunk<ContactInterface[]>("contact/fetchContactList", async () => {

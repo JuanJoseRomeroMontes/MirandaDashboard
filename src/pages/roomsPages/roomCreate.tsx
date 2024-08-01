@@ -4,7 +4,7 @@ import { Form, Label } from '../../components/form'
 import { createRoom } from '../../features/RoomSlice/roomThunk';
 import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { RoomInterface } from '../../types';
+import { RoomCreateInterface, RoomInterface } from '../../types';
 
 interface FormState {
     roomNumber: string;
@@ -54,10 +54,8 @@ export const RoomCreatePage = () => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const roomId = dataSlice.length;
 
-        const newRoom:RoomInterface = {
-            "id": +roomId,
+        const newRoom:RoomCreateInterface = {
             "roomNumber": +form.roomNumber,
             "availability": true,
             "roomType": form.roomType,
