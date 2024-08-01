@@ -16,7 +16,7 @@ interface Order {
 
 export const RoomsPage = () => {
     const [roomData, setRoomData] = useState<RoomInterface[]>([]);
-    const [order, setOrder] = useState<Order>({property: "id", defaultOrder: true}); //object with properties: property, value
+    const [order, setOrder] = useState<Order>({property: "_id", defaultOrder: true}); //object with properties: property, value
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
@@ -77,11 +77,11 @@ export const RoomsPage = () => {
             setCurrentPage(page);
     }
 
-    function handleDeleteRoom(idToFilter:number){
+    function handleDeleteRoom(idToFilter:string){
         dispatch(deleteRoom(idToFilter))
     }
 
-    function handleEditRoom(idToFilter:number){
+    function handleEditRoom(idToFilter:string){
         navigate("edit/"+idToFilter)
     }
 
@@ -92,11 +92,11 @@ export const RoomsPage = () => {
     const columns: TableProps<RoomInterface>['columns'] = [
         { header: 'Photo', render: (row:RoomInterface) => <Image $src={row.photosArray[0]}/>, },
         { header: 'Room number', render: (row:RoomInterface) => <p>{row.roomNumber}</p>, },
-        { header: 'Room id', render: (row:RoomInterface) => <p>{row.id}</p>, },
+        { header: 'Room id', render: (row:RoomInterface) => <p>{row._id}</p>, },
         { header: 'Amenities', render: (row:RoomInterface) => <p>{getAmenitiesString(row.amenities)}</p>, },
         { header: 'Price', render: (row:RoomInterface) => <p>{row.price}€</p>, },
         { header: 'Offer Price', render: (row:RoomInterface) => <p>{ calculateDiscount(row.price, row.discount)}€ | {row.discount}%</p>, },
-        { header: '',  render: (row:RoomInterface) => <ManageData id={row.id} editFunc={handleEditRoom} deleteFunc={handleDeleteRoom}/>, },
+        { header: '',  render: (row:RoomInterface) => <ManageData id={row._id} editFunc={handleEditRoom} deleteFunc={handleDeleteRoom}/>, },
     ];
 
     if(status === 'idle')

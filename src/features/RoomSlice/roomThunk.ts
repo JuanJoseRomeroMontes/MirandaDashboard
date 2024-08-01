@@ -37,7 +37,7 @@ export const createRoom = createAsyncThunk("room/createRoom", async (room:RoomIn
 
 export const updateRoom = createAsyncThunk("room/updateRoom", async (room:RoomInterface): Promise<RoomInterface> => {
     try{
-        const roomAPI = await APIRequest(`room`, 'PATCH', room);
+        const roomAPI = await APIRequest(`room/${room._id}`, 'PATCH', room);
         return roomAPI.room as RoomInterface;
     }
     catch(error){

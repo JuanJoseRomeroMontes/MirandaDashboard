@@ -20,7 +20,7 @@ interface FormState {
 
 export const RoomEditPage = () => {
     const data = useAppSelector((state) => state.roomSlice.single);
-    const { id = 0 } = useParams(); //In case there is an error with the param, it will use 0 by default.
+    const { id = "" } = useParams(); //In case there is an error with the param, it will use 0 by default.
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [form, setForm] = useState<FormState>({
@@ -37,11 +37,11 @@ export const RoomEditPage = () => {
 
     useEffect(() => {
         const fetch = async () => {
-            await dispatch(fetchRoom(+id)).unwrap;
+            await dispatch(fetchRoom(id)).unwrap;
         }
         
         fetch();
-    })
+    }, [])
 
     useEffect(() => {
         if(data != null)
@@ -82,7 +82,7 @@ export const RoomEditPage = () => {
         e.preventDefault();
 
         const newRoom:RoomInterface = {
-            "id": +id,
+            "_id": id,
             "roomNumber": +form.roomNumber,
             "availability": form.availability,
             "roomType": form.roomType,
