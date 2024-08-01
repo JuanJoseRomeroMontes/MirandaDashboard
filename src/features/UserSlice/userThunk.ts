@@ -27,8 +27,8 @@ export const fetchUser = createAsyncThunk("user/fecthUser", async (id:number): P
 
 export const createUser = createAsyncThunk("user/createUser", async (user:EmployeeInterface): Promise<EmployeeInterface> => {
     try{
-        const user = await APIRequest(`user`, 'POST'); //{"room": room}
-        return user as EmployeeInterface;
+        const userAPI = await APIRequest(`user`, 'POST', user);
+        return userAPI as EmployeeInterface;
     }
     catch(error){
         throw new Error;
@@ -37,8 +37,8 @@ export const createUser = createAsyncThunk("user/createUser", async (user:Employ
 
 export const updateUser = createAsyncThunk("user/updateUser", async (user:EmployeeInterface): Promise<EmployeeInterface> => {
     try{
-        const user = await APIRequest(`user`, 'PATCH'); //{"room": room}
-        return user as EmployeeInterface;
+        const userAPI = await APIRequest(`user`, 'PATCH', user);
+        return userAPI as EmployeeInterface;
     }
     catch(error){
         throw new Error;

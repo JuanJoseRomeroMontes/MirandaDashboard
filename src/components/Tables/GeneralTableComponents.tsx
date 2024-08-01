@@ -58,9 +58,9 @@ export const RequestPopUp = styled.div<{$display:boolean;}>`
 `;
 
 interface ManageDataProps {
-    id: number;
-    editFunc?: (id: number) => void;
-    deleteFunc: (id: number) => void;
+    id: string;
+    editFunc?: (id: string) => void;
+    deleteFunc: (id: string) => void;
 }
 
 export const ManageData: React.FC<ManageDataProps> = ({id, editFunc, deleteFunc}) => 

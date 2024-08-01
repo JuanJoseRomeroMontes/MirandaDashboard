@@ -1,17 +1,27 @@
 export interface BookingInterface {
     fullName: string;
-    id:number;
+    _id:string;
     bookDate:string;
     checkIn:string;
     checkOut:string;
     specialRequest:string;
-    roomId:number;
+    roomId:string;
     roomType:string;
     roomNumber:number;
     status:string;
 }
 
-export type BookingProperties = 'fullName' | 'id' | 'bookDate' | 'checkIn' | 'checkOut' | 'specialRequest' | 'roomId' | 'roomType' |
+export interface BookingCreateInterface {
+    fullName: string;
+    bookDate:string;
+    checkIn:string;
+    checkOut:string;
+    specialRequest:string;
+    roomId:string;
+    status:string;
+}
+
+export type BookingProperties = 'fullName' | '_id' | 'bookDate' | 'checkIn' | 'checkOut' | 'specialRequest' | 'roomId' | 'roomType' |
                                 'roomNumber' | 'status';
 
 export interface ContactInterface {
@@ -21,16 +31,16 @@ export interface ContactInterface {
         email:string;
         phone:string;
     };
-    id:number;
+    _id:string;
     subject:string;
     comment:string;
     archived:boolean
 }
 
-export type ContactProperties = 'date' | 'id' | 'subject' | 'comment' | 'archived' | 'client';
+export type ContactProperties = 'date' | '_id' | 'subject' | 'comment' | 'archived' | 'client';
 
 export interface EmployeeInterface {
-    id:number;
+    _id:string;
     name:string;
     email:string;
     phone:string;
@@ -42,10 +52,10 @@ export interface EmployeeInterface {
     password:string
 }
 
-export type EmployeeProperties = 'name' | 'id' | 'email' | 'phone' | 'photo' | 'date' | 'status' | 'password' | 'positionName' | 'positionDescription';
+export type EmployeeProperties = 'name' | '_id' | 'email' | 'phone' | 'photo' | 'date' | 'status' | 'password' | 'positionName' | 'positionDescription';
 
 export interface RoomInterface {
-    id:number;
+    _id:string;
     roomNumber:number;
     availability: boolean;
     roomType:string;
@@ -58,5 +68,5 @@ export interface RoomInterface {
     photosArray: string[]
 }
 
-export type RoomProperties =    'id' | 'roomNumber' | 'availability' | 'roomType' | 'description' | 'offer' | 'price' | 'discount' | 
+export type RoomProperties =    '_id' | 'roomNumber' | 'availability' | 'roomType' | 'description' | 'offer' | 'price' | 'discount' | 
                                 'cancellation' | 'amenities' | 'photosArray';

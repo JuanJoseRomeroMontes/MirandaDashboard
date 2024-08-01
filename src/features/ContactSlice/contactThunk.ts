@@ -27,8 +27,8 @@ export const fetchContact = createAsyncThunk("contact/fecthContact", async (id:n
 
 export const createContact = createAsyncThunk("contact/createContact", async (contact:ContactInterface): Promise<ContactInterface> => {
     try{
-        const contact = await APIRequest(`contact`, 'POST'); //{"contact": contact}
-        return contact as ContactInterface;
+        const contactAPI = await APIRequest(`contact`, 'POST', contact);
+        return contactAPI as ContactInterface;
     }
     catch(error){
         throw new Error('Failed to create contact');
@@ -37,8 +37,8 @@ export const createContact = createAsyncThunk("contact/createContact", async (co
 
 export const updateContact = createAsyncThunk("contact/updateContact", async (contact:ContactInterface): Promise<ContactInterface> => {
     try{
-        const contact = await APIRequest(`contact`, 'PATCH'); //{"contact": contact}
-        return contact as ContactInterface;
+        const contactAPI = await APIRequest(`contact`, 'PATCH', contact);
+        return contactAPI as ContactInterface;
     }
     catch(error){
         throw new Error('Failed to update contact');

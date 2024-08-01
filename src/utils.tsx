@@ -33,15 +33,17 @@ export function convertStringToDate(stringDate:string):Date{
 
 export type RequestMethods = "GET" | "POST" | "PATCH" | "DELETE";
 
-export async function APIRequest(endpoint:string, method:RequestMethods = 'GET', bodyData = null){
-    const url:string = `${process.env.API_URL}/${endpoint}`; //install dotenv
-    const token = localStorage.getItem('AUTH_TOKEN');
+export async function APIRequest(endpoint:string, method:RequestMethods = 'GET', bodyData:any = null){
+    const url:string = `${import.meta.env.VITE_API_URL}${endpoint}`;
+    const token = JSON.parse(localStorage.getItem('AUTH_KEY') as string).token;
+    const bodyDebug = bodyData ? JSON.stringify(bodyData) : undefined;
     const response = await fetch(url, {
         method,
         headers: {
             'Authorization': `Token ${token}`,
+            'Content-Type': 'application/json',
         },
-        body: bodyData ?? undefined,
+        body: bodyDebug,
     })
 
     if(!response.ok){

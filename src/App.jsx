@@ -20,9 +20,7 @@ import { EmployeeCreatePage } from './pages/employeesPages/employeeCreate'
 import { EmployeeEditPage } from './pages/employeesPages/employeeEdit'
 
 import { ContactPage } from './pages/contactsPages/contact'
-
-const dotenv = require('dotenv');
-dotenv.config();
+import { ToastContainer } from 'react-toastify'
 
 export default function App() {
     return (

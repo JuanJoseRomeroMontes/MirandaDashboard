@@ -8,12 +8,12 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 export const BookingInfoPage = () => {
     const bookingData = useAppSelector((state) => state.bookingSlice.single);
     const roomData = useAppSelector((state) => state.roomSlice.single);
-    const { id = 0 } = useParams(); //In case there is an error with the param, it will use 0 by default.
+    const { id = "" } = useParams(); //In case there is an error with the param, it will use "" by default.
     const dispatch = useAppDispatch();
 
     useEffect(() => {
         const fetch = async () => {
-            await dispatch(fetchBooking(+id)).unwrap;
+            await dispatch(fetchBooking(id)).unwrap;
         }
         
         fetch();
@@ -22,7 +22,7 @@ export const BookingInfoPage = () => {
     useEffect(() => {
         const fetch = async () => {
             if(bookingData)
-                await dispatch(fetchRoom(+bookingData.roomId)).unwrap;
+                await dispatch(fetchRoom(bookingData.roomId)).unwrap;
         }
         
         fetch();
@@ -42,7 +42,7 @@ export const BookingInfoPage = () => {
             <Menus title="Booking Info">
                 <div>
                     <p>Client full name: {bookingData.fullName}</p>
-                    <p>Id de la reserva: {bookingData.id}</p>
+                    <p>Id de la reserva: {bookingData._id}</p>
                     <p>Check in: {bookingData.checkIn}</p>
                     <p>Check out: {bookingData.checkOut}</p>
                     <p>Room info: {roomData.cancellation}</p>

@@ -4,7 +4,7 @@ import { Form, Label } from '../../components/form'
 import { createBooking, updateBooking } from '../../features/BookingSlice/bookingThunk';
 import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { BookingInterface, RoomInterface } from '../../types';
+import { BookingCreateInterface, BookingInterface, RoomInterface } from '../../types';
 import { getStatus } from '../../utils';
 import { fetchRoomList } from '../../features/RoomSlice/roomThunk';
 
@@ -21,7 +21,7 @@ export const BookingCreatePage = () => {
         }
         
         fetch();
-    })
+    }, [])
 
     const sortedRoomsData = useMemo(() => {
         const roomsCopy = [...roomsData]
@@ -57,25 +57,21 @@ export const BookingCreatePage = () => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const bookingId = dataSlice.length;
+        const bookingId = dataSlice.length+"";
         const dateTemp = new Date();
         const currentDate = `${dateTemp.getFullYear()}-${(dateTemp.getMonth() + 1).toString().padStart(2, '0')}-${dateTemp.getDate().toString().padStart(2, '0')}`;
 
-        const selectedRoom:RoomInterface = sortedRoomsData.find(room => room.id === +form.roomId) as RoomInterface;
+        const selectedRoom:RoomInterface = sortedRoomsData.find(room => room._id === form.roomId) as RoomInterface;
 
-        const newBooking:BookingInterface = {
+        const newBooking:BookingCreateInterface = {
             "fullName": form.fullName,
-            "id": bookingId,
             "bookDate": currentDate,
             "checkIn": form.checkIn,
             "checkOut": form.checkOut,
-            "specialRequest": form.specialRequest,
-            "roomId": +form.roomId,
-            "roomNumber": selectedRoom.roomNumber,
-            "roomType": selectedRoom.roomType,
+            "specialRequest": form.specialRequest+" ",
+            "roomId": form.roomId,
             "status": getStatus(form.checkIn, form.checkOut)
         }
-        console.log(newBooking);
 
         dispatch(createBooking(newBooking))
         navigate(-1);
@@ -134,7 +130,7 @@ export const BookingCreatePage = () => {
                         >
                             <option value="">Select a room</option>
                             {sortedRoomsData.map((room) => (
-                                <option key={room.id} value={room.id}>
+                                <option key={room._id} value={room._id}>
                                     {room.roomNumber} - {room.roomType}
                                 </option>
                             ))}

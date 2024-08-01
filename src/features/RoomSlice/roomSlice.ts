@@ -62,7 +62,7 @@ export const roomSlice = createSlice({
         })
         .addCase(updateRoom.fulfilled, (state, action:PayloadAction<RoomInterface>) => {
             state.status = 'fulfilled'
-            state.items = state.items.map(i => i.id === action.payload.id ? action.payload : i);
+            state.items = state.items.map(i => i._id === action.payload._id ? action.payload : i);
         })
         .addCase(updateRoom.rejected, (state, action) => {
             state.status = 'rejected'
@@ -71,9 +71,9 @@ export const roomSlice = createSlice({
         .addCase(deleteRoom.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(deleteRoom.fulfilled, (state, action:PayloadAction<number>) => {
+        .addCase(deleteRoom.fulfilled, (state, action:PayloadAction<string>) => {
             state.status = 'fulfilled'
-            state.items = state.items.filter(i => i.id !== action.payload);
+            state.items = state.items.filter(i => i._id !== action.payload);
         })
         .addCase(deleteRoom.rejected, (state, action) => {
             state.status = 'rejected'
