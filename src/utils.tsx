@@ -28,52 +28,34 @@ export type RequestMethods = "GET" | "POST" | "PATCH" | "DELETE";
 export async function APIRequest(endpoint:string, method:RequestMethods = 'GET', bodyData:any = null){
     const url:string = `${import.meta.env.VITE_API_URL}${endpoint}`;
     const token = JSON.parse(localStorage.getItem('AUTH_KEY') as string).token;
-    const bodyDebug = bodyData ? JSON.stringify(bodyData) : undefined;
-    const response = await fetch(url, {
-        method,
-        headers: {
-            'Authorization': `Token ${token}`,
-            'Content-Type': 'application/json',
-        },
-        body: bodyDebug,
-    })
+    const body = bodyData ? JSON.stringify(bodyData) : undefined;
+    let response;
 
-    if(!response.ok){
-        //Gestionar codigo de errores (refrescar la pagina con codigo de errores 401 y 403 borro localStorage y refresco)
-        handleAPIErrors(response.status);
+    try {
+        response = await fetch(url, {
+            method,
+            headers: {
+                'Authorization': `Token ${token}`,
+                'Content-Type': 'application/json',
+            },
+            body: body,
+        })
+    } catch (error) {
+        toast.error('Connection error, please check your internet conection and try again.');
+        return;
+    }
+
+    if([401,403].includes(response.status))
+    {
+        toast.error('Fatal error, reinitializing page...');
+        localStorage.removeItem('AUTH_KEY');
+        window.location.reload();
+    } else if(!response.ok){
+        const json = await response.json();
+        throw new Error(json.message);
+        //throw new Error(response.statusText);
     }
 
     const json = await response.json();
     return json;
-}
-
-enum ApiErrorCodes {
-    NotFound = 404,
-    Unauthorized = 401,
-    Forbidden = 403,
-    BadRequest = 400,
-    InternalServerError = 500
-}
-
-function handleAPIErrors(errorCode: number): void {
-    switch (errorCode) {
-        case ApiErrorCodes.NotFound:
-            toast.error('The item you\'re looking for couldn\'t be found');
-            break;
-        case ApiErrorCodes.Unauthorized:
-            toast.error('Fatal error, reinitializing page...');
-            localStorage.removeItem('AUTH_KEY');
-            window.location.reload();
-            break;
-        case ApiErrorCodes.Forbidden:
-            toast.error('Fatal error, reinitializing page...');
-            localStorage.removeItem('AUTH_KEY');
-            window.location.reload();
-            break;
-        case ApiErrorCodes.BadRequest:
-            toast.error('Invalid data, please check if you\'re not missing any mandatory field.');
-            break;
-        default:
-            toast.error('An unexpected error ocurred, please reload your browser.');
-    }
 }

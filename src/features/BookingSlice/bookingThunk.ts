@@ -9,6 +9,7 @@ export const fetchBookingList = createAsyncThunk("booking/fetchBookingList", asy
         return data.bookings as BookingInterface[];
     }
     catch(error){
+        toast.error('Could\'nt get bookings, the server is down');
         throw new Error;
     }
 })
@@ -21,6 +22,7 @@ export const fetchBooking = createAsyncThunk("booking/fecthBooking", async (id:s
         return booking.booking as BookingInterface;
     }
     catch(error){
+        toast.error('Could\'nt find the booking you\'re looking for');
         throw new Error;
     }
 })
@@ -32,6 +34,7 @@ export const createBooking = createAsyncThunk("booking/createBooking", async (bo
         return bookingAPI.booking as BookingInterface;
     }
     catch(error){
+        toast.error('An error ocurred while creating booking, make sure you filled all the mandatory parameters');
         throw new Error;
     }
 })
@@ -43,6 +46,7 @@ export const updateBooking = createAsyncThunk("booking/updateBooking", async (bo
         return bookingAPI.booking as BookingInterface;
     }
     catch(error){
+        toast.error('Could\'nt update the booking, make sure you filled all the mandatory parameters');
         throw new Error;
     }
 })
@@ -54,6 +58,7 @@ export const deleteBooking = createAsyncThunk("booking/deleteBooking", async (id
         return booking.booking._id as string;
     }
     catch(error){
+        toast.error('Could\'nt delete the booking, try refreshing the page and chek if it exist');
         throw new Error;
     }
 })

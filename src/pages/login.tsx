@@ -22,13 +22,20 @@ export const LoginPage = () => {
 
         const method:RequestMethods = 'POST'
         const body = JSON.stringify({email: email, password: password});
-        const APIResponse = await fetch(`${import.meta.env.VITE_API_URL}login`, {
-            method,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: body,
-        });
+        let APIResponse;
+        try {
+            APIResponse = await fetch(`${import.meta.env.VITE_API_URL}login`, {
+                method,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: body,
+            });
+        } catch (error) {
+            toast.error('Connection error, please check your internet conection and try again.');
+            return;
+        }
+        
 
         if(APIResponse.ok)
         {

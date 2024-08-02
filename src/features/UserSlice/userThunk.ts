@@ -9,6 +9,7 @@ export const fetchUserList = createAsyncThunk("user/fetchUserList", async (): Pr
         return data.users as EmployeeInterface[];
     }
     catch(error){
+        toast.error('Could\'nt get users, the server is down');
         throw new Error;
     }
 })
@@ -21,6 +22,7 @@ export const fetchUser = createAsyncThunk("user/fecthUser", async (id:string): P
         return user.user as EmployeeInterface;
     }
     catch(error){
+        toast.error('Could\'nt find the user you\'re looking for');
         throw new Error;
     }
 })
@@ -32,6 +34,7 @@ export const createUser = createAsyncThunk("user/createUser", async (user:Employ
         return userAPI.user as EmployeeInterface;
     }
     catch(error){
+        toast.error('An error ocurred while creating user, make sure you filled all the mandatory parameters');
         throw new Error;
     }
 })
@@ -43,6 +46,7 @@ export const updateUser = createAsyncThunk("user/updateUser", async (user:Employ
         return userAPI.user as EmployeeInterface;
     }
     catch(error){
+        toast.error('Could\'nt update the user, make sure you filled all the mandatory parameters');
         throw new Error;
     }
 })
@@ -54,6 +58,7 @@ export const deleteUser = createAsyncThunk("user/deleteUser", async (id:string):
         return user.user._id as string;
     }
     catch(error){
+        toast.error('Could\'nt delete the user, try refreshing the page and chek if it exist');
         throw new Error;
     }
 })
