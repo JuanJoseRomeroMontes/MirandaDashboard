@@ -1,35 +1,35 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import bookingsData from '../../data/bookingsData.json';
-import { delay } from '../../utils'
-import { BookingInterface } from "../../types";
+import { APIRequest } from '../../utils'
+import { BookingCreateInterface, BookingInterface } from "../../types";
+import { toast } from "react-toastify";
 
 export const fetchBookingList = createAsyncThunk("booking/fetchBookingList", async (): Promise<BookingInterface[]> => {
     try{
-        const data: BookingInterface[] = bookingsData;
-        return data as BookingInterface[];
+        const data = await APIRequest("booking");
+        return data.bookings as BookingInterface[];
     }
     catch(error){
         throw new Error;
     }
 })
 
-export const fetchBooking = createAsyncThunk("booking/fecthBooking", async (id:number): Promise<BookingInterface> => {
+export const fetchBooking = createAsyncThunk("booking/fecthBooking", async (id:string): Promise<BookingInterface> => {
     try{
-        const bookingId:number = await delay(id) as number;
-        const booking: BookingInterface | undefined = bookingsData.find(booking => booking.id === bookingId);
-        if (!booking) 
-            throw('Failed to fecth contact');
-        return booking as BookingInterface;
+        const booking = await APIRequest(`booking/${id}`);
+        if (!booking)
+                throw('Failed to fecth booking');
+        return booking.booking as BookingInterface;
     }
     catch(error){
         throw new Error;
     }
 })
 
-export const createBooking = createAsyncThunk("booking/createBooking", async (booking:BookingInterface): Promise<BookingInterface> => {
+export const createBooking = createAsyncThunk("booking/createBooking", async (booking:BookingCreateInterface): Promise<BookingInterface> => {
     try{
-        await delay(null)
-        return booking as BookingInterface;
+        const bookingAPI = await APIRequest(`booking`, 'POST', {"booking": booking, "roomId": booking.roomId});
+        toast.success('Booking created sucessfully')
+        return bookingAPI.booking as BookingInterface;
     }
     catch(error){
         throw new Error;
@@ -38,18 +38,20 @@ export const createBooking = createAsyncThunk("booking/createBooking", async (bo
 
 export const updateBooking = createAsyncThunk("booking/updateBooking", async (booking:BookingInterface): Promise<BookingInterface> => {
     try{
-        await delay(null)
-        return booking as BookingInterface;
+        const bookingAPI = await APIRequest(`booking/${booking._id}`, 'PATCH', booking);
+        toast.success('Booking updated sucessfully')
+        return bookingAPI.booking as BookingInterface;
     }
     catch(error){
         throw new Error;
     }
 })
 
-export const deleteBooking = createAsyncThunk("booking/deleteBooking", async (id:number): Promise<number> => {
+export const deleteBooking = createAsyncThunk("booking/deleteBooking", async (id:string): Promise<string> => {
     try{
-        await delay(null)
-        return id as number;
+        const booking = await APIRequest(`booking/${id}`, 'DELETE');
+        toast.success('Booking deleted sucessfully')
+        return booking.booking._id as string;
     }
     catch(error){
         throw new Error;

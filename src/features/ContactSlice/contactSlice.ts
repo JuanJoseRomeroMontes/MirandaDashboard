@@ -62,7 +62,7 @@ export const contactSlice = createSlice({
         })
         .addCase(updateContact.fulfilled, (state, action:PayloadAction<ContactInterface>) => {
             state.status = 'fulfilled'
-            state.items = state.items.map(i => i.id === action.payload.id ? action.payload : i);
+            state.items = state.items.map(i => i._id === action.payload._id ? action.payload : i);
         })
         .addCase(updateContact.rejected, (state, action) => {
             state.status = 'rejected'
@@ -71,9 +71,9 @@ export const contactSlice = createSlice({
         .addCase(deleteContact.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(deleteContact.fulfilled, (state, action:PayloadAction<number>) => {
+        .addCase(deleteContact.fulfilled, (state, action:PayloadAction<string>) => {
             state.status = 'fulfilled'
-            state.items = state.items.filter(i => i.id !== action.payload);
+            state.items = state.items.filter(i => i._id !== action.payload);
         })
         .addCase(deleteContact.rejected, (state, action) => {
             state.status = 'rejected'

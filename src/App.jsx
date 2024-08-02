@@ -5,6 +5,8 @@ import { AuthProvider } from './components/authProvider'
 import { Provider } from 'react-redux'
 import { DashboardPage } from './pages/dashboard'
 import { LoginPage } from './pages/login'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 import { BookingsPage } from './pages/bookingPages/bookings'
 import { BookingInfoPage } from './pages/bookingPages/bookingsInfo'
@@ -45,6 +47,7 @@ export default function App() {
                         </BrowserRouter>
                 </Provider>
             </AuthProvider>
+            <ToastContainer />
         </>
     )
 }

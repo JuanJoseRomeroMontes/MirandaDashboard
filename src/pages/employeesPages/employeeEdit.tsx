@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router';
 import { fetchUser, updateUser } from '../../features/UserSlice/userThunk';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { EmployeeInterface } from '../../types';
 
 interface FormState {
     name: string;
@@ -18,7 +19,7 @@ interface FormState {
 
 export const EmployeeEditPage = () => {
     const data = useAppSelector((state) => state.userSlice.single);
-    const { id=0 } = useParams(); //In case there is an error with the param, it will use 0 by default.
+    const { id="" } = useParams(); //In case there is an error with the param, it will use 0 by default.
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [form, setform] = useState<FormState>({
@@ -34,11 +35,11 @@ export const EmployeeEditPage = () => {
 
     useEffect(() => {
         const fetch = async () => {
-            await dispatch(fetchUser(+id)).unwrap;
+            await dispatch(fetchUser(id)).unwrap;
         }
         
         fetch();
-    })
+    }, [])
 
     useEffect(() => {
         if(data != null)
@@ -65,8 +66,8 @@ export const EmployeeEditPage = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const newEmployee = {
-            id: +id,
+        const newEmployee: EmployeeInterface = {
+            _id: id,
             name: form.name,
             email: form.email,
             phone: form.phone,

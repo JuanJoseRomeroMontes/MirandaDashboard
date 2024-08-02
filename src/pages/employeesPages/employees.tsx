@@ -28,8 +28,8 @@ interface Search {
 export const EmployeesPage = () => {
     const [tabsState, setTabsState] = useState([true, false, false])
     const [employeeData, setEmployeeData] = useState<EmployeeInterface[]>([])
-    const [order, setOrder] = useState<Order>({property:'id', defaultOrder: true});
-    const [filter, setFilter] = useState<Filter>({property:'id', defaultFilter: true});
+    const [order, setOrder] = useState<Order>({property:'_id', defaultOrder: true});
+    const [filter, setFilter] = useState<Filter>({property:'_id', defaultFilter: true});
     const [search, setSearch] = useState<Search>({property: "name", value: ""});
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
@@ -96,11 +96,11 @@ export const EmployeesPage = () => {
             setCurrentPage(page);
     }
 
-    function handleDeleteEmployee(idToFilter:number){
+    function handleDeleteEmployee(idToFilter:string){
         dispatch(deleteUser(idToFilter))
     }
 
-    function handleEditEmployee(idToFilter:number){
+    function handleEditEmployee(idToFilter:string){
         navigate("edit/"+idToFilter)
     }
 
@@ -131,13 +131,13 @@ export const EmployeesPage = () => {
     const columns: TableProps<EmployeeInterface>['columns'] = [
         { header: 'Photo', render: (row:EmployeeInterface) => <Image $src={row.photo}/>, },
         { header: 'Name', render: (row:EmployeeInterface) => <p>{row.name}</p>, },
-        { header: 'Id', render: (row:EmployeeInterface) => <p>{row.id}</p>, },
+        { header: 'Id', render: (row:EmployeeInterface) => <p>{row._id}</p>, },
         { header: 'Email', render: (row:EmployeeInterface) => <p>{row.email}</p>, },
         { header: 'Start date', render: (row:EmployeeInterface) => <p>{row.date}</p>, },
         { header: 'Description', render: (row:EmployeeInterface) => <p>{row.positionDescription}</p>, },
         { header: 'Contact', render: (row:EmployeeInterface) => <p>{row.phone}</p>, },
         { header: 'Status', render: (row:EmployeeInterface) => <p>{row.status ? "ACTIVE" : "INACTIVE"}</p>, },
-        { header: '',  render: (row:EmployeeInterface) => <ManageData id={row.id} editFunc={handleEditEmployee} deleteFunc={handleDeleteEmployee}/>, },
+        { header: '',  render: (row:EmployeeInterface) => <ManageData id={row._id} editFunc={handleEditEmployee} deleteFunc={handleDeleteEmployee}/>, },
     ];
 
     if(status === 'idle')
@@ -150,7 +150,7 @@ export const EmployeesPage = () => {
                     <TabsContainer>
                         <FilterTab $selected={tabsState[0]} onClick={() => {
                             handlectiveTab(0); 
-                            setFilter({property:'id', defaultFilter: true});
+                            setFilter({property:'_id', defaultFilter: true});
                             setOrder({property: "name", inversed: true, defaultOrder: false});
                         }}>All Employee</FilterTab>
                         <FilterTab $selected={tabsState[1]} onClick={() => {

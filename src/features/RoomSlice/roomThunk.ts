@@ -1,35 +1,35 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import roomsData from '../../data/roomsData.json';
-import { delay } from '../../utils'
-import { RoomInterface } from "../../types";
+import { APIRequest } from '../../utils'
+import { RoomCreateInterface, RoomInterface } from "../../types";
+import { toast } from "react-toastify";
 
 export const fetchRoomList = createAsyncThunk("room/fetchRoomList", async (): Promise<RoomInterface[]> => {
     try{
-        const data = await delay(roomsData);
-        return data as RoomInterface[];
+        const data = await APIRequest("room");
+        return data.rooms as RoomInterface[];
     }
     catch(error){
         throw new Error;
     }
 })
 
-export const fetchRoom = createAsyncThunk("room/fecthRoom", async (id:number): Promise<RoomInterface> => {
+export const fetchRoom = createAsyncThunk("room/fecthRoom", async (id:string): Promise<RoomInterface> => {
     try{
-        const roomId:number = await delay(id) as number;
-        const room: RoomInterface | undefined = roomsData.find(room => room.id === roomId);
+        const room = await APIRequest(`room/${id}`);
         if (!room) 
-            throw('Failed to fecth contact');
-        return room as RoomInterface;
+            throw('Failed to fecth room');
+        return room.room as RoomInterface;
     }
     catch(error){
         throw new Error;
     }
 })
 
-export const createRoom = createAsyncThunk("room/createRoom", async (room:RoomInterface): Promise<RoomInterface> => {
+export const createRoom = createAsyncThunk("room/createRoom", async (room:RoomCreateInterface): Promise<RoomInterface> => {
     try{
-        await delay(null)
-        return room as RoomInterface;
+        const roomAPI = await APIRequest(`room`, 'POST', room);
+        toast.success('Room created sucessfully')
+        return roomAPI.room as RoomInterface;
     }
     catch(error){
         throw new Error;
@@ -38,18 +38,20 @@ export const createRoom = createAsyncThunk("room/createRoom", async (room:RoomIn
 
 export const updateRoom = createAsyncThunk("room/updateRoom", async (room:RoomInterface): Promise<RoomInterface> => {
     try{
-        await delay(null)
-        return room as RoomInterface;
+        const roomAPI = await APIRequest(`room/${room._id}`, 'PATCH', room);
+        toast.success('Room updated sucessfully')
+        return roomAPI.room as RoomInterface;
     }
     catch(error){
         throw new Error;
     }
 })
 
-export const deleteRoom = createAsyncThunk("room/deleteRoom", async (id:number): Promise<number> => {
+export const deleteRoom = createAsyncThunk("room/deleteRoom", async (id:string): Promise<string> => {
     try{
-        await delay(null)
-        return id as number;
+        const room = await APIRequest(`room/${id}`, 'DELETE');
+        toast.success('Room deleted sucessfully')
+        return room.room._id as string;
     }
     catch(error){
         throw new Error;

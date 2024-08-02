@@ -27,9 +27,9 @@ interface Search {
 
 export const BookingsPage = () => {    
     const [bookingData, setBookingData] = useState<BookingInterface[]>([])
-    const [popUpMessage, setpopUpMessage] = useState("");
+    const [popUpMessage, setpopUpMessage] = useState(" ");
     const [tabsState, setTabsState] = useState([true, false, false, false])
-    const [order, setOrder] = useState<Order>({property:"id"});
+    const [order, setOrder] = useState<Order>({property:"_id"});
     const [filter, setFilter] = useState<Filter>({property:"fullName", defaultFilter: true});
     const [search, setSearch] = useState<Search>({property: "fullName", value: ""});
     const [currentPage, setCurrentPage] = useState(1);
@@ -65,7 +65,7 @@ export const BookingsPage = () => {
             );
         }
         
-        if(order.property !== "id")
+        if(order.property !== "_id")
         {
             newBookingsList.sort((a,b) => {
                 let value = 0;
@@ -101,11 +101,11 @@ export const BookingsPage = () => {
         setpopUpMessage(message)
     }
 
-    function handleDeleteBooking(idToFilter:number){
+    function handleDeleteBooking(idToFilter:string){
         dispatch(deleteBooking(idToFilter))
     }
 
-    function handleEditBooking(idToFilter:number){
+    function handleEditBooking(idToFilter:string){
         navigate("edit/"+idToFilter)
     }
 
@@ -113,7 +113,7 @@ export const BookingsPage = () => {
         navigate("create")
     }
 
-    const handleViewBooking = (bookingId:number) => {
+    const handleViewBooking = (bookingId:string) => {
         navigate("view/"+bookingId)
     }
 
@@ -138,14 +138,14 @@ export const BookingsPage = () => {
     };
 
     const columns: TableProps<BookingInterface>['columns'] = [
-        { header: 'Guest', render: (row:BookingInterface) => <Guest fullName={row.fullName} bookingId={row.id} viewFunc={handleViewBooking} />, },
+        { header: 'Guest', render: (row:BookingInterface) => <Guest fullName={row.fullName} bookingId={row._id} viewFunc={handleViewBooking} />, },
         { header: 'Order Date', render: (row:BookingInterface) => <p>{row.bookDate}</p>, },
         { header: 'Check In', render: (row:BookingInterface) => <p>{row.checkIn}</p>, },
         { header: 'Check Out', render: (row:BookingInterface) => <p>{row.checkOut}</p>, },
         { header: 'Special Request', render: (row:BookingInterface) => <SpecialRequest message={row.specialRequest} handlePopUp={handlePopUp}/>, },
         { header: 'Room Type', render: (row:BookingInterface) => <p>{row.roomType}</p>, },
         { header: 'Status', render: (row:BookingInterface) => <RoomStatus status={row.status}/>, },
-        { header: '',  render: (row:BookingInterface) => <ManageData id={row.id} editFunc={handleEditBooking} deleteFunc={handleDeleteBooking}/>, },
+        { header: '',  render: (row:BookingInterface) => <ManageData id={row._id} editFunc={handleEditBooking} deleteFunc={handleDeleteBooking}/>, },
     ];
 
     if(status === 'idle')
@@ -158,18 +158,18 @@ export const BookingsPage = () => {
                     <TabsContainer>
                         <FilterTab $selected={tabsState[0]} onClick={() => {
                             handlectiveTab(0); 
-                            setFilter({property:"id", defaultFilter:true});
-                            setOrder({property:"id"});
+                            setFilter({property:"_id", defaultFilter:true});
+                            setOrder({property:"_id"});
                         }}>All Bookings</FilterTab>
                         <FilterTab $selected={tabsState[1]} onClick={() => {
                             handlectiveTab(1);
-                            setFilter({property:"id", defaultFilter:true});
+                            setFilter({property:"_id", defaultFilter:true});
                             setOrder({property: "checkIn"});
                             setCurrentPage(1);
                         }} >Checking In</FilterTab>
                         <FilterTab $selected={tabsState[2]} onClick={() => {
                             handlectiveTab(2);
-                            setFilter({property:"id", defaultFilter:true});
+                            setFilter({property:"_id", defaultFilter:true});
                             setOrder({property: "checkOut"});
                             }}>Checking Out</FilterTab>
                         <FilterTab $selected={tabsState[3]} onClick={() => {
@@ -205,7 +205,7 @@ export const BookingsPage = () => {
                     </Pagination>
                 </MenuChild>
             </Menus>
-            <RequestPopUp $display={popUpMessage!==""} onClick={() => {setpopUpMessage("")}}><div>{popUpMessage}</div></RequestPopUp>
+            <RequestPopUp $display={popUpMessage!==" "} onClick={() => {setpopUpMessage(" ")}}><div>{popUpMessage}</div></RequestPopUp>
         </>
     )
 };
