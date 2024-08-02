@@ -9,6 +9,7 @@ export const fetchRoomList = createAsyncThunk("room/fetchRoomList", async (): Pr
         return data.rooms as RoomInterface[];
     }
     catch(error){
+        toast.error('Could\'nt get rooms, the server is down');
         throw new Error;
     }
 })
@@ -21,6 +22,7 @@ export const fetchRoom = createAsyncThunk("room/fecthRoom", async (id:string): P
         return room.room as RoomInterface;
     }
     catch(error){
+        toast.error('Could\'nt find the room you\'re looking for');
         throw new Error;
     }
 })
@@ -32,6 +34,7 @@ export const createRoom = createAsyncThunk("room/createRoom", async (room:RoomCr
         return roomAPI.room as RoomInterface;
     }
     catch(error){
+        toast.error('An error ocurred while creating room, make sure you filled all the mandatory parameters');
         throw new Error;
     }
 })
@@ -43,6 +46,7 @@ export const updateRoom = createAsyncThunk("room/updateRoom", async (room:RoomIn
         return roomAPI.room as RoomInterface;
     }
     catch(error){
+        toast.error('Could\'nt update the room, make sure you filled all the mandatory parameters');
         throw new Error;
     }
 })
@@ -54,6 +58,7 @@ export const deleteRoom = createAsyncThunk("room/deleteRoom", async (id:string):
         return room.room._id as string;
     }
     catch(error){
+        toast.error('Could\'nt delete the room, try refreshing the page and chek if it exist');
         throw new Error;
     }
 })
