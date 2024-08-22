@@ -27,7 +27,7 @@ export const ContainerInfo = styled.div`
     }
 `
 
-export const Button = styled.div<{$width:string; $padding:string; $margin:string;}>`
+export const Button = styled.button<{$width:string; $padding:string; $margin:string;}>`
     width: ${(props) => (props.$width)};
     padding: ${(props) => (props.$padding)};
     margin: ${(props) => (props.$margin)};
@@ -39,7 +39,7 @@ export const Button = styled.div<{$width:string; $padding:string; $margin:string
     cursor: pointer; 
 `
 
-export const GreenButton = styled.div<{$width:string; $padding:string; $margin:string;}>`
+export const GreenButton = styled.button<{$width:string; $padding:string; $margin:string;}>`
     width: ${(props) => (props.$width)};
     padding: ${(props) => (props.$padding)};
     margin: ${(props) => (props.$margin)};
