@@ -24,9 +24,17 @@ export const Form = styled.form`
   }
 `;
 
-export const Label = styled.label`
+export const Label = styled.label<{$margin:string;}>`
     width: 60%;
-    margin: 20px 0 20px 30%;
+    margin: ${(props) => (props.$margin)};
+    input, select{
+        margin: 0 15px;
+    }
+`
+
+export const LabelDiv = styled.div<{$margin:string;}>`
+    width: 60%;
+    margin: ${(props) => (props.$margin)};
     input, select{
         margin: 0 15px;
     }

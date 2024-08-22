@@ -82,9 +82,9 @@ export const BookingCreatePage = () => {
         <>
             <Menus title="Create Booking">
                 <Form onSubmit={handleSubmit}>
-                    <Label>
+                    <Label $margin={"20px 0 20px 30%"}>
                         Client full name:
-                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 0 0 3%"}
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"20px 0 20px 30%"}
                             type="text"
                             name="fullName"
                             value={form.fullName}
@@ -92,9 +92,9 @@ export const BookingCreatePage = () => {
                             required
                         ></Input>
                     </Label>
-                    <Label>
+                    <Label $margin={"20px 0 20px 30%"}>
                         Check In:
-                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 0 0 3%"}
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"20px 0 20px 30%"}
                             type="date"
                             name="checkIn"
                             value={form.checkIn}
@@ -102,9 +102,9 @@ export const BookingCreatePage = () => {
                             required
                         ></Input>
                     </Label>
-                    <Label>
+                    <Label $margin={"20px 0 20px 30%"}>
                         Check Out:
-                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 0 0 3%"}
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"20px 0 20px 30%"}
                             type="date"
                             name="checkOut"
                             value={form.checkOut}
@@ -112,16 +112,16 @@ export const BookingCreatePage = () => {
                             required
                         ></Input>
                     </Label>
-                    <Label>
+                    <Label $margin={"20px 0 20px 30%"}>
                         Special request:
-                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 0 0 3%"}
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"20px 0 20px 30%"}
                             type="text"
                             name="specialRequest"
                             value={form.specialRequest}
                             onChange={handleChange}
                         ></Input>
                     </Label>
-                    <Label>
+                    <Label $margin={"20px 0 20px 30%"}>
                         Room id:
                         <Select $width={"auto"} $padding={"8px 10px"} $margin={"0 0 0 0"} style={{display: "inline-block"}}
                             name="roomId"
