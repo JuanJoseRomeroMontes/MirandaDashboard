@@ -7,7 +7,7 @@ import { deleteBooking, fetchBookingList } from '../../features/BookingSlice/boo
 import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { BookingInterface, BookingProperties } from '../../types';
-import { MenuChild, TabsContainer } from '../../components/pagesGeneralComponents';
+import { Button, Container, Input, MenuChild, Select, TabsContainer } from '../../components/pagesGeneralComponents';
 
 interface Order {
     property: BookingProperties;
@@ -178,18 +178,19 @@ export const BookingsPage = () => {
                             setOrder({property: "bookDate"});
                             }}>In Progress</FilterTab>
                     </TabsContainer>
+                    <Container $width={"50%"} $margin={"0 0 0 auto"} $justifyContent={"space-evenly"}>
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"0"} type="text" value={search.value} onChange={handleInputChange} ></Input>
 
-                    <input type="text" value={search.value} onChange={handleInputChange} />
+                        <Select $width={"auto"} $padding={"9px 10px"} $margin={"0"} id="orderDropdown" onChange={handleDropdownChange}>
+                            <option value="">Select an option</option>
+                            <option value="fullName">Guest</option>
+                            <option value="bookDate">Order Date</option>
+                            <option value="checkIn">Check In</option>
+                            <option value="checkOut">Check Out</option>
+                        </Select>
 
-                    <select id="orderDropdown" onChange={handleDropdownChange}>
-                        <option value="">Select an option</option>
-                        <option value="fullName">Guest</option>
-                        <option value="bookDate">Order Date</option>
-                        <option value="checkIn">Check In</option>
-                        <option value="checkOut">Check Out</option>
-                    </select>
-
-                    <button onClick={handleCreateBooking}>Create Booking</button>
+                        <Button $width={"auto"} $padding={"5px 10px"} $margin={"0"} onClick={handleCreateBooking}>Create Booking</Button>
+                    </Container>
                     
                     {status === "pending" ? <h1>LOADING TABLE</h1> : null}
                     <Table<BookingInterface> data={paginatedData} columns={columns} />
