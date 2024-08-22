@@ -10,6 +10,7 @@ export const FilterTab = styled.div<{$selected: boolean;}>`
 `;
 
 export const Pagination = styled.div`
+    width: 100%;
     display: inline-flex;
     align-items: center;
 `;

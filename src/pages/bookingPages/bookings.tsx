@@ -2,12 +2,12 @@ import { Menus } from '../../components/Menus/menus';
 import { Table, TableProps } from '../../components/Tables/Table';
 import { useEffect, useMemo, useState } from 'react';
 import { Guest, RoomStatus, SpecialRequest } from '../../components/Tables/BookingTableComponents';
-import { Pagination, FilterTab, ManageData, RequestPopUp } from '../../components/Tables/GeneralTableComponents';
+import { Pagination, FilterTab, ManageData, RequestPopUp, PaginationNavitagtion } from '../../components/Tables/GeneralTableComponents';
 import { deleteBooking, fetchBookingList } from '../../features/BookingSlice/bookingThunk';
 import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { BookingInterface, BookingProperties } from '../../types';
-import { Button, Container, Input, MenuChild, Select, TabsContainer } from '../../components/pagesGeneralComponents';
+import { Button, Container, GreenButton, Input, MenuChild, Select, TabsContainer } from '../../components/pagesGeneralComponents';
 
 interface Order {
     property: BookingProperties;
@@ -198,11 +198,11 @@ export const BookingsPage = () => {
                     <Pagination>
                             <p>Showing booking from {getPaginationIndex()+1} to {getPaginationIndex()+itemsPerPage > filteredBookings.length ? filteredBookings.length : getPaginationIndex()+itemsPerPage} of {filteredBookings.length} total bookings </p>
 
-                            <div>
-                                <button onClick={() => handlePaginationChange(currentPage-1)}>Prev</button>
-                                <input type="number" value={currentPage} onChange={(e) => handlePaginationChange(Number(e.target.value))} />
-                                <button onClick={() => handlePaginationChange(currentPage+1)}>Next</button>
-                            </div>
+                            <Container $width={"30%"} $margin={"0 1% 0 auto"} $justifyContent={"right"}>
+                                <GreenButton  $width={"auto"} $padding={"5px 10px"} $margin={"0 0 0 3%"} onClick={() => handlePaginationChange(currentPage-1)}>Prev</GreenButton>
+                                <Input  $width={"15%"} $padding={"8px 10px"} $margin={"0 0 0 3%"} type="number" value={currentPage} onChange={(e) => handlePaginationChange(Number(e.target.value))} ></Input>
+                                <GreenButton  $width={"auto"} $padding={"5px 10px"} $margin={"0 0 0 3%"} onClick={() => handlePaginationChange(currentPage+1)}>Next</GreenButton>
+                            </Container>
                     </Pagination>
                 </MenuChild>
             </Menus>

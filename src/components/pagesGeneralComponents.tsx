@@ -30,6 +30,16 @@ export const Button = styled.div<{$width:string; $padding:string; $margin:string
     background-color: transparent;
     color: #135846;
 `
+export const GreenButton = styled.div<{$width:string; $padding:string; $margin:string;}>`
+    width: ${(props) => (props.$width)};
+    padding: ${(props) => (props.$padding)};
+    margin: ${(props) => (props.$margin)};
+    border: 1px solid #135846;
+    display: inline-block;
+    border-radius: 12px;
+    background-color: #135846;
+    color: white;
+`
 
 export const Select = styled.select<{$width:string; $padding:string; $margin:string;}>`
     width: ${(props) => (props.$width)};
