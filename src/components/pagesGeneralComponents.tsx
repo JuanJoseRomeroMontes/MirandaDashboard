@@ -73,6 +73,20 @@ export const Input = styled.input<{$width:string; $padding:string; $margin:strin
     font-size: 1em;
 `
 
+export const TextArea = styled.textarea<{$width:string; $padding:string; $margin:string;}>`
+    width: ${(props) => (props.$width)};
+    padding: ${(props) => (props.$padding)};
+    margin: ${(props) => (props.$margin)};
+    border: 1px solid #135846;
+    display: inline-block;
+    border-radius: 12px;
+    background-color: transparent;
+    color: #135846;
+    font-size: 1em;
+    position: relative;
+    top: 18px;
+`
+
 export const DivImg = styled.div<{$paddingTop:number; $width:number; $url:string;}>`
     padding-top: ${(props) => (props.$paddingTop)}%;
     width: ${(props) => (props.$width)}%;

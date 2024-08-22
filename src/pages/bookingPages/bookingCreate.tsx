@@ -84,7 +84,7 @@ export const BookingCreatePage = () => {
                 <Form onSubmit={handleSubmit}>
                     <Label $margin={"20px 0 20px 30%"}>
                         Client full name:
-                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"20px 0 20px 30%"}
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 15px"}
                             type="text"
                             name="fullName"
                             value={form.fullName}
@@ -94,7 +94,7 @@ export const BookingCreatePage = () => {
                     </Label>
                     <Label $margin={"20px 0 20px 30%"}>
                         Check In:
-                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"20px 0 20px 30%"}
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 15px"}
                             type="date"
                             name="checkIn"
                             value={form.checkIn}
@@ -104,7 +104,7 @@ export const BookingCreatePage = () => {
                     </Label>
                     <Label $margin={"20px 0 20px 30%"}>
                         Check Out:
-                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"20px 0 20px 30%"}
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 15px"}
                             type="date"
                             name="checkOut"
                             value={form.checkOut}
@@ -114,7 +114,7 @@ export const BookingCreatePage = () => {
                     </Label>
                     <Label $margin={"20px 0 20px 30%"}>
                         Special request:
-                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"20px 0 20px 30%"}
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 15px"}
                             type="text"
                             name="specialRequest"
                             value={form.specialRequest}

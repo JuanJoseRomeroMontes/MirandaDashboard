@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router';
 import { deleteUser, fetchUserList } from '../../features/UserSlice/userThunk';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { EmployeeInterface, EmployeeProperties } from '../../types';
-import { MenuChild, TabsContainer } from '../../components/pagesGeneralComponents';
+import { Button, Container, GreenButton, Input, MenuChild, Select, TabsContainer } from '../../components/pagesGeneralComponents';
 
 interface Order {
     property: EmployeeProperties;
@@ -166,26 +166,28 @@ export const EmployeesPage = () => {
                             }}>Inactive Employee</FilterTab>
                     </TabsContainer>
 
-                    <input type="text" value={search.value} onChange={handleInputChange} />
+                    <Container $width={"50%"} $margin={"0 0 0 auto"} $justifyContent={"space-evenly"}>
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"0"} type="text" value={search.value} onChange={handleInputChange} ></Input>
 
-                    <select id="orderDropdown" onChange={handleDropdownChange}>
-                        <option value="">Select an option</option>
-                        <option value="name">Nombre</option>
-                        <option value="date">Fecha</option>
-                    </select>
+                        <Select $width={"auto"} $padding={"9px 10px"} $margin={"0"} id="orderDropdown" onChange={handleDropdownChange}>
+                            <option value="">Select an option</option>
+                            <option value="name">Nombre</option>
+                            <option value="date">Fecha</option>
+                        </Select>
 
-                    <button onClick={handleCreateEmployee}>Create Employee</button>
+                        <Button $width={"auto"} $padding={"5px 10px"} $margin={"0"} onClick={handleCreateEmployee}>Create Employee</Button>
+                    </Container>
 
                     <Table<EmployeeInterface> data={paginatedData} columns={columns} />
 
                     <Pagination>
                         <p>Showing employee from {getPaginationIndex()+1} to {getPaginationIndex()+itemsPerPage > filteredEmployees.length ? filteredEmployees.length : getPaginationIndex()+itemsPerPage} of {filteredEmployees.length} total employees </p>
 
-                            <div>
-                                <button onClick={() => handlePaginationChange(currentPage-1)}>Prev</button>
-                                <input type="number" value={currentPage} onChange={(e) => handlePaginationChange(Number(e.target.value))} />
-                                <button onClick={() => handlePaginationChange(currentPage+1)}>Next</button>
-                            </div>
+                        <Container $width={"30%"} $margin={"0 2% 0 auto"} $justifyContent={"right"}>
+                            <GreenButton  $width={"auto"} $padding={"5px 10px"} $margin={"0 0 0 3%"} onClick={() => handlePaginationChange(currentPage-1)}>Prev</GreenButton>
+                            <Input  $width={"15%"} $padding={"8px 10px"} $margin={"0 0 0 3%"} type="number" value={currentPage} onChange={(e) => handlePaginationChange(Number(e.target.value))} ></Input>
+                            <GreenButton  $width={"auto"} $padding={"5px 10px"} $margin={"0 0 0 3%"} onClick={() => handlePaginationChange(currentPage+1)}>Next</GreenButton>
+                        </Container>
                     </Pagination>
                 </MenuChild>
             </Menus>

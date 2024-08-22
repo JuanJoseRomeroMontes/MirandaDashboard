@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import React from 'react'; // Importar React para usar los tipos
 import { EmployeeCreateInterface } from '../../types';
+import { Input, TextArea } from '../../components/pagesGeneralComponents';
 
 interface FormState {
     name: string;
@@ -65,91 +66,91 @@ export const EmployeeCreatePage = () => {
         <>
             <Menus title="Create Employee">
                 <Form onSubmit={handleSubmit}>
-                        <Label>
+                        <Label $margin={"20px 0 20px 30%"}>
                             Name:
-                            <input 
+                            <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 15px"}
                                 type="text"
                                 id="name"
                                 name="name"
                                 value={form.name}
                                 onChange={handleChange}
                                 required 
-                            />
+                            ></Input>
                         </Label>
-                        <Label>
+                        <Label $margin={"20px 0 20px 30%"}>
                             Email:
-                            <input 
+                            <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 15px"}
                                 type="email"
                                 id="email"
                                 name="email"
                                 value={form.email}
                                 onChange={handleChange}
                                 required 
-                            />                        
+                            ></Input>                       
                         </Label>
-                        <Label>
+                        <Label $margin={"20px 0 20px 30%"}>
                             Phone:
-                            <input 
+                            <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 15px"}
                                 type="tel"
                                 id="phone"
                                 name="phone"
                                 value={form.phone}
                                 onChange={handleChange}
                                 required 
-                            />
+                            ></Input>
                         </Label>
-                        <Label>
+                        <Label $margin={"20px 0 20px 30%"}>
                             Position name:
-                            <input 
+                            <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 15px"}
                                 type="text"
                                 id="positionName"
                                 name="positionName"
                                 value={form.positionName}
                                 onChange={handleChange}
                                 required  
-                            />
+                            ></Input>
                         </Label>
-                        <Label>
+                        <Label $margin={"20px 0 20px 30%"}>
                             Position description:
-                            <textarea 
+                            <TextArea $width={"50%"} $padding={"8px 10px"} $margin={"0 15px"}
                                 id="positionDescription"
                                 name="positionDescription"
                                 value={form.positionDescription}
                                 onChange={handleChange}
                                 required 
-                            />                        
+                            ></TextArea>                       
                         </Label>
-                        <Label>
+                        <Label $margin={"20px 0 20px 30%"}>
                             Date:
-                            <input 
+                            <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 15px"}
                                 type="date"
                                 id="date"
                                 name="date"
                                 value={form.date}
                                 onChange={handleChange}
                                 required 
-                            />
+                            ></Input>
                         </Label>
-                        <Label>
+                        <Label $margin={"20px 0 20px 30%"}>
                             Status:
-                            <input 
+                            <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 15px"}
                                 type="checkbox"
                                 id="status"
                                 name="status"
                                 checked={form.status}
                                 onChange={handleChange}
-                            />
+                            ></Input>
                         </Label>
-                        <Label>
+                        <Label $margin={"20px 0 20px 30%"}>
                             Password:
-                            <input 
+                            <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 15px"}
                                 type="password"
                                 id="password"
                                 name="password"
                                 value={form.password}
                                 onChange={handleChange}
                                 required 
-                            />
+                            ></Input>
                         </Label>
                         <button type="submit">Submit</button>
                 </Form>
