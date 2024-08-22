@@ -19,11 +19,11 @@ const Background = styled.div`
   .topBarIcon:hover{cursor: pointer;};
 `;
 
-const Container = styled.div<{$widthPercent:number;}>`
+const Container = styled.div<{$widthPercent:number; $justifyContent:string;}>`
  width: ${(props) => (props.$widthPercent)}%; 
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: ${(props) => (props.$justifyContent)};
 
   .topBarIcon:hover{cursor: pointer;};
 `;
@@ -46,11 +46,11 @@ export const TopMenu: React.FC<TopMenuProps> = ({ title, toggleLeftMenu }) => {
         <>
             <Background>
                 <IconContext.Provider value={{ size: '24px', className: "topBarIcon"}}>
-                    <Container $widthPercent={25}>
-                        <GiHamburgerMenu onClick={toggleLeftMenu}/>
-                        <h1>{title}</h1>
+                    <Container $widthPercent={75} $justifyContent="left">
+                        <GiHamburgerMenu onClick={toggleLeftMenu} style={{marginLeft:"5%"}}/>
+                        <h1 style={{marginLeft:"5%", overflow:"hidden"}}>{title}</h1>
                     </Container>
-                    <Container $widthPercent={25}>
+                    <Container $widthPercent={25} $justifyContent="space-evenly">
                         <LuMail />
                         <FaRegBell />
                         <IoLogOutOutline onClick={LogOut}/>

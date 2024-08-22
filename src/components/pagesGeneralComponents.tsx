@@ -20,6 +20,13 @@ export const Container = styled.div<{$width:string; $margin:string; $justifyCont
     margin-top: 12px;
 `
 
+export const ContainerInfo = styled.div`
+    margin: 30px 5% 0 20%;
+    b{
+        color: #135846;
+    }
+`
+
 export const Button = styled.div<{$width:string; $padding:string; $margin:string;}>`
     width: ${(props) => (props.$width)};
     padding: ${(props) => (props.$padding)};
@@ -29,7 +36,9 @@ export const Button = styled.div<{$width:string; $padding:string; $margin:string
     border-radius: 12px;
     background-color: transparent;
     color: #135846;
+    cursor: pointer; 
 `
+
 export const GreenButton = styled.div<{$width:string; $padding:string; $margin:string;}>`
     width: ${(props) => (props.$width)};
     padding: ${(props) => (props.$padding)};
@@ -39,6 +48,7 @@ export const GreenButton = styled.div<{$width:string; $padding:string; $margin:s
     border-radius: 12px;
     background-color: #135846;
     color: white;
+    cursor: pointer;
 `
 
 export const Select = styled.select<{$width:string; $padding:string; $margin:string;}>`

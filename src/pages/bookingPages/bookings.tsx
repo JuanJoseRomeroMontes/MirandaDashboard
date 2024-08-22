@@ -2,7 +2,7 @@ import { Menus } from '../../components/Menus/menus';
 import { Table, TableProps } from '../../components/Tables/Table';
 import { useEffect, useMemo, useState } from 'react';
 import { Guest, RoomStatus, SpecialRequest } from '../../components/Tables/BookingTableComponents';
-import { Pagination, FilterTab, ManageData, RequestPopUp, PaginationNavitagtion } from '../../components/Tables/GeneralTableComponents';
+import { Pagination, FilterTab, ManageData, RequestPopUp } from '../../components/Tables/GeneralTableComponents';
 import { deleteBooking, fetchBookingList } from '../../features/BookingSlice/bookingThunk';
 import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
