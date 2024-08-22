@@ -36,7 +36,6 @@ export const LoginPage = () => {
             return;
         }
         
-
         if(APIResponse.ok)
         {
             const verification = await APIResponse.json();

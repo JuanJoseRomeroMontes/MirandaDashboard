@@ -10,8 +10,17 @@ import { AuthContext } from "../authProvider";
 
 const Background = styled.div`
   width: 100%;
-  background-color: white;
+  background-color: #ffffff;
   height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .topBarIcon:hover{cursor: pointer;};
+`;
+
+const Container = styled.div<{$widthPercent:number;}>`
+ width: ${(props) => (props.$widthPercent)}%; 
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -37,11 +46,15 @@ export const TopMenu: React.FC<TopMenuProps> = ({ title, toggleLeftMenu }) => {
         <>
             <Background>
                 <IconContext.Provider value={{ size: '24px', className: "topBarIcon"}}>
-                    <GiHamburgerMenu onClick={toggleLeftMenu}/>
-                    <h1>{title}</h1>
-                    <LuMail />
-                    <FaRegBell />
-                    <IoLogOutOutline onClick={LogOut}/>
+                    <Container $widthPercent={25}>
+                        <GiHamburgerMenu onClick={toggleLeftMenu}/>
+                        <h1>{title}</h1>
+                    </Container>
+                    <Container $widthPercent={25}>
+                        <LuMail />
+                        <FaRegBell />
+                        <IoLogOutOutline onClick={LogOut}/>
+                    </Container>
                 </IconContext.Provider>
             </Background>
         </>

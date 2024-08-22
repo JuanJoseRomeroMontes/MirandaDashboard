@@ -10,6 +10,7 @@ const Page = styled.div`
 
   .content
   {
+    background-color: #f8f8f8;
     width: 100%;
     height: 100%;
     overflow-wrap: anywhere;
