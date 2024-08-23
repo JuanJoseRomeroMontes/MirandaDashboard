@@ -95,3 +95,77 @@ export const DivImg = styled.div<{$paddingTop:number; $width:number; $url:string
     background-size: cover;
     background-position: center;
 `
+
+//----------------------//
+
+export const KpiContainer = styled.section`
+    display: flex;
+    justify-content: space-between;
+    margin: 50px; 
+
+        .icon {
+            width: 28px;
+            height: 28px;
+        }
+    }
+`;
+
+export const Kpi = styled.div`
+    width: 18%;
+    display: flex;
+    align-items: center;
+    padding: 30px;
+    border-radius: 12px;
+    background-color: white;
+`;
+
+export const KpiData = styled.div`
+    h6{
+        color: black;
+        font: normal normal 600 30px/46px Poppins;
+        letter-spacing: 0px;
+        color: #393939;
+        margin: 0;
+    }
+
+    p{
+        color: gray;
+        text-align: left;
+        font: normal normal 300 14px/21px Poppins;
+        letter-spacing: 0px;
+        color: #787878;
+        margin: 0;
+    }
+`
+
+export const IconContainer = styled.div<{$selected:boolean;}>`
+    width: 65px;
+    height: 65px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 22px;
+    background-color: ${(props) => (props.$selected ? '#E23428' : '#FFEDEC')};
+    color: ${(props) => (props.$selected ? 'white' : '#E23428')};
+`;
+
+export const CommentList = styled.div`
+    margin: 0 50px;
+    background-color: white;
+    border-radius: 20px;
+    padding: 30px 30px 70px;
+    h3 {
+        font-size: 20px;
+        margin-bottom: 30px;
+        font-weight: 400;
+    }
+    div {
+        display: flex;
+        justify-content: space-between;
+        gap: 5%;
+        @media only screen and (min-width: 1920px) {
+            justify-content: unset;
+        }
+    }
+    `;

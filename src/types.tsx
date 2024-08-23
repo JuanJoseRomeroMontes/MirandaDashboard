@@ -107,3 +107,9 @@ export interface RoomCreateInterface {
 
 export type RoomProperties =    '_id' | 'roomNumber' | 'availability' | 'roomType' | 'description' | 'offer' | 'price' | 'discount' | 
                                 'cancellation' | 'amenities' | 'photosArray';
+
+export interface CommentInterface {
+text: string;
+userName: string;
+timestamp: string;
+}

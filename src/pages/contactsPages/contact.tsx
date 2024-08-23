@@ -5,7 +5,9 @@ import { Pagination, FilterTab, ManageData } from '../../components/Tables/Gener
 import { deleteContact, fetchContactList } from '../../features/ContactSlice/contactThunk';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { ContactInterface, ContactProperties } from '../../types';
-import { Container, GreenButton, Input, MenuChild, TabsContainer } from '../../components/pagesGeneralComponents'
+import { CommentList, Container, GreenButton, Input, MenuChild, TabsContainer } from '../../components/pagesGeneralComponents'
+import Comment from '../../components/comment';
+import { getTimeDifference, mockComments } from '../../utils';
 
 interface Order {
     property: ContactProperties;
@@ -111,6 +113,15 @@ export const ContactPage = () => {
         <>
             <Menus title="Contacts">               
                 <MenuChild>
+                        <CommentList>
+                            <h3>Latest Reviews by Customers</h3>
+                            <div>
+                                {mockComments.map((comment, index) => (
+                                    <Comment comment={comment} timeAgo={getTimeDifference(new Date(comment.timestamp).getTime())} key={index}/>
+                                ))}
+                            </div>    
+                        </CommentList>
+
                     <TabsContainer>
                         <FilterTab $selected={tabsState[0]} onClick={() => {
                             handlectiveTab(0); 
