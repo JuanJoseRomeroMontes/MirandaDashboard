@@ -154,9 +154,10 @@ export const CommentList = styled.div`
     margin: 0 50px;
     background-color: white;
     border-radius: 20px;
-    padding: 30px 30px 70px;
+    padding: 30px;
     h3 {
         font-size: 20px;
+        margin:0;
         margin-bottom: 30px;
         font-weight: 400;
     }

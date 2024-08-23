@@ -113,15 +113,16 @@ export const ContactPage = () => {
         <>
             <Menus title="Contacts">               
                 <MenuChild>
-                        <CommentList>
-                            <h3>Latest Reviews by Customers</h3>
-                            <div>
-                                {mockComments.map((comment, index) => (
-                                    <Comment comment={comment} timeAgo={getTimeDifference(new Date(comment.timestamp).getTime())} key={index}/>
-                                ))}
-                            </div>    
-                        </CommentList>
-
+                    <br/>
+                    <CommentList>
+                        <h3>Latest Reviews by Customers</h3>
+                        <div>
+                            {mockComments.map((comment, index) => (
+                                <Comment comment={comment} timeAgo={getTimeDifference(new Date(comment.timestamp).getTime())} key={index}/>
+                            ))}
+                        </div>    
+                    </CommentList>
+                    <br/><br/>
                     <TabsContainer>
                         <FilterTab $selected={tabsState[0]} onClick={() => {
                             handlectiveTab(0); 

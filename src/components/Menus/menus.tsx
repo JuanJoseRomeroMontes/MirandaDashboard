@@ -37,7 +37,9 @@ export const Menus: React.FC<MenusProps> = ({ title: Title, children }) => {
             <LeftMenu leftMenuClosed={leftMenuClosed}/>
             <div className="content">
                 <TopMenu toggleLeftMenu={toggleLeftMenu} title={Title}/>
-                {children}
+                <div style={{overflow: "auto"}}>
+                    {children}
+                </div>
             </div>
         </Page>
     )
