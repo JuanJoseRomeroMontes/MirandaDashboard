@@ -98,7 +98,7 @@ export const BookingEditPage = () => {
         <>
             <Menus title="Edit Booking">
                 <Form onSubmit={handleSubmit}>
-                    <Label>
+                    <Label $margin={"20px 0 20px 30%"}>
                         Client full name:
                         <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 0 0 3%"}
                             type="text"
@@ -107,7 +107,7 @@ export const BookingEditPage = () => {
                             onChange={handleChange}
                         ></Input>
                     </Label>
-                    <Label>
+                    <Label $margin={"20px 0 20px 30%"}>
                         Book Date:
                         <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 0 0 3%"}
                             type="date"
@@ -116,7 +116,7 @@ export const BookingEditPage = () => {
                             onChange={handleChange}
                         ></Input>
                     </Label>
-                    <Label>
+                    <Label $margin={"20px 0 20px 30%"}>
                         Check In:
                         <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 0 0 3%"}
                             type="date"
@@ -125,7 +125,7 @@ export const BookingEditPage = () => {
                             onChange={handleChange}
                         ></Input>
                     </Label>
-                    <Label>
+                    <Label $margin={"20px 0 20px 30%"}>
                         Check Out:
                         <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 0 0 3%"}
                             type="date"
@@ -134,7 +134,7 @@ export const BookingEditPage = () => {
                             onChange={handleChange}
                         ></Input>
                     </Label>
-                    <Label>
+                    <Label $margin={"20px 0 20px 30%"}>
                         Special request:
                         <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 0 0 3%"}
                             type="text"
@@ -143,7 +143,7 @@ export const BookingEditPage = () => {
                             onChange={handleChange}
                         ></Input>
                     </Label>
-                    <Label>
+                    <Label $margin={"20px 0 20px 30%"}>
                         Room id:
                         <Select $width={"auto"} $padding={"8px 10px"} $margin={"0 0 0 0"} style={{display: "inline-block"}}
                             name="roomId"

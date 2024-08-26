@@ -175,7 +175,7 @@ export const EmployeesPage = () => {
                             <option value="date">Fecha</option>
                         </Select>
 
-                        <Button $width={"auto"} $padding={"5px 10px"} $margin={"0"} onClick={handleCreateEmployee}>Create Employee</Button>
+                        <Button $width={"auto"} $padding={"10px"} $margin={"0"} onClick={handleCreateEmployee}>Create Employee</Button>
                     </Container>
 
                     <Table<EmployeeInterface> data={paginatedData} columns={columns} />

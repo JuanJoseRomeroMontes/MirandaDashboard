@@ -62,10 +62,10 @@ export const RoomEditPage = () => {
     const amenitiesList = ['WiFi', 'TV', 'Minibar', 'Air Conditioning', 'Room Service'];
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value, type, checked } = e.target; //Funciona a pesar de que da problema con los tipos
+        const { name, value, type, ariaChecked } = e.target; //Funciona a pesar de que da problema con los tipos
         setForm(prevState => ({
             ...prevState,
-            [name]: type === 'checkbox' ? checked : value
+            [name]: type === 'checkbox' ? ariaChecked : value
         }));
     };
 

@@ -35,10 +35,10 @@ export const EmployeeCreatePage = () => {
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value, type, checked } = e.target; //Funciona a pesar de que da problema con los tipos
+        const { name, value, type, ariaChecked } = e.target; //Funciona a pesar de que da problema con los tipos
         setform({
             ...form,
-            [name]: type === 'checkbox' ? checked : value
+            [name]: type === 'checkbox' ? ariaChecked : value
         });
     };
 

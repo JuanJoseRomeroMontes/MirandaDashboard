@@ -189,7 +189,7 @@ export const BookingsPage = () => {
                             <option value="checkOut">Check Out</option>
                         </Select>
 
-                        <Button $width={"auto"} $padding={"5px 10px"} $margin={"0"} onClick={handleCreateBooking}>Create Booking</Button>
+                        <Button $width={"auto"} $padding={"10px"} $margin={"0"} onClick={handleCreateBooking}>Create Booking</Button>
                     </Container>
                     
                     {status === "pending" ? <h1>LOADING TABLE</h1> : null}

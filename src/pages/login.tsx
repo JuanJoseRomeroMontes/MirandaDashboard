@@ -41,8 +41,8 @@ export const LoginPage = () => {
     const validateLogin = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const form = event.currentTarget;
-        const email = (form.elements.namedItem("email") as HTMLInputContainerElement).value;
-        const password = (form.elements.namedItem("password") as HTMLInputContainerElement).value;
+        const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+        const password = (form.elements.namedItem("password") as HTMLInputElement).value;
 
         if(email=="" && password=="")
         {

@@ -60,8 +60,6 @@ export async function APIRequest(endpoint:string, method:RequestMethods = 'GET',
     return json;
 }
 
-//-------------------------------------//
-
 export const mockData = {"month":1,"bookings":8023,"occupation":50,"checkIns":152,"checkOuts":257};
 
 export const mockComments = [
