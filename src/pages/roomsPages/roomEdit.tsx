@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Menus } from '../../components/Menus/menus';
-import { Form, Label } from '../../components/form'
+import { Form, Label, LabelDiv } from '../../components/form'
 import { fetchRoom, updateRoom } from '../../features/RoomSlice/roomThunk';
 import { useNavigate, useParams } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { RoomInterface } from '../../types';
+import { Input } from '../../components/pagesGeneralComponents';
 
 interface FormState {
     roomNumber: string;
@@ -61,10 +62,10 @@ export const RoomEditPage = () => {
     const amenitiesList = ['WiFi', 'TV', 'Minibar', 'Air Conditioning', 'Room Service'];
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value, type, checked } = e.target; //Funciona a pesar de que da problema con los tipos
+        const { name, value, type, ariaChecked } = e.target; //Funciona a pesar de que da problema con los tipos
         setForm(prevState => ({
             ...prevState,
-            [name]: type === 'checkbox' ? checked : value
+            [name]: type === 'checkbox' ? ariaChecked : value
         }));
     };
 
@@ -101,67 +102,67 @@ export const RoomEditPage = () => {
     return (
         <Menus title="Edit Room">
             <Form onSubmit={handleSubmit}>
-                    <Label>
+                    <Label $margin={"10px 0 10px 30%"}>
                         Room Number:
-                        <input
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"10px 0 10px 30%"}
                             type="number"
                             name="roomNumber"
                             value={form.roomNumber}
                             onChange={handleChange}
                             required
-                        />
+                        ></Input>
                     </Label>
-                    <Label>
+                    <Label $margin={"10px 0 10px 30%"}>
                         Room Type:
-                        <input
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"10px 0 10px 30%"}
                             type="text"
                             name="roomType"
                             value={form.roomType}
                             onChange={handleChange}
                             required
-                        />
+                        ></Input>
                     </Label>
-                    <Label>
+                    <Label $margin={"10px 0 10px 30%"}>
                         Description:
-                        <input
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"10px 0 10px 30%"}
                             type="text"
                             name="description"
                             value={form.description}
                             onChange={handleChange}
                             required
-                        />
+                        ></Input>
                     </Label>
-                    <Label>
+                    <LabelDiv $margin={"10px 0 10px 30%"}>
                         Availability:
-                        <input
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"10px 0 10px 30%"}
                             type="checkbox"
                             name="availability"
                             checked={form.availability}
                             onChange={handleChange}
-                        />
-                    </Label>
-                    <Label>
+                            ></Input>
+                    </LabelDiv>
+                    <LabelDiv $margin={"10px 0 10px 30%"}>
                         Offer:
-                        <input
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"10px 0 10px 30%"}
                             type="checkbox"
                             name="offer"
                             checked={form.offer}
                             onChange={handleChange}
-                        />
-                    </Label>
-                    <Label>
+                            ></Input>
+                    </LabelDiv>
+                    <Label $margin={"10px 0 10px 30%"}>
                         Price:
-                        <input
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"10px 0 10px 30%"}
                             type="number"
                             name="price"
                             value={form.price}
                             onChange={handleChange}
                             required
-                        />
+                            ></Input>
                     </Label>
-                    <Label>
+                    <Label $margin={"10px 0 10px 30%"}>
                         Discount:
-                        <input
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"10px 0 10px 30%"}
                             type="number"
                             name="discount"
                             min="1"
@@ -169,35 +170,35 @@ export const RoomEditPage = () => {
                             value={form.discount}
                             onChange={handleChange}
                             required
-                        />
+                            ></Input>
                     </Label>
-                    <Label>
+                    <Label $margin={"10px 0 10px 30%"}>
                         Cancellation:
-                        <input
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"10px 0 10px 30%"}
                             type="text"
                             name="cancellation"
                             value={form.cancellation}
                             onChange={handleChange}
                             required
-                        />
+                            ></Input>
                     </Label>
-                    <Label>
+                    <LabelDiv $margin={"10px 0 10px 30%"}>
                         Amenities:
                         {amenitiesList.map((amenity, index) => (
                             <div key={index}>
                                 <label>
-                                    <input
+                                    <Input $width={"auto"} $padding={"8px 10px"} $margin={"10px 0 10px 30%"}
                                         type="checkbox"
                                         name="amenities"
                                         value={amenity}
                                         checked={form.amenities.includes(amenity)}
                                         onChange={handleAmenitiesChange}
-                                    />
+                                        ></Input>
                                     {amenity}
                                 </label>
                             </div>
                         ))}
-                    </Label>
+                    </LabelDiv>
                     <button type="submit">Submit</button>
             </Form>
         </Menus>

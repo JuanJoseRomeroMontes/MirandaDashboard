@@ -4,6 +4,7 @@ import { fetchBooking } from '../../features/BookingSlice/bookingThunk';
 import { fetchRoom } from '../../features/RoomSlice/roomThunk';
 import { useParams } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { ContainerInfo } from '../../components/pagesGeneralComponents';
 
 export const BookingInfoPage = () => {
     const bookingData = useAppSelector((state) => state.bookingSlice.single);
@@ -37,25 +38,40 @@ export const BookingInfoPage = () => {
             </Menus>
         </>)
 
+    function getAmenities():string{
+        let amenitiesString = "";
+
+        if(roomData && roomData.amenities.length > 0)
+        {
+            roomData.amenities.forEach(amenity => {
+                amenitiesString = amenitiesString + `${amenity}, `
+            });
+
+            amenitiesString = amenitiesString.slice(0, -2);
+        }
+        else
+            amenitiesString = "No amenities"
+
+        return amenitiesString;
+    }
+
     return(
         <>
             <Menus title="Booking Info">
-                <div>
-                    <p>Client full name: {bookingData.fullName}</p>
-                    <p>Id de la reserva: {bookingData._id}</p>
-                    <p>Check in: {bookingData.checkIn}</p>
-                    <p>Check out: {bookingData.checkOut}</p>
-                    <p>Room info: {roomData.cancellation}</p>
-                    <p>Price: {roomData.price+"€/nigth"}</p>
-                    <p>Special request: {bookingData.specialRequest}</p>
-                    <p>Amenities: {roomData.amenities}</p>
-                </div>
-                <div>
-                    <p>Carrousel de fotos</p>
-                    <p>Roomtype: {roomData.roomType}</p>
-                    <p>Description: {roomData.description}</p>
-                    <p>State: {roomData.availability ? "available" : "not availale"}</p>
-                </div>
+                <ContainerInfo>
+                    <p><b>Id de la reserva:</b> {bookingData._id}</p>
+                    <p><b>Client name:</b> {bookingData.fullName}</p>
+                    <p><b>Check in:</b> {bookingData.checkIn}</p>
+                    <p><b>Check out:</b> {bookingData.checkOut}</p>
+                    <p><b>Room info:</b> {roomData.cancellation}</p>
+                    <p><b>Price:</b> {roomData.price+"€/nigth"}</p>
+                    <p><b>Special request:</b> {bookingData.specialRequest}</p>
+                    <p><b>Amenities:</b> {getAmenities()}</p>
+                    <p><b>Roomtype:</b> {roomData.roomType}</p>
+                    <p><b>Description:</b> {roomData.description}</p>
+                    <p><b>State:</b> {roomData.availability ? "available" : "not availale"}</p>
+                    <p><b>Carrousel de fotos</b></p>
+                </ContainerInfo>
             </Menus>
         </>
     )

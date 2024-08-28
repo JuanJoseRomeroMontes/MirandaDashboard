@@ -59,3 +59,39 @@ export async function APIRequest(endpoint:string, method:RequestMethods = 'GET',
     const json = await response.json();
     return json;
 }
+
+export const mockData = {"month":1,"bookings":8023,"occupation":50,"checkIns":152,"checkOuts":257};
+
+export const mockComments = [
+    {
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
+      "userName": "Kusnaidi Anderson",
+      "timestamp": "2024-08-15T08:30:00Z"
+    },
+    {
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
+      "userName": "Bella Saphira",
+      "timestamp": "2024-08-19T15:25:00Z"
+    },
+    {
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
+      "userName": "Thomas Al-Ghazali",
+      "timestamp": "2024-08-23T12:00:00Z"
+    }
+]
+
+export const getTimeDifference = (timestamp: number): string => {
+    const now = new Date().getTime() as number;
+    const then = new Date(timestamp).getTime() as number;
+    const differenceInMs = now - then;
+    const differenceInHours = Math.floor(differenceInMs / 3600000);
+    let returnValue:string;
+
+    if(differenceInHours > 24)
+        returnValue = Math.floor(differenceInHours/24)+"d";
+    else
+        returnValue = differenceInHours+"h"
+
+
+    return returnValue;
+};

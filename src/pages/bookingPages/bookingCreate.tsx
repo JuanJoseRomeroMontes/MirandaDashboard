@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { BookingCreateInterface, BookingInterface, RoomInterface } from '../../types';
 import { getStatus } from '../../utils';
 import { fetchRoomList } from '../../features/RoomSlice/roomThunk';
+import { Input, Select } from '../../components/pagesGeneralComponents';
 
 export const BookingCreatePage = () => {
     const roomsData = useAppSelector((state) => state.roomSlice.items);
@@ -81,48 +82,48 @@ export const BookingCreatePage = () => {
         <>
             <Menus title="Create Booking">
                 <Form onSubmit={handleSubmit}>
-                    <Label>
+                    <Label $margin={"20px 0 20px 30%"}>
                         Client full name:
-                        <input
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 15px"}
                             type="text"
                             name="fullName"
                             value={form.fullName}
                             onChange={handleChange}
                             required
-                        />
+                        ></Input>
                     </Label>
-                    <Label>
+                    <Label $margin={"20px 0 20px 30%"}>
                         Check In:
-                        <input
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 15px"}
                             type="date"
                             name="checkIn"
                             value={form.checkIn}
                             onChange={handleChange}
                             required
-                        />
+                        ></Input>
                     </Label>
-                    <Label>
+                    <Label $margin={"20px 0 20px 30%"}>
                         Check Out:
-                        <input
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 15px"}
                             type="date"
                             name="checkOut"
                             value={form.checkOut}
                             onChange={handleChange}
                             required
-                        />
+                        ></Input>
                     </Label>
-                    <Label>
+                    <Label $margin={"20px 0 20px 30%"}>
                         Special request:
-                        <input
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 15px"}
                             type="text"
                             name="specialRequest"
                             value={form.specialRequest}
                             onChange={handleChange}
-                        />
+                        ></Input>
                     </Label>
-                    <Label>
+                    <Label $margin={"20px 0 20px 30%"}>
                         Room id:
-                        <select
+                        <Select $width={"auto"} $padding={"8px 10px"} $margin={"0 0 0 0"} style={{display: "inline-block"}}
                             name="roomId"
                             value={form.roomId}
                             onChange={handleChange}
@@ -134,7 +135,7 @@ export const BookingCreatePage = () => {
                                     {room.roomNumber} - {room.roomType}
                                 </option>
                             ))}
-                        </select>
+                        </Select>
                     </Label>
                     <button type="submit">Submit</button>
                 </Form>

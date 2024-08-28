@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { BookingInterface, RoomInterface } from '../../types';
 import { getStatus } from '../../utils';
 import { fetchRoom, fetchRoomList } from '../../features/RoomSlice/roomThunk';
+import { Input, Select } from '../../components/pagesGeneralComponents';
 
 export const BookingEditPage = () => {
     const bookingData = useAppSelector((state) => state.bookingSlice.single);
@@ -97,54 +98,54 @@ export const BookingEditPage = () => {
         <>
             <Menus title="Edit Booking">
                 <Form onSubmit={handleSubmit}>
-                    <Label>
+                    <Label $margin={"20px 0 20px 30%"}>
                         Client full name:
-                        <input
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 0 0 3%"}
                             type="text"
                             name="fullName"
                             value={form.fullName}
                             onChange={handleChange}
-                        />
+                        ></Input>
                     </Label>
-                    <Label>
+                    <Label $margin={"20px 0 20px 30%"}>
                         Book Date:
-                        <input
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 0 0 3%"}
                             type="date"
                             name="bookDate"
                             value={form.bookDate}
                             onChange={handleChange}
-                        />
+                        ></Input>
                     </Label>
-                    <Label>
+                    <Label $margin={"20px 0 20px 30%"}>
                         Check In:
-                        <input
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 0 0 3%"}
                             type="date"
                             name="checkIn"
                             value={form.checkIn}
                             onChange={handleChange}
-                        />
+                        ></Input>
                     </Label>
-                    <Label>
+                    <Label $margin={"20px 0 20px 30%"}>
                         Check Out:
-                        <input
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 0 0 3%"}
                             type="date"
                             name="checkOut"
                             value={form.checkOut}
                             onChange={handleChange}
-                        />
+                        ></Input>
                     </Label>
-                    <Label>
+                    <Label $margin={"20px 0 20px 30%"}>
                         Special request:
-                        <input
+                        <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 0 0 3%"}
                             type="text"
                             name="specialRequest"
                             value={form.specialRequest}
                             onChange={handleChange}
-                        />
+                        ></Input>
                     </Label>
-                    <Label>
+                    <Label $margin={"20px 0 20px 30%"}>
                         Room id:
-                        <select
+                        <Select $width={"auto"} $padding={"8px 10px"} $margin={"0 0 0 0"} style={{display: "inline-block"}}
                             name="roomId"
                             value={form.roomId}
                             onChange={handleChange}
@@ -156,7 +157,7 @@ export const BookingEditPage = () => {
                                     {room.roomNumber} - {room.roomType}
                                 </option>
                             ))}
-                        </select>
+                        </Select>
                     </Label>
                     <button type="submit">Submit</button>
                 </Form>
