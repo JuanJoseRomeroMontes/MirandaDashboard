@@ -81,8 +81,9 @@ const User = styled.div`
 `
 
 export const LeftMenu: React.FC<{leftMenuClosed:boolean}> = ({ leftMenuClosed }) => {
-  const defaultUsername = "Username";
-  const defaultEmail = "Email@mail.com";
+  const username = JSON.parse(localStorage.getItem('AUTH_KEY') as string).name;
+  const email = JSON.parse(localStorage.getItem('AUTH_KEY') as string).email;
+  const photo = JSON.parse(localStorage.getItem('AUTH_KEY') as string).photo;
 
   return (
     <Background $closed={leftMenuClosed}>
@@ -98,9 +99,9 @@ export const LeftMenu: React.FC<{leftMenuClosed:boolean}> = ({ leftMenuClosed })
         <li><Container><RiContactsFill style={{width:"15%", height:"auto"}}/><Link to='/contact' style={{ textDecoration: 'none', color:'#799283', marginLeft:"10%"}}>Contacts</Link></Container></li>
       </List>
       <User>
-        <DivImg $paddingTop={40} $width={40} $url={"https://profesional.tarkett.es/media/img/M/THH_25094225_25187225_001.jpg"}></DivImg>
-        <h6>{defaultUsername}</h6>
-        <p>{defaultEmail}</p>
+        <DivImg $paddingTop={40} $width={40} $url={photo}></DivImg>
+        <h6>{username}</h6>
+        <p>{email}</p>
         <button>Contact Us</button>
       </User>
     </Background>
