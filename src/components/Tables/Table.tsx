@@ -1,8 +1,5 @@
-import React from 'react';
 import styled from 'styled-components';
-import { BookingInterface, ContactInterface, EmployeeInterface, RoomInterface } from '../../types';
 
-//Usar <T>
 export interface TableProps<T> {
   data: T[];
   columns: {
