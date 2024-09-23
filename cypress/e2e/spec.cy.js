@@ -1,6 +1,6 @@
 describe('My First Test', () => {
   it('Correct data', () => {
-    cy.visit('http://localhost:5173/')
+    cy.visit(import.meta.env.VITE_API_URL)
 
     cy.url().should('include', '/login')
 
@@ -8,11 +8,11 @@ describe('My First Test', () => {
     cy.get('[id^=password]').type('mirapass')
     cy.get('form').submit()
 
-    cy.url().should('eq', 'http://localhost:5173/')
+    cy.url().should('eq', import.meta.env.VITE_API_URL)
   })
 
   it('Incorrect data', () => {
-    cy.visit('http://localhost:5173/')
+    cy.visit(import.meta.env.VITE_API_URL)
 
     cy.url().should('include', '/login')
 
