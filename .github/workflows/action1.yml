@@ -1,4 +1,4 @@
-name: first-action
+name: aws-deploy
 on:
   pull_request:
   push: 
