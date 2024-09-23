@@ -62,7 +62,7 @@ export const bookingSlice = createSlice({
         })
         .addCase(updateBooking.fulfilled, (state, action:PayloadAction<BookingInterface>) => {
             state.status = 'fulfilled'
-            state.items = state.items.map(i => i.id === action.payload.id ? action.payload : i);
+            state.items = state.items.map(i => i._id === action.payload._id ? action.payload : i);
         })
         .addCase(updateBooking.rejected, (state, action) => {
             state.status = 'rejected'
@@ -71,9 +71,9 @@ export const bookingSlice = createSlice({
         .addCase(deleteBooking.pending, (state, action) => {
             state.status = 'pending'
         })
-        .addCase(deleteBooking.fulfilled, (state, action:PayloadAction<number>) => {
+        .addCase(deleteBooking.fulfilled, (state, action:PayloadAction<string>) => {
             state.status = 'fulfilled'
-            state.items = state.items.filter(i => i.id !== action.payload);
+            state.items = state.items.filter(i => i._id !== action.payload);
         })
         .addCase(deleteBooking.rejected, (state, action) => {
             state.status = 'rejected'

@@ -5,7 +5,9 @@ import { Pagination, FilterTab, ManageData } from '../../components/Tables/Gener
 import { deleteContact, fetchContactList } from '../../features/ContactSlice/contactThunk';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { ContactInterface, ContactProperties } from '../../types';
-import { MenuChild, TabsContainer } from '../../components/pagesGeneralComponents'
+import { CommentList, Container, GreenButton, Input, MenuChild, TabsContainer } from '../../components/pagesGeneralComponents'
+import Comment from '../../components/comment';
+import { getTimeDifference, mockComments } from '../../utils';
 
 interface Order {
     property: ContactProperties;
@@ -82,7 +84,7 @@ export const ContactPage = () => {
             setCurrentPage(page);
     }
 
-    function handleDeleteComment(idToFilter:number){
+    function handleDeleteComment(idToFilter:string){
         dispatch(deleteContact(idToFilter));
     }
 
@@ -98,19 +100,29 @@ export const ContactPage = () => {
 
     const columns: TableProps<ContactInterface>['columns'] = [
         { header: 'Date', render: (row: ContactInterface) => <p>{row.date}</p> },
-        { header: 'Id', render: (row: ContactInterface) => <p>{row.id}</p> },
+        { header: 'Id', render: (row: ContactInterface) => <p>{row._id}</p> },
         { header: 'Customer', render: (row: ContactInterface) => <p>{row.client.name}</p> },
         { header: 'Email Request', render: (row: ContactInterface) => <p>{row.client.email}</p> },
         { header: 'Phone', render: (row: ContactInterface) => <p>{row.client.phone}</p> },
         { header: 'Subject', render: (row: ContactInterface) => <p>{row.subject}</p> },
         { header: 'Comment', render: (row: ContactInterface) => <p>{row.comment}</p> },
-        { header: '', render: (row: ContactInterface) => <ManageData id={row.id} deleteFunc={handleDeleteComment} /> },
+        { header: '', render: (row: ContactInterface) => <ManageData id={row._id} deleteFunc={handleDeleteComment} /> },
     ];
 
     return(
         <>
             <Menus title="Contacts">               
                 <MenuChild>
+                    <br/>
+                    <CommentList>
+                        <h3>Latest Reviews by Customers</h3>
+                        <div>
+                            {mockComments.map((comment, index) => (
+                                <Comment comment={comment} timeAgo={getTimeDifference(new Date(comment.timestamp).getTime())} key={index}/>
+                            ))}
+                        </div>    
+                    </CommentList>
+                    <br/><br/>
                     <TabsContainer>
                         <FilterTab $selected={tabsState[0]} onClick={() => {
                             handlectiveTab(0); 
@@ -130,11 +142,11 @@ export const ContactPage = () => {
                     <Pagination>
                             <p>Showing comment from {getPaginationIndex()+1} to {getPaginationIndex()+itemsPerPage > filteredComments.length ? filteredComments.length : getPaginationIndex()+itemsPerPage} of {filteredComments.length} total comments </p>
 
-                            <div>
-                                <button onClick={() => handlePaginationChange(currentPage-1)}>Prev</button>
-                                <input type="number" value={currentPage} onChange={(e) => handlePaginationChange(Number(e.target.value))}/>
-                                <button onClick={() => handlePaginationChange(currentPage+1)}>Next</button>
-                            </div>
+                            <Container $width={"30%"} $margin={"0 2% 0 auto"} $justifyContent={"right"}>
+                                <GreenButton  $width={"auto"} $padding={"5px 10px"} $margin={"0 0 0 3%"} onClick={() => handlePaginationChange(currentPage-1)}>Prev</GreenButton>
+                                <Input  $width={"15%"} $padding={"8px 10px"} $margin={"0 0 0 3%"} type="number" value={currentPage} onChange={(e) => handlePaginationChange(Number(e.target.value))} ></Input>
+                                <GreenButton  $width={"auto"} $padding={"5px 10px"} $margin={"0 0 0 3%"} onClick={() => handlePaginationChange(currentPage+1)}>Next</GreenButton>
+                            </Container>
                     </Pagination>
                 </MenuChild>
             </Menus>

@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 interface GuestProps {
     fullName: string;
-    bookingId: number;
-    viewFunc: (bookingId: number) => void;
+    bookingId: string;
+    viewFunc: (bookingId: string) => void;
 }
 
 export const Guest: React.FC<GuestProps> = ({fullName, bookingId, viewFunc}) => 
@@ -35,7 +35,7 @@ function getStatusColor(status:string):string{
 }
 
 const ViewNotes = styled.button<{$message:string}>`
-    background-color:  ${(props) => (props.$message === "" ? "grey" : "green")};
+    background-color:  ${(props) => (props.$message === " " ? "grey" : "green")};
 `;
 
 interface SpecialRequestProps {

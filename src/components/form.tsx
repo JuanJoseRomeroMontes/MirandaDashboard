@@ -8,11 +8,34 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  button{
+      width: auto;
+      padding: 10px 30px;
+      margin: 20px 0 0 0;
+      border: 1px solid #135846;
+      display: inline-block;
+      border-radius: 12px;
+      background-color: #135846;
+      color: white;
+      cursor: pointer;
+      font-size: 1.5rem;
+      font-weight: bold;
+  }
 `;
 
-export const Label = styled.label`
-    margin: 10px 0;
-    input{
-        margin: 0 5px;
+export const Label = styled.label<{$margin:string;}>`
+    width: 60%;
+    margin: ${(props) => (props.$margin)};
+    input, select{
+        margin: 0 15px;
+    }
+`
+
+export const LabelDiv = styled.div<{$margin:string;}>`
+    width: 60%;
+    margin: ${(props) => (props.$margin)};
+    input, select{
+        margin: 0 15px;
     }
 `

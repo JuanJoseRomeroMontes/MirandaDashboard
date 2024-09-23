@@ -10,6 +10,7 @@ export const FilterTab = styled.div<{$selected: boolean;}>`
 `;
 
 export const Pagination = styled.div`
+    width: 100%;
     display: inline-flex;
     align-items: center;
 `;
@@ -58,9 +59,9 @@ export const RequestPopUp = styled.div<{$display:boolean;}>`
 `;
 
 interface ManageDataProps {
-    id: number;
-    editFunc?: (id: number) => void;
-    deleteFunc: (id: number) => void;
+    id: string;
+    editFunc?: (id: string) => void;
+    deleteFunc: (id: string) => void;
 }
 
 export const ManageData: React.FC<ManageDataProps> = ({id, editFunc, deleteFunc}) => 

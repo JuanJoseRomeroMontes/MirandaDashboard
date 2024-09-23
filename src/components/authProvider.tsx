@@ -3,19 +3,23 @@ import React, { createContext, ReactNode, useEffect, useReducer } from 'react'
 interface AuthData{
   loggedIn: boolean, 
   email: string, 
-  name: string 
+  name: string,
+  photo: string,
+  token: string
 }
 
 const defaultAuth:AuthData = {
   loggedIn: false, 
   email: "", 
-  name: "" 
+  name: "",
+  photo: "",
+  token: ""
 }
 
 type AuthAction = 
-  | { type: 'logIn'; payload: { email: string; name: string } }
+  | { type: 'logIn'; payload: { email: string; name: string; photo:string; token:string; }}
   | { type: 'logOut' }
-  | { type: 'changeUser'; payload: { email: string; name: string }};
+  | { type: 'changeUser'; payload: { email: string; name: string; photo:string; token:string; }};
 
 interface AuthContextProps {
   authState: AuthData;
@@ -44,11 +48,11 @@ export const AuthProvider: React.FC<{children: ReactNode;}> = ({ children }) => 
 const authReducer = (state:AuthData, action:AuthAction) => {
   switch (action.type) {
     case 'logIn':
-      return { loggedIn: true, email: action.payload.email, name: action.payload.name };
+      return { loggedIn: true, email: action.payload.email, name: action.payload.name, photo: action.payload.photo, token: action.payload.token };
     case 'logOut':
         return defaultAuth;
     case 'changeUser':
-        return { ...state,  email: action.payload.email, name: action.payload.name };
+        return { ...state,  email: action.payload.email, name: action.payload.name, photo: action.payload.photo, token: action.payload.token };
   }
 }
 
@@ -62,5 +66,7 @@ function isAuthData(obj: any): obj is AuthData {
   return typeof obj === 'object' &&
          typeof obj.loggedIn === 'boolean' &&
          typeof obj.email === 'string' &&
-         typeof obj.name === 'string';
+         typeof obj.name === 'string' &&
+         typeof obj.photo === 'string' &&
+         typeof obj.token === 'string';
 }

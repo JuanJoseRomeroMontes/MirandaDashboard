@@ -10,6 +10,7 @@ const Page = styled.div`
 
   .content
   {
+    background-color: #f8f8f8;
     width: 100%;
     height: 100%;
     overflow-wrap: anywhere;
@@ -36,7 +37,9 @@ export const Menus: React.FC<MenusProps> = ({ title: Title, children }) => {
             <LeftMenu leftMenuClosed={leftMenuClosed}/>
             <div className="content">
                 <TopMenu toggleLeftMenu={toggleLeftMenu} title={Title}/>
-                {children}
+                <div style={{overflow: "auto"}}>
+                    {children}
+                </div>
             </div>
         </Page>
     )

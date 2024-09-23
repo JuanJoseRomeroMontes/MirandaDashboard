@@ -6,7 +6,7 @@ import { deleteRoom, fetchRoomList } from '../../features/RoomSlice/roomThunk';
 import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { RoomInterface, RoomProperties } from '../../types';
-import { MenuChild } from '../../components/pagesGeneralComponents';
+import { Button, Container, GreenButton, Input, MenuChild } from '../../components/pagesGeneralComponents';
 
 interface Order {
     property: RoomProperties;
@@ -16,7 +16,7 @@ interface Order {
 
 export const RoomsPage = () => {
     const [roomData, setRoomData] = useState<RoomInterface[]>([]);
-    const [order, setOrder] = useState<Order>({property: "id", defaultOrder: true}); //object with properties: property, value
+    const [order, setOrder] = useState<Order>({property: "_id", defaultOrder: true}); //object with properties: property, value
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
@@ -77,11 +77,11 @@ export const RoomsPage = () => {
             setCurrentPage(page);
     }
 
-    function handleDeleteRoom(idToFilter:number){
+    function handleDeleteRoom(idToFilter:string){
         dispatch(deleteRoom(idToFilter))
     }
 
-    function handleEditRoom(idToFilter:number){
+    function handleEditRoom(idToFilter:string){
         navigate("edit/"+idToFilter)
     }
 
@@ -92,11 +92,11 @@ export const RoomsPage = () => {
     const columns: TableProps<RoomInterface>['columns'] = [
         { header: 'Photo', render: (row:RoomInterface) => <Image $src={row.photosArray[0]}/>, },
         { header: 'Room number', render: (row:RoomInterface) => <p>{row.roomNumber}</p>, },
-        { header: 'Room id', render: (row:RoomInterface) => <p>{row.id}</p>, },
+        { header: 'Room id', render: (row:RoomInterface) => <p>{row._id}</p>, },
         { header: 'Amenities', render: (row:RoomInterface) => <p>{getAmenitiesString(row.amenities)}</p>, },
         { header: 'Price', render: (row:RoomInterface) => <p>{row.price}€</p>, },
         { header: 'Offer Price', render: (row:RoomInterface) => <p>{ calculateDiscount(row.price, row.discount)}€ | {row.discount}%</p>, },
-        { header: '',  render: (row:RoomInterface) => <ManageData id={row.id} editFunc={handleEditRoom} deleteFunc={handleDeleteRoom}/>, },
+        { header: '',  render: (row:RoomInterface) => <ManageData id={row._id} editFunc={handleEditRoom} deleteFunc={handleDeleteRoom}/>, },
     ];
 
     if(status === 'idle')
@@ -106,18 +106,18 @@ export const RoomsPage = () => {
         <>
             <Menus title="Rooms">
                 <MenuChild>
-                    <button onClick={handleCreateRoom}>Create Room</button>
+                    <Button $width={"auto"} $padding={"5px 10px"} $margin={"0 0 0 1.5%"} onClick={handleCreateRoom}>Create Room</Button>
 
                     <Table<RoomInterface> data={paginatedData} columns={columns} />
 
                     <Pagination>
                             <p>Showing rooms from {getPaginationIndex()+1} to {getPaginationIndex()+itemsPerPage > filteredRooms.length ? filteredRooms.length : getPaginationIndex()+itemsPerPage} of {filteredRooms.length} total roomss </p>
 
-                            <div>
-                                <button onClick={() => handlePaginationChange(currentPage-1)}>Prev</button>
-                                <input type="number" value={currentPage} onChange={(e) => handlePaginationChange(Number(e.target.value))} />
-                                <button onClick={() => handlePaginationChange(currentPage+1)}>Next</button>
-                            </div>
+                            <Container $width={"30%"} $margin={"0 2% 0 auto"} $justifyContent={"right"}>
+                                <GreenButton  $width={"auto"} $padding={"5px 10px"} $margin={"0 0 0 3%"} onClick={() => handlePaginationChange(currentPage-1)}>Prev</GreenButton>
+                                <Input  $width={"15%"} $padding={"8px 10px"} $margin={"0 0 0 3%"} type="number" value={currentPage} onChange={(e) => handlePaginationChange(Number(e.target.value))} ></Input>
+                                <GreenButton  $width={"auto"} $padding={"5px 10px"} $margin={"0 0 0 3%"} onClick={() => handlePaginationChange(currentPage+1)}>Next</GreenButton>
+                            </Container>
                     </Pagination>
                 </MenuChild>
             </Menus>

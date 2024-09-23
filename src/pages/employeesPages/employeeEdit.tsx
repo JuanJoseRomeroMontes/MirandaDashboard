@@ -4,6 +4,8 @@ import { useNavigate, useParams } from 'react-router';
 import { fetchUser, updateUser } from '../../features/UserSlice/userThunk';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { EmployeeInterface } from '../../types';
+import { Input, TextArea } from '../../components/pagesGeneralComponents';
 
 interface FormState {
     name: string;
@@ -18,7 +20,7 @@ interface FormState {
 
 export const EmployeeEditPage = () => {
     const data = useAppSelector((state) => state.userSlice.single);
-    const { id=0 } = useParams(); //In case there is an error with the param, it will use 0 by default.
+    const { id="" } = useParams(); //In case there is an error with the param, it will use 0 by default.
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [form, setform] = useState<FormState>({
@@ -34,11 +36,11 @@ export const EmployeeEditPage = () => {
 
     useEffect(() => {
         const fetch = async () => {
-            await dispatch(fetchUser(+id)).unwrap;
+            await dispatch(fetchUser(id)).unwrap;
         }
         
         fetch();
-    })
+    }, [])
 
     useEffect(() => {
         if(data != null)
@@ -55,18 +57,18 @@ export const EmployeeEditPage = () => {
     }, [data])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, type, checked } = e.target; //Funciona a pesar de que da problema con los tipos
+    const { name, value, type, ariaChecked } = e.target; //Funciona a pesar de que da problema con los tipos
     setform({
         ...form,
-        [name]: type === 'checkbox' ? checked : value
+        [name]: type === 'checkbox' ? ariaChecked : value
     });
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const newEmployee = {
-            id: +id,
+        const newEmployee: EmployeeInterface = {
+            _id: id,
             name: form.name,
             email: form.email,
             phone: form.phone,
@@ -86,91 +88,91 @@ export const EmployeeEditPage = () => {
         <>
             <Menus title="Edit Employee">
                 <Form onSubmit={handleSubmit}>
-                        <Label>
+                        <Label $margin={"20px 0 20px 30%"}>
                             Name:
-                            <input 
+                            <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 15px"}
                                 type="text"
                                 id="name"
                                 name="name"
                                 value={form.name}
                                 onChange={handleChange}
                                 required 
-                            />
+                            ></Input>
                         </Label>
-                        <Label>
+                        <Label $margin={"20px 0 20px 30%"}>
                             Email:
-                            <input 
+                            <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 15px"}
                                 type="email"
                                 id="email"
                                 name="email"
                                 value={form.email}
                                 onChange={handleChange}
                                 required 
-                            />                        
+                            ></Input>                        
                         </Label>
-                        <Label>
+                        <Label $margin={"20px 0 20px 30%"}>
                             Phone:
-                            <input 
+                            <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 15px"}
                                 type="tel"
                                 id="phone"
                                 name="phone"
                                 value={form.phone}
                                 onChange={handleChange}
                                 required 
-                            />
+                            ></Input>
                         </Label>
-                        <Label>
+                        <Label $margin={"20px 0 20px 30%"}>
                             Position name:
-                            <input 
+                            <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 15px"}
                                 type="text"
                                 id="positionName"
                                 name="positionName"
                                 value={form.positionName}
                                 onChange={handleChange}
                                 required  
-                            />
+                            ></Input>
                         </Label>
-                        <Label>
+                        <Label $margin={"20px 0 20px 30%"}>
                             Position description:
-                            <textarea 
+                            <TextArea $width={"50%"} $padding={"8px 10px"} $margin={"0 15px"}
                                 id="positionDescription"
                                 name="positionDescription"
                                 value={form.positionDescription}
                                 onChange={handleChange}
                                 required 
-                            />                        
+                            ></TextArea>                     
                         </Label>
-                        <Label>
+                        <Label $margin={"20px 0 20px 30%"}>
                             Date:
-                            <input 
+                            <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 15px"}
                                 type="date"
                                 id="date"
                                 name="date"
                                 value={form.date}
                                 onChange={handleChange}
                                 required 
-                            />
+                            ></Input>
                         </Label>
-                        <Label>
+                        <Label $margin={"20px 0 20px 30%"}>
                             Status:
-                            <input 
+                            <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 15px"}
                                 type="checkbox"
                                 id="status"
                                 name="status"
                                 checked={form.status}
                                 onChange={handleChange}
-                            />
+                            ></Input>
                         </Label>
-                        <Label>
+                        <Label $margin={"20px 0 20px 30%"}>
                             Password:
-                            <input 
+                            <Input $width={"auto"} $padding={"8px 10px"} $margin={"0 15px"}
                                 type="password"
                                 id="password"
                                 name="password"
                                 value={form.password}
                                 onChange={handleChange}
                                 required 
-                            />
+                            ></Input>
                         </Label>
                         <button type="submit">Submit</button>
                 </Form>
