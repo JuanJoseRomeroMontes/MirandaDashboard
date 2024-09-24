@@ -1,6 +1,6 @@
 describe('My First Test', () => {
   it('Correct data', () => {
-    cy.visit('http://miranda-dashboard-jrommon.s3-website.eu-west-3.amazonaws.com/')
+    cy.visit('http://localhost:5173/')
 
     cy.url().should('include', '/login')
 
@@ -8,11 +8,11 @@ describe('My First Test', () => {
     cy.get('[id^=password]').type('mirapass')
     cy.get('form').submit()
 
-    cy.url().should('eq', 'http://miranda-dashboard-jrommon.s3-website.eu-west-3.amazonaws.com/')
+    cy.url().should('eq', 'http://localhost:5173/')
   })
 
   it('Incorrect data', () => {
-    cy.visit('http://miranda-dashboard-jrommon.s3-website.eu-west-3.amazonaws.com/')
+    cy.visit('http://localhost:5173/')
 
     cy.url().should('include', '/login')
 
