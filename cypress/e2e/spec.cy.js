@@ -1,6 +1,6 @@
 describe('My First Test', () => {
   it('Correct data', () => {
-    cy.visit('https://1d7z5pqmof.execute-api.eu-west-3.amazonaws.com/dev/loginlogin')
+    cy.visit('http://miranda-dashboard-jrommon.s3-website.eu-west-3.amazonaws.com/')
 
     cy.url().should('include', '/login')
 
@@ -8,11 +8,11 @@ describe('My First Test', () => {
     cy.get('[id^=password]').type('mirapass')
     cy.get('form').submit()
 
-    cy.url().should('eq', 'https://1d7z5pqmof.execute-api.eu-west-3.amazonaws.com/dev/login')
+    cy.url().should('eq', 'http://miranda-dashboard-jrommon.s3-website.eu-west-3.amazonaws.com/')
   })
 
   it('Incorrect data', () => {
-    cy.visit('https://1d7z5pqmof.execute-api.eu-west-3.amazonaws.com/dev/login')
+    cy.visit('http://miranda-dashboard-jrommon.s3-website.eu-west-3.amazonaws.com/')
 
     cy.url().should('include', '/login')
 
