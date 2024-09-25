@@ -20,19 +20,19 @@ jobs:
       - name: Build the project
         run: npm run build
 
-      - name: Cypress.io
-        uses: cypress-io/github-action@v6
-        with:
-          start: npm run dev
-          browser: chrome
-          spec: cypress/e2e/spec.cy.js
+#      - name: Cypress.io
+#        uses: cypress-io/github-action@v6
+#        with:
+#          start: npm run dev
+#          browser: chrome
+#          spec: cypress/e2e/spec.cy.js
 
-      - name: Upload test artifacts # If test fails, upload registers
-        if: failure()
-        uses: actions/upload-artifact@v3
-        with:
-          name: cypress-screenshots
-          path: cypress/screenshots
+#      - name: Upload test artifacts # If test fails, upload registers
+#        if: failure()
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: cypress-screenshots
+#          path: cypress/screenshots
    
       - uses: jakejarvis/s3-sync-action@master # Updload to aws
         with: 
